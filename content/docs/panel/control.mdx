@@ -5,23 +5,36 @@ icon: SquareChevronRight
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
-在面板點擊 `主控台`
+# 欄位
 
-1. 電源按鈕
+<Steps>
+	<Step>
+  
+		### 電源按鈕
+    
+    分別能對伺服器執行 **啟動** / **重啟** / **停止**。
+![伺服器控制鈕](/images/panel/control/control-buttons.png)
 
-分別能對伺服器執行 **啟動** / **重啟** / **停止**
+    </Step>
+    <Step>
 
-![圖片](/images/panel/control.png)
+    ### 資源顯示
 
-2. 資源顯示
+    顯示了目前的資源用量。
 
-顯示了目前的資源用量
+![資源使用量](/images/panel/control/resource-usage.png)
 
-![圖片2](/images/panel/control2.png)
+    </Step>
+    <Step>
 
-3. 控制台
+    ### 控制台
 
-能夠對伺服器輸入指令( **不需要加/** )
+    能夠對伺服器輸入指令( **不需要加 `/`** )
 
-![圖片3](/images/panel/control3.png)
+![控制台](/images/panel/control/command.png)
+
+    </Step>
+
+</Steps>

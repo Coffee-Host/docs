@@ -4,14 +4,47 @@ description: 使用 Geyser 讓基岩板玩家也能跟 Java 玩家共同遊玩�
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
-<Callout title="基岩版請使用 'bedrock.tw.connect.coffeehost.net <端口>' 連線 ！" />
+<Callout title="連線方式">基岩版請使用 `bedrock.tw.connect.coffeehost.net <端口>` 連線 ！</Callout>
 
-## 如何架設geyser
-首先,請先到 [geyser 下載界面](https://geysermc.org/download) 選擇你要的版本並安裝
-我們以 spigot/paper 示範
-下載好之後，我們把插件丟到'/home/container/plugins'裡面並啟動伺服器
-啟動完之後，我們會發現多了一個'Geyser-Spigot'資料夾
-打開 'config.yml' 找到第19行的 'port'
-修改為你伺服器的端口，然後重啟伺服器
-就可以使用'bedrock.tw.connect.coffeehost.net' < 端口 > 連線了!
+# 如何架設Geyser
+
+<Steps>
+	<Step>
+  
+	### 下載Geyser插件
+
+    到 [**Geyser 下載介面**](https://geysermc.org/download)
+
+    選擇你要的版本並安裝(以 spigot/paper 示範)
+
+    </Step>
+
+    <Step>
+
+    ### 將插件放入'/home/container/plugins'
+
+    放完插件後重啟伺服器
+
+    啟動完之後，會發現多了一個'Geyser-Spigot'資料夾
+
+    </Step>
+
+    <Step>
+
+    ### 打開 Geyser-Spigot 資料夾裡面的 config.yml
+
+    找到第19行的 'port'
+
+    ![圖片](/images/panel/practice/geyser/panel.png)
+
+    這個就是你伺服器的端口
+
+    將第19行的 'port'修改為你伺服器的端口，然後重啟伺服器
+
+    </Step>
+
+</Steps>
+
+就可以使用 `bedrock.tw.connect.coffeehost.net <端口>` 連線了!

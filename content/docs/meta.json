@@ -14,6 +14,9 @@
     "panel/control",
     "panel/files",
     "panel/settings",
-    "panel/practice"
+    "panel/practice",
+    "---文件---",
+    "documents/terms-of-service",
+    "documents/privacy-policy"
   ]
 }

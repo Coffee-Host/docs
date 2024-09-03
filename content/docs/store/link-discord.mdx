@@ -4,6 +4,44 @@ description: 綁定 Discord 帳號以獲得支援。
 icon: Link
 ---
 
+如果您是我們的客戶，可以透過綁定 Discord 帳號，取得客戶、贊助專屬身份組。
+
+取得客戶、贊助身份組後，您將可以：
+- 接收最新伺服器通知
+- 開啟「售後服務」類別客服單
+- 存取客戶、贊助專屬聊天頻道
+- 獲得客戶、贊助專屬顏色、圖示
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 
-<Callout title="仍在努力撰寫！" />
+<Steps>
+	<Step>
+	    ### 進入「客戶中心」
+        從「[商店](https://store.coffeehost.net)」首頁點擊「客戶中心」進入。
+        ![圖片](/images/store/link-discord/home.png)
+    </Step>
+    <Step>
+        ### 登入商店
+        使用您先前註冊的帳號登入官方商店。
+        ![圖片](/images/store/link-discord/login.png)
+    </Step>
+    <Step>
+        ### 綁定 Discord 帳號
+        點擊 Discord 旁的「綁定」按鈕。
+        ![圖片](/images/store/link-discord/clientarea.png)
+    </Step>
+    <Step>
+        ### 授權存取
+        點擊「授權」按鈕以繼續。
+        ![圖片](/images/store/link-discord/oauth.png)
+        <Callout title="注意" type="warn">我們無法透過此存取您的 Discord 帳號，請您放心授權即可。</Callout>
+    </Step>
+    <Step>
+        ### 綁定完成
+        看到以下畫面即代表您已成功綁定 Discord 帳號，若您先前有需要綁定後才能使用的服務，現在可以再試一次了。
+        ![圖片](/images/store/link-discord/done.png)
+        <Callout title="注意" type="warn">若綁定後仍未於 Discord 中獲得身份組，請嘗試解除綁定後再重新綁定一次</Callout>
+    </Step>
+</Steps>

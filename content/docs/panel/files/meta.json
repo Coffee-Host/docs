@@ -5,6 +5,7 @@
     "upload",
     "edit",
     "backup",
-    "sftp"
+    "sftp",
+    "winscp"
   ]
 }

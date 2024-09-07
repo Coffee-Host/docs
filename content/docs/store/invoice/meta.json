@@ -3,6 +3,7 @@
   "icon": "CreditCard",
   "pages": [
     "pay",
-    "cancel"
+    "cancel",
+    "ipassmoney"
   ]
 }

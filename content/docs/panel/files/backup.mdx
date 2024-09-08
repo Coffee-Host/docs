@@ -3,6 +3,59 @@ title: 備份
 description: 管理與恢復備份。
 ---
 
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 
-<Callout title="仍在努力撰寫！" />
+<Callout title="警告" type="warn">
+	需要於商店購買時加購備份空間才可以使用此功能
+</Callout>
+
+# 創建備份
+<Steps>
+	<Step>
+  
+		### 點擊「備份」
+    
+    點擊之後會進入備份頁面，可以管理你的備份。
+
+![圖片](/images/panel/files/backup/manage.png)
+
+    </Step>
+    <Step>
+    ### 創建備份
+
+    點擊「創建備份」開始創建
+
+![圖片](/images/panel/files/backup/create.png)
+
+    </Step>
+    <Step>
+	### 填入名稱
+	為您的備份取一個名稱後按「開始備份」
+	![圖片](/images/panel/files/backup/start.png)
+
+</Step>
+</Steps>
+
+# 回復備份
+<Steps>
+	<Step>
+  
+		### 點擊「...」
+    
+    點擊之後可以根據您的需求進行下載、回復、鎖定、刪除等操作。
+
+
+![圖片](/images/panel/files/backup/restore.png)
+
+    </Step>
+    <Step>
+    ### 回復備份
+
+    點擊「回復」後可決定是否清除原先資料，確定後按「Restore」。
+
+![圖片](/images/panel/files/backup/confirm.png)
+
+    </Step>
+</Steps>

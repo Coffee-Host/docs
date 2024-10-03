@@ -1,6 +1,7 @@
 {
   "title": "檔案管理",
   "icon": "File",
+  "defaultOpen": false,
   "pages": [
     "upload",
     "edit",

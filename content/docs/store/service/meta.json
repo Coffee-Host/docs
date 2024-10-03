@@ -1,6 +1,7 @@
 {
   "title": "服務",
   "icon": "Server",
+  "defaultOpen": false,
   "pages": [
     "upgrade",
     "cancel"

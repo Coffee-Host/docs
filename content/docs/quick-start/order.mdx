@@ -4,43 +4,31 @@ description: 下單到開通，只要幾分鐘！
 icon: ShoppingCart
 ---
 
-現在我們來買伺服器，請先到[官方商店](https://store.coffeehost.net/store)
-
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Callout } from "fumadocs-ui/components/callout";
 
 <Steps>
 	<Step>
-  
 		### 選擇方案
-    
-    首先，先選擇一個適合您的方案，接著點選「立即購買」。
-
-    舉例來說，我想要購買 TW-S-4 的方案。
         前往 [服務一覽](https://store.coffeehost.net/store) 查看現有產品。
         ![圖片](/images/quick-start/order/services.png)
         評估好您要購買的方案後，點擊 「立即購買」。
         ![圖片](/images/quick-start/order/buy.png)
     </Step>
     <Step>
-
-    選擇好之後點「繼續」。
-
+        ### 設定伺服器
+        接下來您會看到三個區域，首先紅色的區域是您選購的方案內容。接著是藍色區域，可以選擇購買時長，月繳 30 天、季繳 90 天、半年繳 180 天，購買越長越有優惠。最後的黃色區域是訂單概關，您選購的服務與價格都會顯示。不過注意，價格都不含手續費。
         ![圖片](/images/quick-start/order/order.png)
     </Step>
     <Step>
-	<Tab value="Stripe">
-		您可使用信用卡付款，手續費較 PayPal 低。
-		<Callout title="注意" type="warn">
-			若使用此付款方式，由於設計問題，直接刷卡會自動退款。因此我們建議先點選
-			8591，跳轉到帳單後將付款方式切回 Stripe 再付款。
         ### 加購服務
         往下滑，您可以看到這個方案可以加購的服務，像是端口、備份、資料庫、伺服器切分等，選配完成後，按繼續。
         ![圖片](/images/quick-start/order/addon.png)
         | 選項       | 介紹                                    |
         | ---------- | -------------------------------------- |
         | 出帳循環   | 選擇季繳、半年繳，可享折扣                |
+        | 端口       | 小地圖或一些插件會需要用到                |
         | 備份       | 強烈建議大家都要購買，資料回檔的時候很方便 |
         | 資料庫     | 某些插件可能會把資料儲存在 MySQL 資料庫   |
         | 伺服器切分 | 將伺服器資源靈活分配，創建多個獨立實例     |

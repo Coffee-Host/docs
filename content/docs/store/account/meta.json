@@ -1,0 +1,11 @@
+{
+  "title": "帳號管理",
+  "icon": "SquareUserRound",
+  "pages": [
+    "add-credit",
+    "view-credit",
+    "pay-credit",
+    "share-account",
+    "reset-password"
+  ]
+}

@@ -18,75 +18,57 @@ import { Callout } from "fumadocs-ui/components/callout";
     首先，先選擇一個適合您的方案，接著點選「立即購買」。
 
     舉例來說，我想要購買 TW-S-4 的方案。
+        前往 [服務一覽](https://store.coffeehost.net/store) 查看現有產品。
+        ![圖片](/images/quick-start/order/services.png)
+        評估好您要購買的方案後，點擊 「立即購買」。
+        ![圖片](/images/quick-start/order/buy.png)
     </Step>
     <Step>
-
-    ### 設定伺服器
-
-    接著會跳轉到這個頁面，您可以選擇出帳類型以及附加選項。
-
-| 選項       | 介紹                                       |
-| ---------- | ------------------------------------------ |
-| 出帳循環   | 選擇季繳、半年繳，可享折扣                 |
-| 伺服器類型 | 選擇您要的伺服器類型                       |
-| 端口       | 小地圖或一些插件會需要用到                 |
-| 資料庫     | 某些插件可能會把資料儲存在 MySQL 資料庫    |
-| 備份       | 強烈建議大家都要購買，資料回檔的時候很方便 |
-
-![](/images/quick-start/order/settings.png)
 
     選擇好之後點「繼續」。
 
+        ![圖片](/images/quick-start/order/order.png)
     </Step>
     <Step>
-
-    ### 結帳
-
-    登入 / 註冊一個帳號，選擇您想要的付款方式，並點選同意服務條款。
-
-<Tabs items={["PayPal", "Stripe", "銀行轉帳", "超商代碼", "超商條碼", "其他"]}>
-	<Tab value="PayPal">
-		您可使用 PayPal 餘額或信用卡付款。如使用信用卡，建議使用 Stripe
-		付款，手續費較低。
-	</Tab>
 	<Tab value="Stripe">
 		您可使用信用卡付款，手續費較 PayPal 低。
 		<Callout title="注意" type="warn">
 			若使用此付款方式，由於設計問題，直接刷卡會自動退款。因此我們建議先點選
 			8591，跳轉到帳單後將付款方式切回 Stripe 再付款。
-		</Callout>
-	</Tab>
-	<Tab value="銀行轉帳">您可使用 ATM / 網銀轉帳。</Tab>
-	<Tab value="超商代碼">您可至超商繳費。</Tab>
-	<Tab value="超商條碼">
-		手續費比超商代碼低 10 元。
-		<Callout title="注意" type="warn">
-			需等待 3~4 天銷帳，如果可以，建議使用超商代碼。
-		</Callout>
-	</Tab>
-	<Tab value="其他">
-		其他付款方式請到我們的 [Discord](https://dc.coffeehost.net)
-	</Tab>
-</Tabs>
-
-![](/images/quick-start/order/checkout.png)
-
-    選擇好之後點「結帳」。
-
+        ### 加購服務
+        往下滑，您可以看到這個方案可以加購的服務，像是端口、備份、資料庫、伺服器切分等，選配完成後，按繼續。
+        ![圖片](/images/quick-start/order/addon.png)
+        | 選項       | 介紹                                    |
+        | ---------- | -------------------------------------- |
+        | 出帳循環   | 選擇季繳、半年繳，可享折扣                |
+        | 備份       | 強烈建議大家都要購買，資料回檔的時候很方便 |
+        | 資料庫     | 某些插件可能會把資料儲存在 MySQL 資料庫   |
+        | 伺服器切分 | 將伺服器資源靈活分配，創建多個獨立實例     |
     </Step>
     <Step>
-
-    ### 付款
-
-    照上面的指示付款就可以了！
-
+        ### 結帳
+        接下來一樣也是看到三個區域。首先是紅色區域，這裡是您本次要結帳的方案總覽。接著是藍色區域，如果您有優惠代碼，您就可以在這邊使用。最後的是黃色區域是本次訂單總覽，包含支付手續費都會顯示在這裡。
+        ![圖片](/images/quick-start/order/checkout.png)
     </Step>
     <Step>
-
-    ### 大功告成
-
-    有些付款方式需要等待幾分鐘，等到開通時，就會發送一封電子郵件提醒您！
-
+        ### 註冊帳號
+        填入個人資料，並填寫密碼與確認密碼，您也可以先綁定社交帳號後再填寫資料，未來就可以透過社交帳號登入。
+        ![圖片](/images/quick-start/order/register.png)
     </Step>
-
+    <Step>
+        ### 支付方式
+        最後請於下方選擇支付方式，如果沒有您想要的支付方式，可以透過聯絡我們來詢問喔！
+        ![圖片](/images/quick-start/order/payment.png)
+        
+    </Step>
+    <Step>
+        ### 確認
+        勾選「我已詳閱並同意 [服務條款](../documents/terms-of-service)」，並按下結帳。
+        ![圖片](/images/quick-start/order/confirm.png)
+    </Step>
+    <Step>
+        ### 完成
+        完成訂單，如果您不是使用帳號餘額支付，系統會轉到帳單付款頁面。
+        ![圖片](/images/quick-start/order/done.png)
+    </Step>
 </Steps>

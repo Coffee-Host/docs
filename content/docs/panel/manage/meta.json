@@ -1,0 +1,11 @@
+{
+  "title": "管理",
+  "icon": "Shield",
+  "pages": [
+    "upload",
+    "edit",
+    "database",
+    "backup",
+    "network"
+  ]
+}

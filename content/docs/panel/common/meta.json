@@ -1,0 +1,9 @@
+{
+  "title": "一般",
+  "icon": "Info",
+  "pages": [
+    "console",
+    "settings",
+    "sftp"
+  ]
+}

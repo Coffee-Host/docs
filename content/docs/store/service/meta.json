@@ -1,9 +1,11 @@
 {
-  "title": "服務",
+  "title": "服務管理",
   "icon": "Server",
   "defaultOpen": false,
   "pages": [
-    "upgrade",
-    "cancel"
+    "upgrade-plan",
+    "upgrade-addon",
+    "renew-early",
+    "cancel-service"
   ]
 }

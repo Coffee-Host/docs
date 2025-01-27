@@ -1,6 +1,7 @@
 {
   "title": "配置",
   "icon": "Settings",
+  "defaultOpen": false,
   "pages": [
     "schedules",
     "user",

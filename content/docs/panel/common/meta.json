@@ -1,6 +1,7 @@
 {
   "title": "一般",
   "icon": "Info",
+  "defaultOpen": false,
   "pages": [
     "console",
     "settings",

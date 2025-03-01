@@ -37,6 +37,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 				>
 					<RootProvider>{children}</RootProvider>
 				</I18nProvider>
+				<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fc0c46db83974e1e8666c368312952c3"}'></script><!-- End Cloudflare Web Analytics -->
 			</body>
 		</html>
 	);

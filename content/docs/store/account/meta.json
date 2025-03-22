@@ -7,6 +7,7 @@
     "view-credit",
     "pay-credit",
     "share-account",
-    "reset-password"
+    "reset-password",
+    "edit-account"
   ]
 }

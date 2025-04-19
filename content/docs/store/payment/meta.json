@@ -1,8 +1,0 @@
-{
-  "title": "支付方式",
-  "icon": "CreditCard",
-  "defaultOpen": false,
-  "pages": [
-    "ipassmoney"
-  ]
-}

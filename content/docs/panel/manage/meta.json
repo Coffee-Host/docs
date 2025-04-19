@@ -5,8 +5,6 @@
   "pages": [
     "upload",
     "edit",
-    "database",
-    "backup",
-    "network"
+    "backup"
   ]
 }

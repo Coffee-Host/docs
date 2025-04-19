@@ -4,5 +4,43 @@ description: 使用 SRV 紀錄連接您的網域。
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
-<Callout title="仍在努力撰寫！" />
+<Callout title="警告" type="warn">
+	本教學僅適用於 Java 版，基岩版無法使用 SRV 紀錄。
+</Callout>
+
+<Callout title="提示">本教學以 Cloudflare DNS 管理作為示範。</Callout>
+
+# Cloudflare SRV 紀錄設定教學
+
+在開始之前，請至 Cloudflare 添加您的網域，並確認網域狀態為「使用中」。
+
+<Steps>
+	<Step>
+  
+	### 前往 Cloudflare DNS 管理介面
+
+    進入 [**Cloudflare DNS 管理介面**](https://dash.cloudflare.com/) 後，選擇您的網域，並進入「DNS」頁面。
+
+    </Step>
+
+    <Step>
+
+    ### 新增 SRV 紀錄
+
+    請參考圖片內容填寫，以 `mc.coffeehub.club` 綁定 `tw-s-a.connect.coffeehost.net:50202` 為例。
+
+    ![圖片](/images/practice/subdomain/config.png)
+
+    </Step>
+
+    <Step>
+
+    ### 等待 DNS 更新
+
+    完成後，請靜候 10 分鐘 ~ 24 小時，使 DNS 完全更新，即可使用您的網域直接連線。
+
+    </Step>
+
+</Steps>

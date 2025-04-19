@@ -6,28 +6,24 @@ description: 使用 Geyser 讓基岩板玩家也能跟 Java 玩家共同遊玩�
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 
-<Callout title="連線方式">基岩版請使用 `bedrock.tw.connect.coffeehost.net <端口>` 連線 ！</Callout>
+<Callout title="連線方式">基岩版請使用 `bedrock.tw.connect.coffeehost.net + <端口>` 連線 ！</Callout>
 
-# 如何架設Geyser
+# 如何架設 Geyser
 
 <Steps>
 	<Step>
   
-	### 下載Geyser插件
+	### 下載 Geyser 插件
 
-    到 [**Geyser 下載介面**](https://geysermc.org/download)
-
-    選擇您要的版本並安裝(以 spigot/paper 示範)
+    到 [**Geyser 下載介面**](https://geysermc.org/download) 下載 Geyser，選擇您要的版本並安裝（以 Spigot/Paper 示範）。
 
     </Step>
 
     <Step>
 
-    ### 將插件放入'/home/container/plugins'
+    ### 將插件放入 `/home/container/plugins`
 
-    放完插件後重啟伺服器
-
-    啟動完之後，會發現多了一個'Geyser-Spigot'資料夾
+    放完插件後重啟伺服器後，會發現多了一個 `Geyser-Spigot` 資料夾。
 
     </Step>
 
@@ -35,16 +31,38 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
     ### 打開 Geyser-Spigot 資料夾裡面的 config.yml
 
-    找到第19行的 'port'
+    將第 23 行的 `clone-remote-port` 從 `false` 調整為 `true`
 
-    ![圖片](/images/practice/geyser/panel.png)
+    ![圖片](/images/practice/geyser/config.png)
 
-    這個就是您伺服器的端口
+    </Step>
 
-    將第19行的 'port' 修改為您伺服器的端口，然後重啟伺服器
+    <Step>
+
+    ### 儲存並套用
+
+    儲存檔案後，重新啟動伺服器即可套用設定。
 
     </Step>
 
 </Steps>
 
-就可以使用 `bedrock.tw.connect.coffeehost.net <端口>` 連線了!
+# 利用 Floodgate 使未購買電腦版的玩家直接加入伺服器
+
+<Steps>
+	<Step>
+  
+	### 下載 Floodgate 插件
+
+    到 [**Floodgate 下載介面**](https://geysermc.org/download) 下載 Geyser，選擇您要的版本並安裝（以 Spigot/Paper 示範）。
+
+    </Step>
+
+    <Step>
+
+    ### 將插件放入 `/home/container/plugins`
+
+    放完插件後重啟伺服器即可。
+    </Step>
+
+</Steps>

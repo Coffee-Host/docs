@@ -8,6 +8,7 @@
     "pay-credit",
     "share-account",
     "reset-password",
-    "edit-account"
+    "edit-account",
+    "kyc"
   ]
 }

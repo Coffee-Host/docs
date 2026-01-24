@@ -6,13 +6,17 @@ description: 使用 ChatGPT 分析錯誤
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 
-<Callout title="善用 AI 工具">ChatGPT 是一個強大的 AI 工具，可以幫助您快速分析伺服器錯誤訊息，找出問題所在。</Callout>
+<Callout title="善用 AI 工具">
+  ChatGPT 是一個強大的 AI 工具，可以幫助您快速分析伺服器錯誤訊息，找出問題所在。
+</Callout>
 
 # 什麼時候該使用 ChatGPT？
 
-當您的伺服器發生錯誤時，控制台會顯示錯誤訊息（Error Log）。這些訊息通常包含了問題的原因，但對於新手來說可能不太容易理解。這時候就可以利用 ChatGPT 來幫助您分析這些錯誤訊息。
+當您的伺服器發生錯誤時，控制台會顯示錯誤訊息（Error
+Log）。這些訊息通常包含了問題的原因，但對於新手來說可能不太容易理解。這時候就可以利用 ChatGPT 來幫助您分析這些錯誤訊息。
 
 常見的錯誤情況包括：
+
 - 伺服器無法啟動
 - 插件發生衝突或錯誤
 - 遊戲崩潰（Crash）
@@ -28,7 +32,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
     ### 複製錯誤訊息
 
     在控制台中找到錯誤訊息，通常會以紅色或黃色顯示，並包含 `ERROR`、`WARN`、`Exception` 等關鍵字。
-    
+
     1. 前往面板的「控制台」頁面
     2. 在終端區域找到錯誤訊息，錯誤通常會有以下特徵：
        - 以 `[ERROR]` 或 `[WARN]` 開頭
@@ -114,16 +118,18 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 </Steps>
 
 <Callout type="warn" title="注意事項">
-- ChatGPT 的回答可能不一定完全正確，請謹慎評估後再執行建議的操作。
-- 如果問題仍然無法解決，請將錯誤訊息與 ChatGPT 的分析結果一併提交給客服，以便我們更快速地協助您。
-- 請勿在對話中透露任何敏感資訊，例如密碼、API 金鑰等。
+  - ChatGPT 的回答可能不一定完全正確，請謹慎評估後再執行建議的操作。 -
+  如果問題仍然無法解決，請將錯誤訊息與 ChatGPT
+  的分析結果一併提交給客服，以便我們更快速地協助您。 -
+  請勿在對話中透露任何敏感資訊，例如密碼、API 金鑰等。
 </Callout>
 
 # 提問技巧
 
 為了讓 ChatGPT 給出更準確的回答，您可以：
 
-1. **提供完整的錯誤訊息**：不要只複製一小段，盡量包含完整的錯誤堆疊（Stack Trace）。
+1. **提供完整的錯誤訊息**：不要只複製一小段，盡量包含完整的錯誤堆疊（Stack
+   Trace）。
 2. **說明您的環境**：告訴 ChatGPT 您使用的伺服器類型（Paper、Spigot、Forge 等）和版本。
 3. **描述發生情況**：說明錯誤是在什麼情況下發生的，例如「安裝新插件後」或「更新伺服器後」。
 4. **追問細節**：如果 ChatGPT 的回答不夠清楚，可以繼續追問更多細節。
@@ -133,6 +139,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 以下是一些常見的錯誤類型和對應的提問方式：
 
 ### 插件錯誤
+
 ```
 我的 Paper 1.20.4 伺服器在啟動時出現插件錯誤，請幫我分析：
 
@@ -141,6 +148,7 @@ org.bukkit.plugin.InvalidPluginException: java.lang.NoClassDefFoundError...
 ```
 
 ### 記憶體不足
+
 ```
 我的 Minecraft 伺服器出現 OutOfMemoryError，伺服器配置為 4GB 記憶體，
 約有 30 個插件，請問該如何解決？
@@ -149,6 +157,7 @@ java.lang.OutOfMemoryError: Java heap space
 ```
 
 ### 版本不相容
+
 ```
 我將伺服器從 1.19 升級到 1.20 後出現以下錯誤，請問是什麼原因？
 
@@ -162,7 +171,8 @@ java.lang.OutOfMemoryError: Java heap space
 1. 將完整的錯誤訊息複製保存
 2. 截圖 ChatGPT 的分析結果
 3. 記錄您已經嘗試過的解決方法
-4. 前往 [Discord 群組](https://discord.gg/coffeehost) 或開啟客服工單，並提供以上資訊
+4. 前往 [Discord 群組](https://discord.gg/coffeehost)
+   或開啟客服工單，並提供以上資訊
 
 ![聯繫客服](/images/troubleshooting/chatgpt/contact-support.png)
 

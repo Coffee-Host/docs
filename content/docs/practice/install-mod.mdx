@@ -1,0 +1,152 @@
+---
+title: 安裝模組
+description: 學習如何在 Minecraft 伺服器上安裝模組
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="適用範圍">本教學適用於 Forge、NeoForge、Fabric 等模組伺服器。</Callout>
+
+# 插件 vs 模組
+
+| 項目 | 插件（Plugin） | 模組（Mod） |
+|------|----------------|-------------|
+| 伺服器類型 | Paper、Spigot、Purpur | Forge、NeoForge、Fabric |
+| 客戶端需求 | 不需要安裝 | 需要安裝相同模組 |
+| 功能範圍 | 伺服器端功能 | 可修改遊戲核心內容 |
+| 檔案位置 | `plugins` 資料夾 | `mods` 資料夾 |
+
+# 在哪裡下載模組？
+
+以下是常見且安全的模組下載平台：
+
+| 平台 | 網址 | 說明 |
+|------|------|------|
+| CurseForge | https://www.curseforge.com/minecraft/mc-mods | 最大的模組平台 |
+| Modrinth | https://modrinth.com/mods | 新興平台，下載速度快 |
+
+<Callout type="warn" title="安全提醒">
+- 請勿從不明來源下載模組，以避免電腦或伺服器被植入惡意程式
+- 下載時請確認模組載入器（Forge/Fabric）和遊戲版本是否正確
+</Callout>
+
+# 安裝模組教學
+
+<Steps>
+    <Step>
+
+    ### 確認伺服器類型
+
+    在安裝模組前，請先確認您的伺服器使用的模組載入器：
+
+    - **Forge / NeoForge**：檔案名稱通常包含 `forge`
+    - **Fabric**：檔案名稱通常包含 `fabric`
+
+    <Callout type="warn">Forge 和 Fabric 的模組不能互通使用！</Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 下載模組檔案
+
+    1. 前往 CurseForge 或 Modrinth
+    2. 搜尋您想要的模組名稱
+    3. 選擇正確的版本（注意模組載入器和遊戲版本）
+    4. 點擊下載 `.jar` 檔案
+
+    ![下載模組](/images/practice/install-mod/download.png)
+
+    <Callout type="info">
+    以下載 JEI（Just Enough Items）為例：
+    - 若伺服器是 Forge 1.20.1，請選擇 Forge 版本的 1.20.1 模組
+    - 若伺服器是 Fabric 1.20.1，請選擇 Fabric 版本的 1.20.1 模組
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 檢查依賴模組
+
+    部分模組需要其他模組才能運作，常見的依賴模組包括：
+
+    **Fabric 伺服器常見依賴：**
+    - Fabric API（幾乎所有 Fabric 模組都需要）
+
+    **Forge 伺服器常見依賴：**
+    - 各模組有不同依賴，請查看模組頁面說明
+
+    ![依賴模組](/images/practice/install-mod/dependencies.png)
+
+    </Step>
+
+    <Step>
+
+    ### 上傳模組到伺服器
+
+    1. 前往面板的「檔案管理」頁面
+    2. 進入 `mods` 資料夾
+    3. 點擊「上傳」按鈕
+    4. 選擇下載的 `.jar` 檔案並上傳
+
+    ![上傳模組](/images/practice/install-mod/upload.png)
+
+    </Step>
+
+    <Step>
+
+    ### 重新啟動伺服器
+
+    上傳完成後，重新啟動伺服器以載入模組。
+
+    </Step>
+
+    <Step>
+
+    ### 客戶端安裝相同模組
+
+    與插件不同，模組需要在客戶端（您的電腦）也安裝相同的模組才能連線。
+
+    1. 確保您的 Minecraft 啟動器已安裝對應的模組載入器
+    2. 將相同的模組檔案放入您電腦的 `.minecraft/mods` 資料夾
+    3. 啟動遊戲並連線至伺服器
+
+    <Callout type="info">建議使用 CurseForge App 或 Modrinth App 管理客戶端模組。</Callout>
+
+    </Step>
+
+</Steps>
+
+# 模組載入失敗怎麼辦？
+
+常見的模組錯誤及解決方式：
+
+| 錯誤訊息 | 可能原因 | 解決方式 |
+|----------|----------|----------|
+| Missing dependencies | 缺少依賴模組 | 下載並安裝缺少的依賴模組 |
+| Incompatible mod | 版本不相容 | 確認模組版本與伺服器版本一致 |
+| Duplicate mod | 模組重複安裝 | 刪除重複的模組檔案 |
+| Mixin error | 模組衝突 | 嘗試移除最近安裝的模組 |
+
+<Callout type="info">如果無法自行解決，可以使用 [ChatGPT 分析錯誤](/docs/troubleshooting/chatgpt) 來找出問題原因。</Callout>
+
+# 常用模組推薦
+
+### 伺服器優化模組
+
+| 模組名稱 | 適用載入器 | 功能說明 |
+|----------|------------|----------|
+| Lithium | Fabric | 伺服器效能優化 |
+| Starlight | Forge/Fabric | 光照引擎優化 |
+| FerriteCore | Forge/Fabric | 記憶體優化 |
+
+### 實用功能模組
+
+| 模組名稱 | 適用載入器 | 功能說明 |
+|----------|------------|----------|
+| JEI | Forge | 合成表查詢 |
+| REI | Fabric | 合成表查詢 |
+| JourneyMap | Forge/Fabric | 小地圖 |
+| Waystones | Forge/Fabric | 傳送石 |

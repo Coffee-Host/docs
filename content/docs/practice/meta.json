@@ -1,5 +1,14 @@
 {
   "title": "實戰練習",
   "icon": "LibraryBig",
-  "defaultOpen": false
+  "defaultOpen": false,
+  "pages": [
+    "install-plugin",
+    "install-mod",
+    "plugin-config",
+    "luckperms",
+    "server-properties",
+    "geyser",
+    "subdomain"
+  ]
 }

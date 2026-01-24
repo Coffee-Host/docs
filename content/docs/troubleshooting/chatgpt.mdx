@@ -4,5 +4,166 @@ description: 使用 ChatGPT 分析錯誤
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 
-<Callout title="仍在努力撰寫！" />
+<Callout title="善用 AI 工具">ChatGPT 是一個強大的 AI 工具，可以幫助您快速分析伺服器錯誤訊息，找出問題所在。</Callout>
+
+# 什麼時候該使用 ChatGPT？
+
+當您的伺服器發生錯誤時，控制台會顯示錯誤訊息（Error Log）。這些訊息通常包含了問題的原因，但對於新手來說可能不太容易理解。這時候就可以利用 ChatGPT 來幫助您分析這些錯誤訊息。
+
+常見的錯誤情況包括：
+- 伺服器無法啟動
+- 插件發生衝突或錯誤
+- 遊戲崩潰（Crash）
+- 記憶體不足（Out of Memory）
+
+![錯誤訊息範例](/images/troubleshooting/chatgpt/error-example.png)
+
+# 如何使用 ChatGPT 分析錯誤
+
+<Steps>
+    <Step>
+
+    ### 複製錯誤訊息
+
+    在控制台中找到錯誤訊息，通常會以紅色或黃色顯示，並包含 `ERROR`、`WARN`、`Exception` 等關鍵字。
+    
+    1. 前往面板的「控制台」頁面
+    2. 在終端區域找到錯誤訊息，錯誤通常會有以下特徵：
+       - 以 `[ERROR]` 或 `[WARN]` 開頭
+       - 包含 `Exception`、`Error`、`Caused by` 等字樣
+       - 顯示一長串以 `at` 開頭的堆疊追蹤（Stack Trace）
+    3. 使用滑鼠選取錯誤訊息，建議從錯誤開始往上多選幾行，以包含更多上下文
+    4. 使用滑鼠右键并点击 `複製/Copy` 複製選取的內容
+
+    ![複製錯誤訊息](/images/troubleshooting/chatgpt/copy-error.png)
+
+    <Callout type="info">如果錯誤訊息很長，建議全部複製。不完整的錯誤訊息可能會導致分析不準確。</Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 打開 ChatGPT
+
+    1. 前往 [ChatGPT](https://chat.openai.com/) 網站
+    2. 如果還沒有帳號，點擊「Sign up」註冊一個免費帳號
+    3. 如果已有帳號，點擊「Log in」登入
+
+    ![ChatGPT 首頁](/images/troubleshooting/chatgpt/chatgpt-home.png)
+
+    <Callout type="info">您也可以使用其他 AI 工具，例如 [Claude](https://claude.ai/)、[Google Gemini](https://gemini.google.com/) 或 [Bing Copilot](https://copilot.microsoft.com/)，操作方式類似。</Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 詢問 ChatGPT
+
+    1. 在對話框中輸入您的問題，建議使用以下格式：
+
+    ```
+    我的 Minecraft 伺服器出現以下錯誤，請幫我分析原因並提供解決方案：
+
+    伺服器類型：Paper 1.20.4
+    問題描述：伺服器啟動時崩潰
+
+    錯誤訊息：
+    [貼上錯誤訊息]
+    ```
+
+    2. 將剛才複製的錯誤訊息貼上（`Ctrl + V`）
+    3. 按下 Enter 或點擊發送按鈕
+
+    ![詢問 ChatGPT](/images/troubleshooting/chatgpt/ask-chatgpt.png)
+
+    </Step>
+
+    <Step>
+
+    ### 閱讀分析結果
+
+    ChatGPT 會為您分析錯誤原因，並提供可能的解決方案。回覆通常會包含：
+
+    - **錯誤原因**：說明為什麼會發生這個錯誤
+    - **問題插件/模組**：如果是插件問題，會指出是哪個插件造成的
+    - **解決方案**：一步一步的修復建議
+
+    ![ChatGPT 分析結果](/images/troubleshooting/chatgpt/chatgpt-response.png)
+
+    請仔細閱讀並嘗試建議的解決方法。如果解決方案不夠清楚，可以繼續追問。
+
+    </Step>
+
+    <Step>
+
+    ### 執行解決方案
+
+    根據 ChatGPT 的建議進行操作，常見的解決方式包括：
+
+    - **更新插件**：前往插件的官方頁面下載最新版本
+    - **移除衝突插件**：將有問題的插件從 `plugins` 資料夾移除
+    - **修改設定檔**：根據建議修改相關的 `.yml` 或 `.properties` 檔案
+    - **增加記憶體**：如果是記憶體不足，考慮升級方案
+
+    完成修改後，重新啟動伺服器測試是否解決問題。
+
+    </Step>
+
+</Steps>
+
+<Callout type="warn" title="注意事項">
+- ChatGPT 的回答可能不一定完全正確，請謹慎評估後再執行建議的操作。
+- 如果問題仍然無法解決，請將錯誤訊息與 ChatGPT 的分析結果一併提交給客服，以便我們更快速地協助您。
+- 請勿在對話中透露任何敏感資訊，例如密碼、API 金鑰等。
+</Callout>
+
+# 提問技巧
+
+為了讓 ChatGPT 給出更準確的回答，您可以：
+
+1. **提供完整的錯誤訊息**：不要只複製一小段，盡量包含完整的錯誤堆疊（Stack Trace）。
+2. **說明您的環境**：告訴 ChatGPT 您使用的伺服器類型（Paper、Spigot、Forge 等）和版本。
+3. **描述發生情況**：說明錯誤是在什麼情況下發生的，例如「安裝新插件後」或「更新伺服器後」。
+4. **追問細節**：如果 ChatGPT 的回答不夠清楚，可以繼續追問更多細節。
+
+# 常見問題範例
+
+以下是一些常見的錯誤類型和對應的提問方式：
+
+### 插件錯誤
+```
+我的 Paper 1.20.4 伺服器在啟動時出現插件錯誤，請幫我分析：
+
+[17:32:45 ERROR]: Error occurred while enabling ExamplePlugin v1.0
+org.bukkit.plugin.InvalidPluginException: java.lang.NoClassDefFoundError...
+```
+
+### 記憶體不足
+```
+我的 Minecraft 伺服器出現 OutOfMemoryError，伺服器配置為 4GB 記憶體，
+約有 30 個插件，請問該如何解決？
+
+java.lang.OutOfMemoryError: Java heap space
+```
+
+### 版本不相容
+```
+我將伺服器從 1.19 升級到 1.20 後出現以下錯誤，請問是什麼原因？
+
+[錯誤訊息]
+```
+
+# 問題仍然無法解決？
+
+如果嘗試了 ChatGPT 的建議後問題仍然存在，請透過以下方式聯繫我們：
+
+1. 將完整的錯誤訊息複製保存
+2. 截圖 ChatGPT 的分析結果
+3. 記錄您已經嘗試過的解決方法
+4. 前往 [Discord 群組](https://discord.gg/coffeehost) 或開啟客服工單，並提供以上資訊
+
+![聯繫客服](/images/troubleshooting/chatgpt/contact-support.png)
+
+<Callout type="info">提供越完整的資訊，我們就能越快幫您解決問題！</Callout>

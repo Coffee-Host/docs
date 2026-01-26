@@ -1,0 +1,288 @@
+---
+title: 自動化維護
+description: 設定自動重啟、備份、清理等維護任務，讓伺服器穩定運行
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="為什麼需要自動化？">
+伺服器需要定期維護才能保持穩定運行。自動化維護可以減少人工操作，即使您不在線上，伺服器也能自動執行重要任務！
+</Callout>
+
+# 自動重啟
+
+長時間運行的伺服器可能會累積記憶體碎片或出現問題，定期重啟可以保持伺服器健康。
+
+## 使用面板排程
+
+在 CoffeeHost 面板中設定排程任務：
+
+<Steps>
+    <Step>
+
+    ### 進入排程頁面
+
+    在控制面板側邊欄點擊「**排程**」。
+
+    ![排程頁面](/images/practice/automation/schedule-page.png)
+
+    </Step>
+
+    <Step>
+
+    ### 建立新排程
+
+    點擊「**建立排程**」，設定：
+    - **名稱**：每日重啟
+    - **時間**：例如每天凌晨 4:00
+
+    </Step>
+
+    <Step>
+
+    ### 新增任務
+
+    在排程中新增以下任務：
+
+    1. **發送指令**：`say 伺服器將在 5 分鐘後重啟！`
+    2. **延遲**：5 分鐘
+    3. **發送指令**：`save-all`
+    4. **電源操作**：重新啟動
+
+    ![排程任務](/images/practice/automation/schedule-tasks.png)
+
+    </Step>
+
+</Steps>
+
+## 使用 CMI 自動重啟
+
+CMI 內建自動重啟功能：
+
+```yaml
+# plugins/CMI/config.yml
+AutoRestart:
+  Enabled: true
+  
+  # 重啟時間（24 小時制）
+  Times:
+    - "04:00"
+    - "16:00"
+  
+  # 倒數計時警告（秒）
+  Warn:
+    - 3600    # 1 小時前
+    - 1800    # 30 分鐘前
+    - 600     # 10 分鐘前
+    - 300     # 5 分鐘前
+    - 60      # 1 分鐘前
+    - 30
+    - 10
+    - 5
+    - 4
+    - 3
+    - 2
+    - 1
+```
+
+# 自動備份
+
+定期備份可以在出問題時快速恢復。
+
+## 使用面板備份
+
+<Steps>
+    <Step>
+
+    ### 建立備份排程
+
+    在排程中新增備份任務：
+    - **時間**：每天凌晨 3:00
+    - **任務類型**：建立備份
+
+    </Step>
+
+    <Step>
+
+    ### 設定備份保留數量
+
+    設定最多保留幾個備份，避免空間不足。
+
+    </Step>
+
+</Steps>
+
+## 使用 CMI 備份
+
+```yaml
+# plugins/CMI/config.yml
+Backup:
+  Enabled: true
+  
+  # 備份間隔（分鐘）
+  Interval: 1440    # 24 小時
+  
+  # 備份前儲存世界
+  SaveBeforeBackup: true
+  
+  # 備份位置
+  BackupFolder: "backups/"
+  
+  # 最大備份數量
+  MaxBackups: 7
+  
+  # 要備份的世界
+  Worlds:
+    - world
+    - world_nether
+    - world_the_end
+```
+
+## 重要檔案備份清單
+
+| 檔案/資料夾 | 重要性 | 說明 |
+|-------------|--------|------|
+| `world/` | ⭐⭐⭐⭐⭐ | 主世界地圖 |
+| `world_nether/` | ⭐⭐⭐⭐ | 地獄地圖 |
+| `world_the_end/` | ⭐⭐⭐⭐ | 終界地圖 |
+| `plugins/` | ⭐⭐⭐⭐⭐ | 插件設定和資料 |
+| `server.properties` | ⭐⭐⭐ | 伺服器設定 |
+| `bukkit.yml` | ⭐⭐⭐ | Bukkit 設定 |
+| `spigot.yml` | ⭐⭐⭐ | Spigot 設定 |
+| `config/` | ⭐⭐⭐⭐ | Paper 設定 |
+
+# 自動清理
+
+定期清理可以維持伺服器效能和節省空間。
+
+## 清理掉落物
+
+使用 ClearLagg 或 CMI：
+
+```yaml
+# CMI 設定
+Schedule:
+  ClearEntities:
+    Enabled: true
+    Interval: 300    # 每 5 分鐘
+    
+    # 警告訊息
+    Warn:
+      - 60
+      - 30
+      - 10
+    
+    # 要清理的實體
+    Entities:
+      - DROPPED_ITEM
+      - ARROW
+      - EXPERIENCE_ORB
+```
+
+## 清理舊日誌
+
+日誌檔案會不斷累積，定期清理可以節省空間：
+
+<Steps>
+    <Step>
+
+    ### 建立清理腳本
+
+    建立 `cleanup.sh`（Linux）或 `cleanup.bat`（Windows）：
+
+    **Linux:**
+    ```bash
+    #!/bin/bash
+    # 刪除 7 天前的日誌
+    find /path/to/server/logs -name "*.log.gz" -mtime +7 -delete
+    ```
+
+    **Windows:**
+    ```batch
+    @echo off
+    forfiles /p "C:\server\logs" /s /m *.log.gz /d -7 /c "cmd /c del @path"
+    ```
+
+    </Step>
+
+    <Step>
+
+    ### 設定定期執行
+
+    使用面板排程或系統排程（cron/Task Scheduler）定期執行。
+
+    </Step>
+
+</Steps>
+
+## 清理 CoreProtect 資料
+
+CoreProtect 會記錄大量方塊變更，定期清理舊資料：
+
+```
+# 刪除 30 天前的記錄
+/co purge t:30d
+```
+
+可以設定排程自動執行。
+
+# 自動公告
+
+定期發送公告可以提醒玩家重要資訊。
+
+## 使用 CMI 自動訊息
+
+```yaml
+# plugins/CMI/config.yml
+AutoMessages:
+  Enabled: true
+  
+  # 訊息間隔（秒）
+  Interval: 300
+  
+  # 隨機順序
+  Random: true
+  
+  # 訊息列表
+  Messages:
+    - "&a加入我們的 Discord：discord.gg/xxxxx"
+    - "&e記得用 /vote 每日投票獲得獎勵！"
+    - "&b遇到問題？輸入 /help 查看幫助"
+    - "&d商店開放中！輸入 /shop 查看"
+```
+
+# 監控與告警
+
+## 使用 Plan 監控
+
+[Plan](https://www.spigotmc.org/resources/plan-player-analytics.32536/) 提供詳細的伺服器統計和監控。
+
+功能包括：
+- 玩家在線統計
+- TPS 監控
+- 玩家活動追蹤
+- 網頁儀表板
+
+## Discord 通知
+
+使用 [DiscordSRV](https://www.spigotmc.org/resources/discordsrv.18494/) 將伺服器事件發送到 Discord：
+
+- 玩家加入/離開通知
+- 伺服器啟動/關閉通知
+- 聊天訊息同步
+
+# 維護任務檢查清單
+
+| 任務 | 頻率 | 說明 |
+|------|------|------|
+| ☐ 自動重啟 | 每日 | 保持伺服器穩定 |
+| ☐ 自動備份 | 每日 | 防止資料遺失 |
+| ☐ 清理掉落物 | 每 5-10 分鐘 | 維持效能 |
+| ☐ 清理舊日誌 | 每週 | 節省空間 |
+| ☐ 清理 CoreProtect | 每月 | 節省空間 |
+| ☐ 檢查更新 | 每週 | 安全性和新功能 |
+
+<Callout type="info" title="測試排程">
+設定好排程後，建議先手動測試一次確保正常運作。特別是重啟排程，要確認伺服器能正確啟動。
+</Callout>

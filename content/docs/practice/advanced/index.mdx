@@ -1,0 +1,54 @@
+---
+title: 進階教學
+description: 進階伺服器管理技巧，包含效能優化、資料庫設定、跨服架構等
+---
+
+import { Cards, Card } from "fumadocs-ui/components/card";
+import { Callout } from "fumadocs-ui/components/callout";
+
+<Callout title="適合誰閱讀？">
+本章節適合**已經熟悉基本操作**的伺服器管理員。如果您還不熟悉插件安裝和基本設定，建議先完成[安裝教學](/docs/practice/install)和[設定教學](/docs/practice/config)。
+</Callout>
+
+# 進階教學內容
+
+<Cards>
+  <Card
+    title="🚀 效能優化"
+    description="提升伺服器 TPS，減少延遲，讓玩家有更流暢的遊戲體驗"
+    href="/docs/practice/advanced/performance"
+  />
+  <Card
+    title="💾 資料庫設定"
+    description="將插件資料儲存到 MySQL，實現跨服資料同步"
+    href="/docs/practice/advanced/database"
+  />
+  <Card
+    title="🌐 群組伺服器"
+    description="使用 Velocity/BungeeCord 建立多伺服器網路"
+    href="/docs/practice/advanced/proxy"
+  />
+  <Card
+    title="🔄 自動化維護"
+    description="設定自動重啟、備份、清理等維護任務"
+    href="/docs/practice/advanced/automation"
+  />
+</Cards>
+
+# 進階學習路徑
+
+```
+基礎完成 ─────────────────────────────────────►
+     │
+     ├─► 效能優化 ──► 調整 Paper 設定、限制實體數量
+     │
+     ├─► 資料庫設定 ──► MySQL 安裝、插件資料庫配置
+     │
+     ├─► 群組伺服器 ──► Velocity 安裝、跨服傳送
+     │
+     └─► 自動化維護 ──► 排程重啟、自動備份
+```
+
+<Callout type="info" title="需要協助？">
+進階設定可能比較複雜，如果遇到問題歡迎加入我們的 Discord 社群尋求協助！
+</Callout>

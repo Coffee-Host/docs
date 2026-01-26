@@ -1,0 +1,5 @@
+{
+  "title": "進階教學",
+  "icon": "Rocket",
+  "pages": ["performance", "database", "proxy", "automation"]
+}

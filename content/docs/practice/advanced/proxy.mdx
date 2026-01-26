@@ -1,0 +1,265 @@
+---
+title: 群組伺服器架構
+description: 使用 Velocity 或 BungeeCord 建立多伺服器網路
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="什麼是群組伺服器？">
+群組伺服器（又稱 Proxy 伺服器）可以將多個 Minecraft 伺服器連接在一起，玩家可以在不同伺服器間無縫切換。大型伺服器如 Hypixel 就是使用這種架構！
+</Callout>
+
+# 群組伺服器架構
+
+```
+                    玩家連線
+                       │
+                       ▼
+              ┌─────────────────┐
+              │   Proxy 伺服器   │
+              │ (Velocity/Bungee)│
+              │    Port: 25565   │
+              └────────┬────────┘
+                       │
+       ┌───────────────┼───────────────┐
+       │               │               │
+       ▼               ▼               ▼
+┌────────────┐  ┌────────────┐  ┌────────────┐
+│   大廳      │  │  生存服     │  │  小遊戲服  │
+│   Lobby    │  │  Survival  │  │   Games   │
+│ Port:25566 │  │ Port:25567 │  │ Port:25568│
+└────────────┘  └────────────┘  └────────────┘
+```
+
+## Velocity vs BungeeCord
+
+| 特性 | Velocity | BungeeCord |
+|------|----------|------------|
+| 效能 | ⭐⭐⭐⭐⭐ 優秀 | ⭐⭐⭐ 一般 |
+| 安全性 | ⭐⭐⭐⭐⭐ 現代驗證 | ⭐⭐⭐ 傳統 |
+| 插件相容 | ⭐⭐⭐ 較少（成長中） | ⭐⭐⭐⭐⭐ 很多 |
+| 維護狀態 | ✅ 積極開發 | ⚠️ 較少更新 |
+| 推薦度 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
+
+<Callout type="info">
+**推薦使用 Velocity**，它是由 Paper 團隊開發的新一代 Proxy，效能和安全性都優於 BungeeCord。
+</Callout>
+
+# Velocity 安裝教學
+
+<Steps>
+    <Step>
+
+    ### 下載 Velocity
+
+    前往 [PaperMC 下載頁面](https://papermc.io/downloads/velocity) 下載最新版 Velocity。
+
+    </Step>
+
+    <Step>
+
+    ### 建立 Proxy 伺服器
+
+    在主機面板建立一個新的伺服器，選擇 **Velocity** 類型。
+
+    或手動建立：
+    1. 建立新資料夾
+    2. 放入 `velocity-xxx.jar`
+    3. 建立啟動腳本
+
+    </Step>
+
+    <Step>
+
+    ### 首次啟動
+
+    啟動 Velocity 後會生成設定檔 `velocity.toml`。
+
+    </Step>
+
+    <Step>
+
+    ### 設定 velocity.toml
+
+    ```toml
+    # 綁定位址和連接埠（玩家連線用）
+    bind = "0.0.0.0:25565"
+
+    # 顯示的 MOTD
+    motd = "&a我的群組伺服器"
+
+    # 最大玩家數
+    show-max-players = 100
+
+    # 是否啟用正版驗證
+    online-mode = true
+
+    # 玩家轉發模式（重要！）
+    player-info-forwarding-mode = "modern"
+
+    [servers]
+    # 定義各個子伺服器
+    lobby = "127.0.0.1:25566"
+    survival = "127.0.0.1:25567"
+    games = "127.0.0.1:25568"
+
+    # 預設伺服器（玩家連線後進入）
+    try = ["lobby"]
+
+    [forced-hosts]
+    # 強制導向（可選）
+    # 玩家連線 survival.example.com 會直接進入生存服
+    "survival.example.com" = ["survival"]
+    ```
+
+    </Step>
+
+    <Step>
+
+    ### 複製 forwarding secret
+
+    Velocity 會生成 `forwarding.secret` 檔案，這是驗證用的金鑰。
+
+    **記下這個金鑰**，稍後需要在子伺服器中設定。
+
+    </Step>
+
+</Steps>
+
+# 子伺服器設定
+
+每個連接到 Velocity 的子伺服器都需要做以下設定：
+
+<Steps>
+    <Step>
+
+    ### 關閉正版驗證
+
+    編輯子伺服器的 `server.properties`：
+
+    ```properties
+    # 關閉正版驗證（由 Velocity 處理）
+    online-mode=false
+    ```
+
+    <Callout type="warn">
+    這不代表伺服器變成盜版！玩家驗證由 Velocity 處理。
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 設定 Paper 轉發
+
+    編輯子伺服器的 `config/paper-global.yml`：
+
+    ```yaml
+    proxies:
+      velocity:
+        enabled: true
+        online-mode: true
+        secret: "複製 forwarding.secret 的內容貼在這裡"
+    ```
+
+    </Step>
+
+    <Step>
+
+    ### 重新啟動
+
+    重新啟動所有子伺服器和 Velocity。
+
+    </Step>
+
+</Steps>
+
+# 跨服傳送
+
+## 使用指令傳送
+
+在 Velocity 中，玩家可以使用指令切換伺服器：
+
+```
+/server lobby
+/server survival
+/server games
+```
+
+## 使用插件傳送
+
+可以使用 GUI 選單讓玩家選擇伺服器：
+
+| 插件 | 平台 | 說明 |
+|------|------|------|
+| [HubBasics](https://github.com/4drian3d/HubBasics) | Velocity | 大廳功能 |
+| [ServerUtils](https://modrinth.com/plugin/serverutils) | Velocity | 伺服器管理工具 |
+| [VelocityServerSelector](https://github.com/hyperdefined/VelocityServerSelector) | Velocity | 伺服器選擇 GUI |
+
+## 使用 BungeeCord API
+
+後端伺服器可以透過 BungeeCord API 傳送玩家：
+
+```java
+// Java 插件程式碼
+ByteArrayDataOutput out = ByteStreams.newDataOutput();
+out.writeUTF("Connect");
+out.writeUTF("survival");
+player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+```
+
+許多插件（如 CMI、EssentialsX）支援跨服傳送指令。
+
+# 常用 Velocity 插件
+
+| 插件 | 功能 |
+|------|------|
+| [LuckPerms-Velocity](https://luckperms.net/) | 跨服權限管理 |
+| [SignedVelocity](https://modrinth.com/plugin/signedvelocity) | 修復聊天簽章 |
+| [ViaVersion](https://viaversion.com/) | 版本相容 |
+| [LimboAPI](https://modrinth.com/plugin/limboapi) | 虛空大廳 |
+
+# 安全性建議
+
+## 1. 限制子伺服器連線
+
+只允許 Velocity 連接子伺服器，防止玩家直接連線繞過驗證：
+
+**方法 A：使用防火牆**
+```bash
+# 只允許本機（Velocity）連線子伺服器
+iptables -A INPUT -p tcp --dport 25566:25568 -s 127.0.0.1 -j ACCEPT
+iptables -A INPUT -p tcp --dport 25566:25568 -j DROP
+```
+
+**方法 B：綁定本機位址**
+
+在子伺服器的 `server.properties` 設定：
+```properties
+server-ip=127.0.0.1
+```
+
+## 2. 使用 Modern Forwarding
+
+確保 Velocity 使用 `player-info-forwarding-mode = "modern"`，這是最安全的模式。
+
+## 3. 保護 forwarding.secret
+
+這個金鑰絕對不能洩漏！如果洩漏，惡意人士可能偽造玩家身份。
+
+# 常見問題
+
+## 玩家 UUID 不一致？
+
+確保所有伺服器的 forwarding 設定正確，UUID 應該由 Velocity 統一處理。
+
+## 插件資料不同步？
+
+使用 MySQL 資料庫儲存插件資料，讓所有伺服器共用同一個資料庫。
+
+## 跨服聊天？
+
+使用跨服聊天插件：
+- [AdvancedServerList](https://modrinth.com/plugin/advancedserverlist)
+- [VentureChat](https://www.spigotmc.org/resources/venturechat.771/)

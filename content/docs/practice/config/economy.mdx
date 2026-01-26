@@ -1,0 +1,308 @@
+---
+title: 經濟系統設定
+description: 設定伺服器經濟系統，包含 Vault、CMI 經濟、商店插件整合
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="什麼是經濟系統？">
+經濟系統讓玩家可以**賺取和使用遊戲幣**，用於購買物品、交易、領地費用等。一個完善的經濟系統可以讓伺服器更有趣、更有活力！
+</Callout>
+
+# 經濟系統架構
+
+大多數 Minecraft 伺服器的經濟系統由三個部分組成：
+
+```
+┌─────────────────────────────────────────────┐
+│                   Vault                      │
+│          （經濟 API 橋接插件）                │
+└─────────────────┬───────────────────────────┘
+                  │
+    ┌─────────────┼─────────────┐
+    ▼             ▼             ▼
+┌────────┐  ┌──────────┐  ┌──────────┐
+│ CMI    │  │EssentialsX│ │ 其他經濟 │
+│ 經濟   │  │  經濟    │  │   插件   │
+└────────┘  └──────────┘  └──────────┘
+    │             │             │
+    └─────────────┼─────────────┘
+                  ▼
+        ┌──────────────────┐
+        │   商店/交易插件   │
+        │ (ChestShop 等)   │
+        └──────────────────┘
+```
+
+| 組件 | 功能 | 推薦選擇 |
+|------|------|----------|
+| **Vault** | 橋接不同經濟插件 | 必裝 |
+| **經濟提供者** | 儲存玩家金錢 | CMI / EssentialsX |
+| **商店插件** | 讓玩家交易 | ChestShop / ShopGUIPlus |
+
+# 安裝 Vault
+
+<Steps>
+    <Step>
+
+    ### 下載 Vault
+
+    前往 [SpigotMC](https://www.spigotmc.org/resources/vault.34315/) 下載 Vault。
+
+    </Step>
+
+    <Step>
+
+    ### 安裝插件
+
+    將 `Vault.jar` 放入 `plugins` 資料夾，重新啟動伺服器。
+
+    </Step>
+
+    <Step>
+
+    ### 確認安裝
+
+    Vault 本身不提供經濟功能，它只是一個橋接器。安裝後控制台會顯示：
+
+    ```
+    [Vault] Enabling Vault v1.7.x
+    [Vault] [Economy] CMI found: Loaded
+    ```
+
+    </Step>
+
+</Steps>
+
+# 設定 CMI 經濟
+
+如果您使用 CMI 作為主要插件，CMI 內建經濟功能。
+
+## 啟用經濟功能
+
+編輯 `plugins/CMI/config.yml`：
+
+```yaml
+Economy:
+  # 啟用 CMI 經濟（會自動註冊到 Vault）
+  Enabled: true
+  
+  # 新玩家起始金額
+  StartingBalance: 1000.0
+  
+  # 金錢顯示格式
+  MoneyFormat: '#,##0.00'
+  
+  # 貨幣符號
+  CurrencySymbol: '$'
+  
+  # 符號位置（true = 前面 $100，false = 後面 100$）
+  SuffixSymbol: false
+  
+  # 最大金額上限
+  MaxBalance: 10000000000000
+  
+  # 允許負數餘額
+  AllowNegativeBalance: false
+```
+
+## 經濟指令
+
+| 指令 | 功能 | 權限 |
+|------|------|------|
+| `/balance` 或 `/bal` | 查看餘額 | `cmi.command.balance` |
+| `/pay <玩家> <金額>` | 轉帳給其他玩家 | `cmi.command.pay` |
+| `/baltop` | 查看財富排行榜 | `cmi.command.baltop` |
+| `/cmi money give <玩家> <金額>` | 給予玩家金錢 | `cmi.command.money` |
+| `/cmi money take <玩家> <金額>` | 扣除玩家金錢 | `cmi.command.money` |
+| `/cmi money set <玩家> <金額>` | 設定玩家金錢 | `cmi.command.money` |
+
+# 設定 EssentialsX 經濟
+
+如果您使用 EssentialsX，經濟功能預設已啟用。
+
+## 經濟設定
+
+編輯 `plugins/Essentials/config.yml`：
+
+```yaml
+# 貨幣符號
+currency-symbol: '$'
+
+# 符號位置（true = 後面）
+currency-symbol-suffix: false
+
+# 新玩家起始金額
+starting-balance: 1000
+
+# 最大金額
+max-money: 10000000000000
+
+# 最小金額（負數表示可以欠債）
+min-money: 0
+
+# 是否在餘額不足時顯示確切金額
+economy-log-enabled: false
+```
+
+# 商店系統
+
+## ChestShop（箱子商店）
+
+ChestShop 讓玩家用箱子建立自己的商店。
+
+### 安裝
+
+下載 [ChestShop](https://www.spigotmc.org/resources/chestshop.51856/) 並放入 plugins 資料夾。
+
+### 建立商店
+
+<Steps>
+    <Step>
+
+    ### 放置箱子
+
+    放置一個箱子，並在裡面放入要販售的物品。
+
+    </Step>
+
+    <Step>
+
+    ### 放置告示牌
+
+    在箱子上方或旁邊放置告示牌，按照以下格式填寫：
+
+    ```
+    第一行：留空（會自動填入玩家名稱）
+    第二行：數量
+    第三行：B 買價 : S 賣價
+    第四行：物品名稱或 ?
+    ```
+
+    **範例（賣鑽石）：**
+    ```
+    [空白]
+    64
+    B 100 : S 50
+    Diamond
+    ```
+
+    這表示：玩家可以用 $100 買 64 個鑽石，或用 64 個鑽石賣給商店換 $50。
+
+    </Step>
+
+    <Step>
+
+    ### 完成！
+
+    告示牌會自動變色，表示商店建立成功。
+
+    ![ChestShop](/images/practice/economy/chestshop.png)
+
+    </Step>
+
+</Steps>
+
+### 告示牌格式說明
+
+| 行數 | 內容 | 說明 |
+|------|------|------|
+| 第一行 | 玩家名稱 | 留空會自動填入，填 `Admin` 為管理員商店 |
+| 第二行 | `64` | 每次交易的數量 |
+| 第三行 | `B 100 : S 50` | B=買價、S=賣價，可以只寫其中一個 |
+| 第四行 | `Diamond` | 物品名稱，填 `?` 會自動偵測箱內物品 |
+
+### 管理員商店
+
+管理員商店有**無限庫存**，玩家可以無限購買/出售。
+
+在第一行填入 `Admin Shop` 或在設定中指定的名稱：
+
+```
+Admin Shop
+64
+B 100 : S 50
+Diamond
+```
+
+## ShopGUIPlus（GUI 商店）
+
+ShopGUIPlus 提供漂亮的 GUI 商店介面，但需要付費購買。
+
+### 替代方案
+
+| 插件 | 類型 | 價格 |
+|------|------|------|
+| [DeluxeMenus](https://www.spigotmc.org/resources/deluxemenus.11734/) | GUI 選單 | 免費 |
+| [BossShopPro](https://www.spigotmc.org/resources/bossshoppro.222/) | GUI 商店 | 免費 |
+| [zShop](https://www.spigotmc.org/resources/zshop.43640/) | GUI 商店 | 免費 |
+
+# 賺錢方式設定
+
+讓玩家有多種方式賺錢，經濟才會活絡！
+
+## 工作/任務插件
+
+| 插件 | 功能 |
+|------|------|
+| [Jobs Reborn](https://www.spigotmc.org/resources/jobs-reborn.4216/) | 職業系統，做特定工作賺錢 |
+| [Quests](https://www.spigotmc.org/resources/quests.3711/) | 任務系統，完成任務獲得獎勵 |
+
+## Jobs Reborn 快速設定
+
+Jobs Reborn 讓玩家選擇職業，做對應工作賺錢：
+
+- ⛏️ **礦工**：挖礦賺錢
+- 🪓 **伐木工**：砍樹賺錢
+- 🎣 **漁夫**：釣魚賺錢
+- 🌾 **農夫**：種田賺錢
+- ⚔️ **獵人**：打怪賺錢
+
+```yaml
+# plugins/Jobs/jobConfig.yml 範例
+Jobs:
+  Miner:
+    fullname: 礦工
+    shortname: M
+    description: 挖掘礦物賺取金錢
+    income:
+      Break:
+        COAL_ORE:
+          income: 1.0
+        IRON_ORE:
+          income: 2.0
+        DIAMOND_ORE:
+          income: 10.0
+```
+
+# 經濟平衡建議
+
+<Callout type="warn" title="經濟平衡很重要！">
+經濟設定不當會導致通貨膨脹（錢太多）或通貨緊縮（錢太少），影響遊戲體驗。
+</Callout>
+
+## 金錢來源 vs 消耗
+
+確保金錢的**來源**和**消耗**大致平衡：
+
+| 💰 金錢來源 | 💸 金錢消耗 |
+|------------|------------|
+| 打怪掉落 | 商店購買物品 |
+| 賣物品給 NPC | 傳送費用 |
+| 完成任務 | 領地購買/租金 |
+| 職業收入 | 附魔/修復費用 |
+| 投票獎勵 | 玩家間交易（轉移） |
+
+## 建議數值
+
+| 項目 | 建議值 | 說明 |
+|------|--------|------|
+| 起始金額 | $500 - $2000 | 夠買基本物品即可 |
+| 鑽石售價 | $50 - $200 | 作為中期目標 |
+| 傳送費用 | $10 - $50 | 小額消耗 |
+| 設置家費用 | $100 - $500 | 中額消耗 |
+
+<Callout type="info">
+經濟數值沒有標準答案，需要根據伺服器玩法和玩家回饋持續調整。
+</Callout>

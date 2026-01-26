@@ -5,6 +5,7 @@
   "pages": [
     "install",
     "config",
+    "advanced",
     "geyser",
     "subdomain"
   ]

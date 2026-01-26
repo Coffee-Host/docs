@@ -1,0 +1,317 @@
+---
+title: 插件設定
+description: 學習如何修改插件的 config.yml 設定檔，自訂插件功能
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="什麼是插件設定檔？">
+幾乎所有插件都有設定檔（Config），讓您可以**自訂插件的各項功能**，而不需要修改程式碼。掌握設定檔的修改方法，是管理伺服器的必備技能！
+</Callout>
+
+# 設定檔基本介紹
+
+## 設定檔在哪裡？
+
+插件的設定檔通常位於：
+```
+plugins/插件名稱/config.yml
+```
+
+例如：
+- LuckPerms 的設定檔：`plugins/LuckPerms/config.yml`
+- EssentialsX 的設定檔：`plugins/Essentials/config.yml`
+- CMI 的設定檔：`plugins/CMI/config.yml`
+
+## 常見的設定檔類型
+
+| 檔案名稱 | 用途 |
+|----------|------|
+| `config.yml` | 主要設定檔（最常修改） |
+| `messages.yml` | 訊息文字設定 |
+| `lang.yml` 或 `locale/` | 語言/翻譯設定 |
+| `data.yml` | 資料儲存（通常不需修改） |
+
+<Callout type="info" title="找不到設定檔？">
+設定檔在**插件首次載入後**才會生成。如果找不到，請先啟動一次伺服器。
+</Callout>
+
+# YAML 格式教學
+
+大多數插件使用 **YAML**（.yml）格式的設定檔。學會 YAML 格式是修改設定的基礎。
+
+## 基本語法
+
+```yaml
+# 這是註解，用 # 開頭，不會影響設定
+# 大多數設定檔都有詳細的註解說明
+
+# 基本設定：名稱: 值
+server-name: "我的伺服器"
+max-players: 100
+enable-pvp: true
+
+# 巢狀設定（用空格縮排）
+teleport:
+  delay: 3
+  cooldown: 60
+  cancel-on-move: true
+
+# 列表（用 - 開頭）
+disabled-commands:
+  - kill
+  - suicide
+  - gamemode
+```
+
+## 資料類型說明
+
+| 類型 | 範例 | 說明 |
+|------|------|------|
+| **字串** | `"Hello World"` | 文字，建議用引號包起來 |
+| **數字** | `100` 或 `3.14` | 整數或小數 |
+| **布林值** | `true` 或 `false` | 是/否、開/關 |
+| **列表** | `- item1`<br/>`- item2` | 多個項目 |
+
+## ⚠️ YAML 常見錯誤
+
+<Callout type="warn" title="YAML 對格式非常敏感！">
+
+**錯誤 1：使用 Tab 縮排**
+```yaml
+# ❌ 錯誤 - 使用 Tab
+teleport:
+	delay: 3        # Tab 縮排會出錯！
+
+# ✅ 正確 - 使用空格
+teleport:
+  delay: 3          # 用 2 個空格縮排
+```
+
+**錯誤 2：冒號後面沒有空格**
+```yaml
+# ❌ 錯誤
+delay:3
+
+# ✅ 正確
+delay: 3            # 冒號後面要有空格
+```
+
+**錯誤 3：縮排不對齊**
+```yaml
+# ❌ 錯誤 - 縮排不一致
+teleport:
+  delay: 3
+   cooldown: 60     # 多了一個空格！
+
+# ✅ 正確 - 同層級對齊
+teleport:
+  delay: 3
+  cooldown: 60
+```
+
+</Callout>
+
+# 修改設定檔教學
+
+<Steps>
+    <Step>
+
+    ### 步驟一：找到設定檔
+
+    1. 前往面板的「**檔案管理**」頁面
+    2. 進入 `plugins` 資料夾
+    3. 找到您要修改的**插件資料夾**
+    4. 點擊 `config.yml` 開啟編輯
+
+    ![找到設定檔](/images/practice/plugin-config/locate.png)
+
+    </Step>
+
+    <Step>
+
+    ### 步驟二：閱讀註解
+
+    開啟設定檔後，先**閱讀註解說明**。大多數設定檔都有詳細的英文註解，解釋每個選項的用途。
+
+    ```yaml
+    # Teleport delay in seconds
+    # Set to 0 to disable
+    teleport-delay: 3
+    ```
+
+    ![設定檔內容](/images/practice/plugin-config/content.png)
+
+    <Callout type="info">
+    如果註解是英文，可以使用 [Google 翻譯](https://translate.google.com/) 或 [ChatGPT](/docs/troubleshooting/chatgpt) 了解設定的意義。
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 步驟三：修改設定值
+
+    找到要修改的設定，將值改成您想要的：
+
+    ```yaml
+    # 修改前
+    teleport-delay: 3
+
+    # 修改後（改成 5 秒）
+    teleport-delay: 5
+    ```
+
+    ![修改設定](/images/practice/plugin-config/edit.png)
+
+    </Step>
+
+    <Step>
+
+    ### 步驟四：儲存檔案
+
+    修改完成後，點擊「**儲存**」按鈕。
+
+    ![儲存設定](/images/practice/plugin-config/save.png)
+
+    </Step>
+
+    <Step>
+
+    ### 步驟五：重新載入設定
+
+    有兩種方式可以套用新設定：
+
+    | 方式 | 指令 | 說明 |
+    |------|------|------|
+    | **重新載入**（推薦） | `/插件名稱 reload` | 不需重啟，立即生效 |
+    | **重新啟動** | 重啟伺服器 | 最穩定，但需要等待 |
+
+    常見的重新載入指令：
+    - EssentialsX：`/essentials reload` 或 `/ess reload`
+    - CMI：`/cmi reload`
+    - LuckPerms：`/lp reload`
+    - WorldGuard：`/wg reload`
+
+    ![重新載入](/images/practice/plugin-config/reload.png)
+
+    </Step>
+
+</Steps>
+
+# 常見插件設定範例
+
+## CMI（多功能插件）
+
+CMI 是功能最完整的多功能插件之一，設定檔位於 `plugins/CMI/`。
+
+**傳送設定** - `config.yml`
+```yaml
+Teleportation:
+  # 傳送請求超時時間（秒）
+  Tpa:
+    Time: 60
+  
+  # 傳送前的延遲（秒）
+  Delay: 3
+  
+  # 傳送冷卻時間（秒）
+  Cooldown: 5
+  
+  # 移動時取消傳送
+  CancelOnMove: true
+```
+
+**經濟設定** - `config.yml`
+```yaml
+Economy:
+  # 新玩家起始金額
+  StartingBalance: 1000.0
+  
+  # 金錢顯示格式
+  MoneyFormat: '#,##0.00'
+  
+  # 最大金額
+  MaxBalance: 10000000000000
+```
+
+## EssentialsX
+
+EssentialsX 是最經典的基礎插件，設定檔位於 `plugins/Essentials/`。
+
+**傳送設定** - `config.yml`
+```yaml
+# 傳送延遲（秒），0 = 無延遲
+teleport-delay: 3
+
+# 傳送冷卻（秒）
+teleport-cooldown: 0
+
+# 傳送時無敵時間（秒）
+teleport-invulnerability: 4
+```
+
+**新玩家設定** - `config.yml`
+```yaml
+newbies:
+  # 新玩家出生點（設定一個 warp 名稱）
+  spawnpoint: newbie
+  
+  # 新玩家裝備包
+  kit: starter
+  
+  # 新玩家公告
+  announce-format: "&d歡迎 {PLAYER} 加入伺服器！"
+```
+
+## WorldGuard（領地保護）
+
+WorldGuard 的設定檔位於 `plugins/WorldGuard/`。
+
+**全域設定** - `config.yml`
+```yaml
+# 是否啟用建築權限
+build-permission-nodes:
+  enable: false
+
+# 高度 Y 座標限制
+max-region-count-per-player:
+  default: 7    # 預設每人最多 7 個領地
+```
+
+# 設定檔錯誤排解
+
+## 常見錯誤診斷
+
+| 症狀 | 可能原因 | 解決方式 |
+|------|----------|----------|
+| 插件無法載入 | YAML 格式錯誤 | 使用 YAML 驗證器檢查 |
+| 設定沒有生效 | 沒有重新載入 | 執行 reload 或重啟 |
+| 找不到設定檔 | 插件未載入過 | 先啟動一次伺服器 |
+| 部分設定不見 | 插件更新後格式改變 | 備份後刪除，讓插件重新生成 |
+
+## 使用 YAML 驗證器
+
+如果修改後插件無法載入，可以使用線上工具檢查格式：
+
+1. 前往 [YAML Lint](https://www.yamllint.com/)
+2. 將設定檔內容貼上
+3. 點擊驗證
+4. 查看錯誤訊息並修正
+
+![YAML 驗證](/images/practice/plugin-config/yaml-lint.png)
+
+## 還原預設設定
+
+如果設定檔損壞無法修復：
+
+1. **備份**現有的設定檔（重新命名為 `config.yml.bak`）
+2. **刪除**原始的 `config.yml`
+3. **重新啟動**伺服器
+4. 插件會自動生成**新的預設設定檔**
+5. 參考備份檔案，重新設定您需要的選項
+
+<Callout type="info" title="養成備份習慣">
+修改設定前建議先備份原始檔案（例如複製一份命名為 `config.yml.backup`），出問題時可以快速還原。
+</Callout>

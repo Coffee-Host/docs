@@ -1,0 +1,65 @@
+---
+title: 安裝教學
+description: 學習如何安裝插件和模組
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card, Cards } from "fumadocs-ui/components/card";
+
+<Callout title="新手必讀">
+本章節將教您如何為 Minecraft 伺服器安裝插件和模組，是架設伺服器的基礎技能。
+</Callout>
+
+# 插件 vs 模組
+
+在開始之前，先了解插件和模組的差異：
+
+| 比較項目 | 插件（Plugin） | 模組（Mod） |
+|----------|----------------|-------------|
+| **伺服器類型** | Paper、Spigot、Purpur | Forge、NeoForge、Fabric |
+| **檔案位置** | `plugins` 資料夾 | `mods` 資料夾 |
+| **客戶端需求** | 不需要安裝 | 需要安裝相同模組 |
+| **功能範圍** | 伺服器端功能 | 可修改遊戲核心內容 |
+| **適合對象** | 小遊戲、生存服、RPG 服 | 模組包、科技、魔法服 |
+
+## 如何選擇？
+
+- **想要簡單易用**：選擇插件伺服器（Paper），玩家不需額外安裝
+- **想要豐富的遊戲內容**：選擇模組伺服器（Forge/Fabric），可添加新物品、新生物等
+- **想要兩者兼具**：考慮使用混合伺服器（如 Mohist、Arclight）
+
+# 本章節內容
+
+<Cards>
+  <Card
+    title="安裝插件"
+    description="學習如何下載、上傳和管理 Bukkit/Paper 插件"
+    href="/docs/practice/install/plugin"
+  />
+  <Card
+    title="安裝模組"
+    description="學習如何安裝 Forge/Fabric 模組到伺服器"
+    href="/docs/practice/install/mod"
+  />
+</Cards>
+
+# 安裝前的準備
+
+在安裝插件或模組之前，請確認以下事項：
+
+1. **確認伺服器類型**
+   - 進入面板的「啟動設定」查看您的伺服器核心類型
+   - Paper/Spigot/Purpur → 安裝插件
+   - Forge/NeoForge/Fabric → 安裝模組
+
+2. **確認伺服器版本**
+   - 在控制台查看 Minecraft 版本（如 1.20.4）
+   - 下載對應版本的插件/模組
+
+3. **了解檔案管理**
+   - 熟悉面板的檔案管理功能
+   - 或學習使用 [SFTP](/docs/panel/common/sftp) 上傳檔案
+
+<Callout type="info">
+如果您還沒有建立伺服器，請先參考 [快速開始](/docs/quick-start/order) 購買並建立伺服器。
+</Callout>

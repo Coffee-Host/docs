@@ -1,0 +1,223 @@
+---
+title: 安裝模組
+description: 學習如何在 Minecraft 伺服器上安裝模組，體驗豐富的遊戲內容
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="適用範圍">
+本教學適用於 Forge、NeoForge、Fabric 等模組伺服器。如果您使用 Paper/Spigot 伺服器，請參考 [安裝插件](/docs/practice/install/plugin)。
+</Callout>
+
+# 什麼是模組？
+
+模組（Mod）可以從根本上修改 Minecraft 的遊戲內容，添加新的物品、方塊、生物、維度等。與插件不同，**玩家也需要安裝相同的模組**才能連線到伺服器。
+
+## 模組能做什麼？
+
+| 功能類別 | 說明 | 常見模組 |
+|----------|------|----------|
+| **新物品/方塊** | 添加數百種新物品和方塊 | 工業、科技、魔法模組 |
+| **新生物** | 添加新的怪物和動物 | Alex's Mobs、Ice and Fire |
+| **新維度** | 添加全新的世界可探索 | 暮色森林、天堂 |
+| **遊戲機制** | 改變或增強遊戲玩法 | 匠魂、植物魔法 |
+| **效能優化** | 提升遊戲和伺服器效能 | Sodium、Lithium |
+| **輔助工具** | 合成表查詢、小地圖等 | JEI、JourneyMap |
+
+<Callout type="warn" title="重要提醒">
+模組伺服器的玩家**必須安裝相同的模組**才能連線。這是模組伺服器與插件伺服器最大的差異。
+</Callout>
+
+# 模組載入器介紹
+
+Minecraft 模組需要透過「模組載入器」來運行，主要有以下幾種：
+
+| 載入器 | 說明 | 適合場景 |
+|--------|------|----------|
+| **Forge** | 歷史最悠久，模組最多 | 大型模組包、科技/魔法模組 |
+| **NeoForge** | Forge 的分支，更現代化 | 新版本 Minecraft |
+| **Fabric** | 輕量、更新快 | 效能優化、輕量模組 |
+| **Quilt** | Fabric 的分支 | 較少使用 |
+
+<Callout type="warn" title="不能混用！">
+⚠️ **Forge 模組不能用在 Fabric 伺服器**，反之亦然！下載模組時請確認載入器類型。
+</Callout>
+
+# 在哪裡下載模組？
+
+以下是安全可靠的模組下載平台：
+
+| 平台 | 網址 | 特色 |
+|------|------|------|
+| **CurseForge** | https://www.curseforge.com/minecraft/mc-mods | 模組最齊全，模組包多 |
+| **Modrinth** | https://modrinth.com/mods | 介面簡潔，下載速度快 |
+
+<Callout type="warn" title="安全提醒">
+- ⚠️ **請勿從不明網站下載模組**，可能包含病毒
+- ⚠️ **避免下載來路不明的模組包**
+- ✅ 只從 CurseForge 和 Modrinth 下載
+</Callout>
+
+# 安裝模組教學
+
+<Steps>
+    <Step>
+
+    ### 步驟一：確認伺服器類型
+
+    在安裝模組前，請先確認您的伺服器使用哪種模組載入器：
+
+    1. 前往面板的「**啟動設定**」頁面
+    2. 查看伺服器核心類型
+    3. 記住載入器類型和版本
+
+    | 核心名稱包含 | 模組載入器 |
+    |--------------|------------|
+    | `forge` | Forge |
+    | `neoforge` | NeoForge |
+    | `fabric` | Fabric |
+
+    </Step>
+
+    <Step>
+
+    ### 步驟二：下載模組檔案
+
+    1. 前往 CurseForge 或 Modrinth
+    2. 搜尋您想要的模組
+    3. **選擇正確的版本**：
+       - 選擇正確的模組載入器（Forge/Fabric）
+       - 選擇正確的 Minecraft 版本
+    4. 點擊下載 `.jar` 檔案
+
+    ![下載模組](/images/practice/install-mod/download.png)
+
+    <Callout type="info" title="版本選擇範例">
+    如果您的伺服器是 **Forge 1.20.1**：
+    - ✅ 下載標示 `Forge` + `1.20.1` 的版本
+    - ❌ 不要下載 `Fabric` 或 `1.19` 的版本
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 步驟三：檢查依賴模組
+
+    許多模組需要其他模組才能運作，這些稱為「依賴模組」：
+
+    **Fabric 伺服器必裝：**
+    - **Fabric API** - 幾乎所有 Fabric 模組都需要
+
+    **常見依賴模組：**
+    - Architectury API
+    - Cloth Config
+    - GeckoLib
+
+    ![依賴模組](/images/practice/install-mod/dependencies.png)
+
+    <Callout type="info">
+    模組頁面通常會列出需要的依賴，請一併下載安裝。
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 步驟四：上傳模組到伺服器
+
+    1. 前往面板的「**檔案管理**」頁面
+    2. 進入 `mods` 資料夾
+    3. 點擊「**上傳**」按鈕
+    4. 選擇所有下載的 `.jar` 檔案並上傳
+
+    ![上傳模組](/images/practice/install-mod/upload.png)
+
+    </Step>
+
+    <Step>
+
+    ### 步驟五：重新啟動伺服器
+
+    上傳完成後，重新啟動伺服器以載入模組。
+
+    <Callout type="info">
+    模組伺服器啟動較慢是正常的，請耐心等待。
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 步驟六：客戶端安裝相同模組
+
+    玩家需要在自己的電腦上安裝相同的模組才能連線：
+
+    **方法一：手動安裝**
+    1. 安裝對應的模組載入器（Forge/Fabric）
+    2. 將模組檔案放入 `.minecraft/mods` 資料夾
+    3. 啟動遊戲
+
+    **方法二：使用啟動器（推薦）**
+    - 使用 **CurseForge App** 或 **Modrinth App**
+    - 可以自動管理模組和依賴
+
+    <Callout type="info">
+    建議將伺服器的模組打包分享給玩家，確保版本一致。
+    </Callout>
+
+    </Step>
+
+</Steps>
+
+# 模組載入失敗怎麼辦？
+
+## 常見錯誤及解決方式
+
+| 錯誤訊息 | 原因 | 解決方式 |
+|----------|------|----------|
+| `Missing dependencies` | 缺少依賴模組 | 下載並安裝缺少的依賴 |
+| `Incompatible mod` | 版本不相容 | 確認模組版本正確 |
+| `Duplicate mod` | 模組重複安裝 | 刪除重複的模組檔案 |
+| `Mixin error` | 模組衝突 | 移除最近安裝的模組 |
+| `Mod requires Fabric API` | 缺少 Fabric API | 安裝 Fabric API |
+
+<Callout type="info">
+如果無法自行解決，可以使用 [ChatGPT 分析錯誤](/docs/troubleshooting/chatgpt) 來找出問題原因。
+</Callout>
+
+# 常用模組推薦
+
+## 效能優化模組（強烈建議安裝）
+
+| 模組名稱 | 載入器 | 功能說明 |
+|----------|--------|----------|
+| **Lithium** | Fabric | 伺服器效能大幅優化 |
+| **Starlight** | Forge/Fabric | 光照計算優化 |
+| **FerriteCore** | Forge/Fabric | 記憶體使用優化 |
+| **Chunky** | Forge/Fabric | 預生成區塊，減少卡頓 |
+
+## 實用輔助模組
+
+| 模組名稱 | 載入器 | 功能說明 |
+|----------|--------|----------|
+| **JEI** | Forge | 合成表查詢 |
+| **REI** | Fabric | 合成表查詢 |
+| **JourneyMap** | Forge/Fabric | 小地圖和大地圖 |
+| **Jade** | Forge/Fabric | 顯示方塊/實體資訊 |
+
+## 熱門模組包推薦
+
+如果您想要完整的模組體驗，可以考慮使用現成的模組包：
+
+| 模組包 | 類型 | 說明 |
+|--------|------|------|
+| All The Mods 9 | 綜合 | 包含各類模組的大型模組包 |
+| Create | 科技 | 機械自動化 |
+| RLCraft | 生存 | 高難度生存挑戰 |
+| Pixelmon | 寶可夢 | 在 MC 中抓寶可夢 |
+
+<Callout type="info">
+模組設定通常位於 `config` 資料夾中，您可以參考 [插件設定教學](/docs/practice/config/plugin) 的 YAML 格式說明來修改。
+</Callout>

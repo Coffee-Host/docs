@@ -1,0 +1,121 @@
+---
+title: 設定教學
+description: 學習如何修改伺服器和插件的設定檔
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Card, Cards } from "fumadocs-ui/components/card";
+
+<Callout title="什麼是設定檔？">
+設定檔（Config）讓您可以自訂伺服器和插件的各項功能，不需要寫程式就能調整伺服器的行為。
+</Callout>
+
+# 為什麼需要修改設定？
+
+安裝完伺服器和插件後，預設設定可能不符合您的需求。透過修改設定檔，您可以：
+
+- 🎮 **調整遊戲體驗** - 難度、PvP、飛行等
+- ⚡ **優化伺服器效能** - 視野距離、區塊載入等
+- 🔧 **自訂插件功能** - 傳送冷卻、經濟系統等
+- 🎨 **修改顯示文字** - MOTD、提示訊息等
+- 🔒 **加強安全性** - 白名單、正版驗證等
+
+# 設定檔的種類
+
+Minecraft 伺服器有多種設定檔，各有不同用途：
+
+| 設定檔 | 位置 | 用途 | 適用伺服器 |
+|--------|------|------|------------|
+| `server.properties` | 根目錄 | 伺服器核心設定 | 所有伺服器 |
+| `paper-global.yml` | `config/` | Paper 全域設定 | Paper/Purpur |
+| `spigot.yml` | 根目錄 | Spigot 設定 | Spigot 系列 |
+| `bukkit.yml` | 根目錄 | Bukkit 設定 | Bukkit 系列 |
+| 插件設定檔 | `plugins/插件名稱/` | 各插件的設定 | 插件伺服器 |
+
+# 本章節內容
+
+<Cards>
+  <Card
+    title="server.properties 設定"
+    description="Minecraft 伺服器的核心設定，控制遊戲規則和基本行為"
+    href="/docs/practice/config/server-properties"
+  />
+  <Card
+    title="Paper 全域設定"
+    description="Paper 伺服器的進階設定，包含生電特性開關"
+    href="/docs/practice/config/paper-global"
+  />
+  <Card
+    title="插件設定"
+    description="學習如何修改插件的 config.yml 設定檔"
+    href="/docs/practice/config/plugin"
+  />
+  <Card
+    title="LuckPerms 權限設定"
+    description="設定玩家權限和群組，控制誰能做什麼"
+    href="/docs/practice/config/luckperms"
+  />
+</Cards>
+
+# 設定檔格式介紹
+
+大多數設定檔使用 YAML 或 Properties 格式：
+
+## YAML 格式（.yml）
+
+大多數插件和 Paper 設定使用此格式：
+
+```yaml
+# 這是註解
+setting-name: value
+
+# 巢狀設定
+parent:
+  child: value
+  
+# 列表
+items:
+  - item1
+  - item2
+```
+
+<Callout type="warn" title="YAML 注意事項">
+- 使用**空格**縮排，不要用 Tab
+- 冒號後面要有**一個空格**
+- 縮排要**對齊**
+</Callout>
+
+## Properties 格式（.properties）
+
+`server.properties` 使用此格式：
+
+```properties
+# 這是註解
+setting-name=value
+max-players=20
+```
+
+# 修改設定的基本流程
+
+1. **關閉伺服器**（建議）
+2. **找到設定檔** - 使用檔案管理
+3. **編輯設定** - 修改需要的值
+4. **儲存檔案**
+5. **重啟伺服器** - 套用新設定
+
+<Callout type="info">
+部分插件支援 `/插件名稱 reload` 指令重新載入設定，不需要重啟伺服器。
+</Callout>
+
+# 設定檔損壞怎麼辦？
+
+如果修改設定後伺服器無法啟動：
+
+1. 使用 [YAML 驗證器](https://www.yamllint.com/) 檢查格式
+2. 查看控制台的錯誤訊息
+3. 刪除設定檔，讓伺服器重新生成預設設定
+4. 使用 [ChatGPT 分析錯誤](/docs/troubleshooting/chatgpt)
+
+<Callout type="info" title="備份提醒">
+修改設定前建議先備份原始檔案，以便出問題時還原。
+</Callout>

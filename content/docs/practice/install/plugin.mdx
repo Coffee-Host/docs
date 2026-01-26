@@ -1,0 +1,180 @@
+---
+title: 安裝插件
+description: 學習如何在 Minecraft 伺服器上安裝插件，為伺服器添加各種功能
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Step, Steps } from "fumadocs-ui/components/steps";
+
+<Callout title="適用範圍">
+本教學適用於 Paper、Spigot、Purpur 等 Bukkit 系列伺服器。如果您使用 Forge/Fabric 伺服器，請參考 [安裝模組](/docs/practice/install/mod)。
+</Callout>
+
+# 什麼是插件？
+
+插件（Plugin）是用來擴展 Minecraft 伺服器功能的程式。透過安裝插件，您可以為伺服器添加各種功能，而**玩家不需要安裝任何東西**就能使用這些功能。
+
+## 插件能做什麼？
+
+| 功能類別 | 說明 | 常見插件 |
+|----------|------|----------|
+| **基礎功能** | 傳送、設定家、經濟系統 | EssentialsX、CMI |
+| **權限管理** | 控制玩家能做什麼 | LuckPerms |
+| **領地保護** | 保護玩家的建築不被破壞 | WorldGuard、Residence |
+| **登入系統** | 盜版伺服器的密碼保護 | AuthMe |
+| **小遊戲** | 床戰、空島戰爭等 | BedWars、SkyWars |
+| **聊天管理** | 聊天格式、過濾髒話 | ChatControl、Essentials Chat |
+| **商店系統** | 玩家交易、商店 | ShopGUIPlus、QuickShop |
+
+<Callout type="info" title="新手提示">
+如果您是第一次架設伺服器，建議先安裝 **EssentialsX**（或 CMI）和 **LuckPerms**，這兩個插件能滿足大部分基礎需求。
+</Callout>
+
+# 在哪裡下載插件？
+
+以下是安全可靠的插件下載平台：
+
+| 平台 | 網址 | 特色 |
+|------|------|------|
+| **SpigotMC** | https://www.spigotmc.org/resources/ | 最大的插件平台，插件最齊全 |
+| **Modrinth** | https://modrinth.com/plugins | 介面簡潔，下載速度快 |
+| **Hangar** | https://hangar.papermc.io/ | Paper 官方平台，品質有保證 |
+| **Bukkit** | https://dev.bukkit.org/ | 老牌平台，歷史悠久 |
+
+<Callout type="warn" title="安全提醒">
+- ⚠️ **請勿從不明來源下載插件**，可能包含惡意程式
+- ⚠️ **避免使用破解/盜版插件**，可能有後門
+- ✅ 只從上述官方平台下載
+</Callout>
+
+# 安裝插件教學
+
+<Steps>
+    <Step>
+
+    ### 步驟一：下載插件檔案
+
+    1. 前往插件下載平台（以 SpigotMC 為例）
+    2. 使用搜尋功能找到您想要的插件
+    3. **確認插件支援您的伺服器版本**（非常重要！）
+    4. 點擊「Download」下載 `.jar` 檔案
+
+    ![下載插件](/images/practice/install-plugin/download.png)
+
+    <Callout type="info" title="版本相容性">
+    請確認插件版本與您的伺服器版本相容：
+    - 1.20.4 的伺服器 → 下載支援 1.20.4 的插件
+    - 有些插件標示 1.8-1.20 表示支援多個版本
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 步驟二：上傳插件到伺服器
+
+    1. 前往面板的「**檔案管理**」頁面
+    2. 進入 `plugins` 資料夾（如果沒有，請先啟動一次伺服器）
+    3. 點擊「**上傳**」按鈕
+    4. 選擇剛才下載的 `.jar` 檔案並上傳
+
+    ![上傳插件](/images/practice/install-plugin/upload.png)
+
+    <Callout type="info">
+    **小技巧：** 您也可以使用 SFTP 批量上傳多個插件，詳見 [SFTP 教學](/docs/panel/common/sftp)。
+    </Callout>
+
+    </Step>
+
+    <Step>
+
+    ### 步驟三：重新啟動伺服器
+
+    上傳完成後，需要重新啟動伺服器才能載入插件：
+
+    1. 回到「**控制台**」頁面
+    2. 點擊「**重新啟動**」按鈕
+    3. 等待伺服器完全啟動（看到 Done! 訊息）
+
+    ![重新啟動](/images/practice/install-plugin/restart.png)
+
+    </Step>
+
+    <Step>
+
+    ### 步驟四：確認插件載入成功
+
+    伺服器啟動後，在控制台輸入指令來確認：
+
+    ```
+    plugins
+    ```
+
+    或簡寫：
+
+    ```
+    pl
+    ```
+
+    查看結果：
+    - 🟢 **綠色**的插件名稱 = 載入成功
+    - 🔴 **紅色**的插件名稱 = 載入失敗
+
+    ![檢查插件](/images/practice/install-plugin/check.png)
+
+    </Step>
+
+</Steps>
+
+# 插件載入失敗怎麼辦？
+
+如果插件顯示為紅色或控制台出現錯誤，請按以下步驟排查：
+
+## 常見問題排查
+
+| 問題 | 症狀 | 解決方式 |
+|------|------|----------|
+| **版本不相容** | 控制台顯示 unsupported version | 下載支援您伺服器版本的插件 |
+| **缺少依賴插件** | 顯示 missing dependency | 安裝缺少的依賴插件（如 Vault） |
+| **檔案損壞** | 顯示 invalid plugin | 重新下載插件檔案 |
+| **Java 版本問題** | 顯示 class version error | 更新 Java 版本（啟動設定） |
+| **插件衝突** | 伺服器崩潰或異常 | 逐一排查最近安裝的插件 |
+
+## 如何查看錯誤訊息？
+
+1. 在控制台向上滾動，找到紅色的錯誤訊息
+2. 複製錯誤訊息
+3. 使用 [ChatGPT 分析錯誤](/docs/troubleshooting/chatgpt) 來找出問題原因
+
+# 新手必裝插件
+
+以下是建議新手優先安裝的插件：
+
+## 基礎必備
+
+| 插件名稱 | 功能說明 | 優先級 |
+|----------|----------|--------|
+| **LuckPerms** | 權限管理系統 | ⭐⭐⭐ 必裝 |
+| **EssentialsX** 或 **CMI** | 基礎指令（傳送、home、經濟） | ⭐⭐⭐ 必裝 |
+| **Vault** | 經濟 API（許多插件依賴） | ⭐⭐⭐ 必裝 |
+
+## 進階推薦
+
+| 插件名稱 | 功能說明 | 適用場景 |
+|----------|----------|----------|
+| **WorldEdit** | 地圖編輯工具 | 建築服、創造服 |
+| **WorldGuard** | 領地保護 | 生存服 |
+| **AuthMe** | 登入系統 | 盜版伺服器 |
+| **CoreProtect** | 方塊日誌（查誰破壞的） | 生存服 |
+
+## 插件下載連結
+
+| 插件 | SpigotMC | Modrinth |
+|------|----------|----------|
+| LuckPerms | [下載](https://www.spigotmc.org/resources/luckperms.28140/) | [下載](https://modrinth.com/plugin/luckperms) |
+| EssentialsX | [下載](https://www.spigotmc.org/resources/essentialsx.9089/) | - |
+| Vault | [下載](https://www.spigotmc.org/resources/vault.34315/) | - |
+
+<Callout type="info">
+安裝完插件後，您可能需要進行設定。請參考 [插件設定教學](/docs/practice/config/plugin) 了解如何修改設定檔。
+</Callout>

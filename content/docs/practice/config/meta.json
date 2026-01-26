@@ -1,0 +1,6 @@
+{
+  "title": "設定教學",
+  "icon": "Settings",
+  "defaultOpen": true,
+  "pages": ["server-properties", "paper-global", "plugin", "luckperms"]
+}

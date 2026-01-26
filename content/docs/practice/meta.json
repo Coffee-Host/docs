@@ -3,12 +3,8 @@
   "icon": "LibraryBig",
   "defaultOpen": false,
   "pages": [
-    "install-plugin",
-    "install-mod",
-    "plugin-config",
-    "luckperms",
-    "server-properties",
-    "paper-global",
+    "install",
+    "config",
     "geyser",
     "subdomain"
   ]

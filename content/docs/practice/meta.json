@@ -8,6 +8,7 @@
     "plugin-config",
     "luckperms",
     "server-properties",
+    "paper-global",
     "geyser",
     "subdomain"
   ]

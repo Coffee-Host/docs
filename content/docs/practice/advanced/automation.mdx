@@ -17,7 +17,7 @@ import Image from "next/image";
 
 ## 使用面板排程
 
-在 CoffeeHost 面板中設定排程任務：
+在 Coffee Host 面板中設定排程任務：
 
 <Steps>
     <Step>
@@ -26,7 +26,7 @@ import Image from "next/image";
 
     在控制面板側邊欄點擊「**排程**」。
 
-    <Image src="/images/practice/automation/schedule-page.png" alt="排程頁面" width={800} height={600} />
+    ![排程頁面](/images/practice/automation/schedules.png)
 
     </Step>
 
@@ -34,9 +34,10 @@ import Image from "next/image";
 
     ### 建立新排程
 
-    點擊「**建立排程**」，設定：
+    點擊「**創建排程**」，設定：
     - **名稱**：每日重啟
-    - **時間**：例如每天凌晨 4:00
+    - **時間**：例如每天凌晨 4:00，就輸入 **0 4 \* \* \***
+    ![創建排程](/images/practice/automation/schedules2.png)
 
     </Step>
 
@@ -44,14 +45,12 @@ import Image from "next/image";
 
     ### 新增任務
 
-    在排程中新增以下任務：
+    點擊「**管理排程**」後點擊「**新工作**」，在排程中新增以下任務：
 
-    1. **發送指令**：`say 伺服器將在 5 分鐘後重啟！`
-    2. **延遲**：5 分鐘
-    3. **發送指令**：`save-all`
-    4. **電源操作**：重新啟動
+    1. **傳送指令**：`say 伺服器將在 5 分鐘後重啟！`
+    2. **傳送電源操作**：重啟伺服器，時間偏移設為 300
 
-    <Image src="/images/practice/automation/schedule-tasks.png" alt="排程任務" width={800} height={600} />
+    ![排程任務](/images/practice/automation/schedule-tasks.png)
 
     </Step>
 
@@ -96,22 +95,23 @@ AutoRestart:
 <Steps>
     <Step>
 
-    ### 建立備份排程
+    ### 建立新排程
 
-    在排程中新增備份任務：
-    - **時間**：每天凌晨 3:00
-    - **任務類型**：建立備份
+    點擊「**創建排程**」，設定：
+    - **名稱**：創建備份
+    - **時間**：例如每天凌晨 4:00，就輸入 **0 4 \* \* \***
 
     </Step>
 
     <Step>
 
-    ### 設定備份保留數量
+    ### 新增任務
 
-    設定最多保留幾個備份，避免空間不足。
+    點擊「**管理排程**」後點擊「**新工作**」，在排程中新增以下任務：
+
+    1. **創建備份**
 
     </Step>
-
 </Steps>
 
 ## 使用 CMI 備份
@@ -180,43 +180,6 @@ Schedule:
       - ARROW
       - EXPERIENCE_ORB
 ```
-
-## 清理舊日誌
-
-日誌檔案會不斷累積，定期清理可以節省空間：
-
-<Steps>
-    <Step>
-
-    ### 建立清理腳本
-
-    建立 `cleanup.sh`（Linux）或 `cleanup.bat`（Windows）：
-
-    **Linux:**
-    ```bash
-    #!/bin/bash
-    # 刪除 7 天前的日誌
-    find /path/to/server/logs -name "*.log.gz" -mtime +7 -delete
-    ```
-
-    **Windows:**
-    ```batch
-    @echo off
-    forfiles /p "C:\server\logs" /s /m *.log.gz /d -7 /c "cmd /c del @path"
-    ```
-
-    </Step>
-
-    <Step>
-
-    ### 設定定期執行
-
-    使用面板排程或系統排程（cron/Task Scheduler）定期執行。
-
-    </Step>
-
-</Steps>
-
 ## 清理 CoreProtect 資料
 
 CoreProtect 會記錄大量方塊變更，定期清理舊資料：
@@ -280,7 +243,6 @@ AutoMessages:
 | ☐ 自動重啟 | 每日 | 保持伺服器穩定 |
 | ☐ 自動備份 | 每日 | 防止資料遺失 |
 | ☐ 清理掉落物 | 每 5-10 分鐘 | 維持效能 |
-| ☐ 清理舊日誌 | 每週 | 節省空間 |
 | ☐ 清理 CoreProtect | 每月 | 節省空間 |
 | ☐ 檢查更新 | 每週 | 安全性和新功能 |
 

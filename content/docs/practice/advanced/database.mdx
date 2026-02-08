@@ -5,6 +5,7 @@ description: 將插件資料儲存到 MySQL/MariaDB，實現跨服資料同步
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import Image from "next/image";
 
 <Callout title="為什麼使用資料庫？">
 使用資料庫儲存資料有幾個好處：**跨服資料同步**（多個伺服器共用資料）、**更好的效能**（大量資料時）、**更安全的資料備份**。
@@ -43,7 +44,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
     在控制面板側邊欄點擊「**資料庫**」。
 
-    ![資料庫頁面](/images/practice/database/panel-database.png)
+    <Image src="/images/practice/database/panel-database.png" alt="資料庫頁面" width={800} height={600} />
 
     </Step>
 
@@ -53,7 +54,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
     點擊「**新增資料庫**」，輸入資料庫名稱。
 
-    ![建立資料庫](/images/practice/database/create-database.png)
+    <Image src="/images/practice/database/create-database.png" alt="建立資料庫" width={800} height={600} />
 
     </Step>
 

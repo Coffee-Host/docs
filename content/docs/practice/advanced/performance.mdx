@@ -5,6 +5,7 @@ description: 提升伺服器 TPS，減少延遲，打造流暢的遊戲體驗
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import Image from "next/image";
 
 <Callout title="為什麼需要效能優化？">
 當伺服器的 TPS（Ticks Per Second）低於 20 時，玩家會感受到明顯的延遲。透過正確的設定，可以在不犧牲太多遊戲體驗的情況下大幅提升效能！
@@ -22,7 +23,7 @@ TPS（Ticks Per Second）代表伺服器每秒處理的遊戲刻數：
 | 18-19 | ⚠️ 輕微掉幀 | 幾乎無感 |
 | 15-17 | ⚠️ 中等延遲 | 輕微卡頓 |
 | 10-14 | ❌ 嚴重延遲 | 明顯延遲 |
-| <10 | ❌ 極度延遲 | 幾乎無法遊玩 |
+| &lt;10 | ❌ 極度延遲 | 幾乎無法遊玩 |
 
 ## 查看 TPS
 
@@ -87,7 +88,7 @@ Spark 是最好用的效能分析插件，可以找出導致延遲的原因。
     - 哪些插件效能最差
     - 實體數量統計
 
-    ![Spark 報告](/images/practice/performance/spark-report.png)
+    <Image src="/images/practice/performance/spark-report.png" alt="Spark 報告" width={800} height={600} />
 
     </Step>
 

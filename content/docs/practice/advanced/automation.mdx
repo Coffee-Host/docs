@@ -5,6 +5,7 @@ description: 設定自動重啟、備份、清理等維護任務，讓伺服器�
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import Image from "next/image";
 
 <Callout title="為什麼需要自動化？">
 伺服器需要定期維護才能保持穩定運行。自動化維護可以減少人工操作，即使您不在線上，伺服器也能自動執行重要任務！
@@ -25,7 +26,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 
     在控制面板側邊欄點擊「**排程**」。
 
-    ![排程頁面](/images/practice/automation/schedule-page.png)
+    <Image src="/images/practice/automation/schedule-page.png" alt="排程頁面" width={800} height={600} />
 
     </Step>
 
@@ -50,7 +51,7 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
     3. **發送指令**：`save-all`
     4. **電源操作**：重新啟動
 
-    ![排程任務](/images/practice/automation/schedule-tasks.png)
+    <Image src="/images/practice/automation/schedule-tasks.png" alt="排程任務" width={800} height={600} />
 
     </Step>
 

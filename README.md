@@ -1,26 +1,21 @@
-# docs
+# 超大咖託管文檔
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+這是一個使用 [Create Fumadocs](https://github.com/fuma-nama/fumadocs) 生成的 Next.js 應用程式。
 
-Run development server:
+安裝套件並執行開發伺服器：
 
 ```bash
+npm install
 npm run dev
-# or
-pnpm dev
-# or
-yarn dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+在瀏覽器中開啟 http://localhost:3000 查看結果。
 
-## Learn More
+## 貢獻
+我們歡迎你對此專案進行貢獻！
+您可以 Fork 此專案並 Clone 到本地進行更改，然後開啟 Pull Request，我們會查看你的貢獻並適時合併
 
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
+### 貢獻規範
+**請確保貢獻的內容已經經過本地測試，所有文章和圖片能正常載入顯示**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.vercel.app) - learn about Fumadocs
+有問題可以開啟 Issue 或至 Discord 聯絡我們

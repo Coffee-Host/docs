@@ -1,10 +1,11 @@
 ---
 title: Paper 全域設定
-description: 了解並修改 paper-global.yml，啟用 Minecraft 原版特性如 TNT 複製、鐵軌複製等生電機制
+description: 了解並修改 paper-global.yml，啟用 Minecraft 原版特性如 TNT 複製等生電機制
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import Image from "next/image";
 
 <Callout title="什麼是 Paper 設定檔？">
 Paper 伺服器有自己的設定檔，可以控制許多 **Minecraft 原版特性的開關**。Paper 為了優化效能，預設關閉了一些原版特性，但您可以手動開啟它們。
@@ -47,7 +48,7 @@ Paper 伺服器有兩個主要設定檔，位於 `config` 資料夾中：
     2. 進入 `config` 資料夾
     3. 點擊要編輯的設定檔
 
-    ![開啟設定檔](/images/practice/paper-global/open.png)
+    <Image src="/images/practice/paper-global/open.png" alt="開啟設定檔" width={800} height={600} />
 
     </Step>
 
@@ -57,7 +58,7 @@ Paper 伺服器有兩個主要設定檔，位於 `config` 資料夾中：
 
     找到對應的設定項目，修改其值。
 
-    ![修改設定](/images/practice/paper-global/edit.png)
+    <Image src="/images/practice/paper-global/edit.png" alt="修改設定" width={800} height={600} />
 
     </Step>
 
@@ -114,71 +115,43 @@ entities:
 | `DELETE` | 刪除重複的實體 |
 | `WARN` | 只顯示警告 |
 
-## 🛤️ 鐵軌複製 / 地毯複製
+<Callout type="warn" title="其他複製機制">
+在較新版本的 Paper 中，鐵軌複製、地毯複製、沙子複製等設定已被移除或整合到其他設定中。如果您需要這些功能，可以考慮：
+- 使用 Purpur 等其他伺服器核心
+- 使用特定的插件來實現
+- 查看 `unsupported-settings.allow-permanent-block-break-exploits` 設定
+</Callout>
 
-**用途：** 無限複製鐵軌、地毯等物品
+## 🪨 床岩破壞與活塞複製
 
-**原理：** 利用活塞推動物品時的特性複製物品
+**用途：** 允許玩家使用活塞機器破壞床岩和進行活塞複製
 
-**設定位置：** `config/paper-world-defaults.yml`
-
-```yaml
-blocks:
-  pistons:
-    block-destroy-duplication: true   # ← 預設值（阻止複製）
-```
-
-**啟用方式：** 將值改為 `false`
+**設定位置：** `config/paper-global.yml`
 
 ```yaml
-blocks:
-  pistons:
-    block-destroy-duplication: false  # ← 允許鐵軌/地毯複製
+unsupported-settings:
+  allow-headless-pistons: false              # ← 預設值
+  allow-piston-duplication: false            # ← 預設值
+  allow-permanent-block-break-exploits: false # ← 預設值
 ```
 
-## ⏬ 沙子複製（重力方塊複製）
-
-**用途：** 無限複製沙子、礫石、混凝土粉末等重力方塊
-
-**原理：** 利用重力方塊下落時的特性
-
-**設定位置：** `config/paper-world-defaults.yml`
+**啟用方式：** 將這些值改為 `true`
 
 ```yaml
-blocks:
-  falling-block:
-    gravity-duplication-bug: false   # ← 預設值（阻止複製）
+unsupported-settings:
+  allow-headless-pistons: true               # ← 允許無頭活塞
+  allow-piston-duplication: true             # ← 允許活塞複製
+  allow-permanent-block-break-exploits: true # ← 允許永久方塊破壞漏洞
 ```
 
-**啟用方式：** 將值改為 `true`
+<Callout type="warn" title="不支援的設定">
+這些設定位於 `unsupported-settings` 區塊中，代表 Paper 官方**不支援且不建議**使用。啟用這些設定可能會：
+- 導致遊戲機制異常
+- 破壞遊戲平衡
+- 在未來版本中被移除或變更
 
-```yaml
-blocks:
-  falling-block:
-    gravity-duplication-bug: true    # ← 允許沙子複製
-```
-
-## 🪨 床岩破壞
-
-**用途：** 允許玩家使用活塞機器破壞床岩
-
-**設定位置：** `config/paper-world-defaults.yml`
-
-```yaml
-blocks:
-  pistons:
-    allow-headless-pistons: false     # ← 預設值
-    allow-piston-duplication: false   # ← 預設值
-```
-
-**啟用方式：** 將兩個值都改為 `true`
-
-```yaml
-blocks:
-  pistons:
-    allow-headless-pistons: true      # ← 允許無頭活塞
-    allow-piston-duplication: true    # ← 允許活塞複製
-```
+請謹慎評估後再啟用！
+</Callout>
 
 # 📋 完整生電設定範例
 
@@ -191,14 +164,15 @@ entities:
   spawning:
     duplicate-uuid:
       mode: NOTHING                    # 允許 TNT 複製
+```
 
-blocks:
-  pistons:
-    block-destroy-duplication: false   # 允許鐵軌/地毯複製
-    allow-headless-pistons: true       # 允許無頭活塞
-    allow-piston-duplication: true     # 允許活塞複製
-  falling-block:
-    gravity-duplication-bug: true      # 允許沙子複製
+**config/paper-global.yml**
+
+```yaml
+unsupported-settings:
+  allow-headless-pistons: true               # 允許無頭活塞
+  allow-piston-duplication: true             # 允許活塞複製
+  allow-permanent-block-break-exploits: true # 允許永久方塊破壞漏洞
 ```
 
 <Callout type="warn" title="效能警告">

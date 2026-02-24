@@ -40,13 +40,13 @@ TPS（Ticks Per Second）代表伺服器每秒處理的遊戲刻數：
 1. 🏷️ 實體（Entity）     ████████████████████  40%
    - 怪物、動物、掉落物、船、礦車等
 
-2. 🧩 紅石/漏斗         ██████████████        28%
+2. 🧩 紅石 / 漏斗        ██████████████        28%
    - 紅石機器、大量漏斗
 
-3. 🌍 區塊載入          ████████████          24%
+3. 🌍 區塊載入           ████████████          24%
    - 玩家移動時載入新區塊
 
-4. 🔌 插件              ████                   8%
+4. 🔌 插件               ████                   8%
    - 效能差的插件
 ```
 
@@ -72,7 +72,7 @@ Spark 是最好用的效能分析插件，可以找出導致延遲的原因。
     /spark profiler start
     ```
 
-    等待 1-2 分鐘後：
+    約 30 分鐘後：
     ```
     /spark profiler stop
     ```
@@ -104,21 +104,21 @@ entities:
   spawning:
     # 減少怪物生成數量（預設為 70）
     monster-spawn-limit: 50
-    
+
     # 減少動物生成數量（預設為 10）
     creature-spawn-limit: 8
-    
+
     # 減少水生生物
     water-animal-spawn-limit: 3
     water-ambient-spawn-limit: 10
-    
+
     # 減少環境生物（蝙蝠等）
     ambient-spawn-limit: 1
 
   behavior:
     # 停用不必要的 AI（可能影響遊戲體驗）
     disable-chest-cat-detection: true
-    
+
     # 村民優化
     tick-inactive-villagers: false
 
@@ -135,7 +135,7 @@ chunks:
     experience_orb: 16
     arrow: 8
     ender_pearl: 8
-    
+
   # 自動儲存間隔（tick）
   auto-save-interval: 6000
 ```
@@ -146,7 +146,7 @@ chunks:
 hopper:
   # 禁用漏斗移動事件（大幅提升效能）
   disable-move-event: true
-  
+
   # 漏斗檢測間隔（tick）
   cooldown-when-full: true
 ```
@@ -166,10 +166,10 @@ world-settings:
     merge-radius:
       exp: 6.0      # 經驗球
       item: 4.0     # 掉落物
-    
+
     # 怪物生成範圍（較低 = 較少怪物）
     mob-spawn-range: 6
-    
+
     # 實體啟用範圍（方塊）
     entity-activation-range:
       animals: 16      # 動物
@@ -179,7 +179,7 @@ world-settings:
       water: 8         # 水生
       villagers: 16    # 村民
       flying-monsters: 32  # 飛行怪物
-    
+
     # 村民工作站檢測間隔
     entity-tracking-range:
       players: 48
@@ -187,7 +187,7 @@ world-settings:
       monsters: 48
       misc: 32
       other: 64
-    
+
     # 每 tick 最大生成數量
     ticks-per:
       animal-spawns: 400
@@ -229,11 +229,11 @@ ticks-per:
 auto-removal:
   enabled: true
   interval: 300    # 每 300 秒（5 分鐘）清理一次
-  
+
   broadcast:
     enabled: true
     message: "&c[系統] 將在 60 秒後清理掉落物..."
-    
+
   remove:
     items: true      # 清理掉落物
     primed-tnt: true # 清理 TNT

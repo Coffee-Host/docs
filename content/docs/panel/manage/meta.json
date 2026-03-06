@@ -5,6 +5,7 @@
   "pages": [
     "upload",
     "edit",
+    "move",
     "backup"
   ]
 }

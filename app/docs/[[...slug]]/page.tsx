@@ -1,3 +1,4 @@
+import defaultMdxComponents from "fumadocs-ui/mdx";
 import { Edit } from "lucide-react";
 import { getPage, getPages } from "@/app/source";
 import type { Metadata } from "next";
@@ -8,22 +9,21 @@ import { buttonVariants } from "@/app/components/ui/button";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { utils, type Page } from "@/app/source";
 
-export default async function Page({
-	params,
-}: {
-	params: { slug?: string[] };
+export default async function Page(props: {
+	params: Promise<{ slug?: string[] }>;
 }) {
+	const params = await props.params;
 	const page = getPage(params.slug);
 
 	if (page == null) {
 		notFound();
 	}
 
-	const MDX = page.data.exports.default;
+	const MDX = page.data.body;
 
 	const footer = (
 		<a
-			href={`https://github.com/Coffee-Hub-Club/docs/blob/main/content/docs/${page.file.path}`}
+			href={`https://github.com/Coffee-Host/docs/blob/main/content/docs/${page.path || ''}`}
 			target="_blank"
 			rel="noreferrer noopener"
 			className={cn(
@@ -40,12 +40,12 @@ export default async function Page({
 
 	return (
 		<DocsPage
-			toc={page.data.exports.toc}
+			toc={page.data.toc}
 			full={page.data.full}
-			lastUpdate={page.data.exports.lastModified}
 			tableOfContent={{
 				footer,
-				enabled: Boolean(page.data.exports.toc.length),
+				enabled: Boolean(page.data.toc?.length),
+				style: 'clerk',
 			}}
 			tableOfContentPopover={{ footer }}
 		>
@@ -54,8 +54,8 @@ export default async function Page({
 				<p className="mb-8 text-lg text-muted-foreground">
 					{page.data.description}
 				</p>
-				<MDX />
-				{page.file.name == "index" && page.slugs.length ? (
+				<MDX components={{ ...defaultMdxComponents }} />
+				{page.slugs.length && (page.path || '').endsWith("index.mdx") ? (
 					<Category page={page} />
 				) : null}
 			</DocsBody>
@@ -66,10 +66,11 @@ export default async function Page({
 function Category({ page }: { page: Page }): React.ReactElement {
 	const filtered = utils
 		.getPages()
-		.filter(
-			(item) =>
-				item.file.dirname === page.file.dirname && item.file.name !== "index"
-		);
+		.filter((item) => {
+			const itemDir = item.slugs.slice(0, -1).join('/');
+			const pageDir = page.slugs.slice(0, -1).join('/');
+			return itemDir === pageDir && item.url !== page.url;
+		});
 
 	return (
 		<Cards>
@@ -91,7 +92,8 @@ export async function generateStaticParams() {
 	}));
 }
 
-export function generateMetadata({ params }: { params: { slug?: string[] } }) {
+export async function generateMetadata(props: { params: Promise<{ slug?: string[] }> }) {
+	const params = await props.params;
 	const page = getPage(params.slug);
 
 	if (page == null) notFound();

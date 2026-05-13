@@ -3,7 +3,6 @@
   "defaultOpen": false,
   "icon": "SquareUserRound",
   "pages": [
-    "add-credit",
     "view-credit",
     "pay-credit",
     "share-account",

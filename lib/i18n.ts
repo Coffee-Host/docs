@@ -1,7 +1,7 @@
 import { Translations } from 'fumadocs-ui/i18n';
 
 export const zhTWTranslations: Partial<Translations> = {
-  search: '搜尋文檔',
+  search: '搜尋文件',
   searchNoResult: '沒有找到結果',
   toc: '目錄',
   tocNoHeadings: '沒有標題',

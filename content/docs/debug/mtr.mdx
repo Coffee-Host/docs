@@ -1,0 +1,56 @@
+---
+title: 路由追蹤
+description: 在 Windows 上進行路由追蹤
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+當您在遊玩過程中遭遇與伺服器連線不穩定、頻繁斷線，或是完全無法建立連線的情況時，問題可能出在您的網路與伺服器節點之間的路由傳輸上。為了讓我們能更有效地協助您排解問題，請在 Windows 系統上使用 **WinMTR** 工具進行路由追蹤（Traceroute）。
+
+<Callout type="info">
+**什麼是 WinMTR？**  
+WinMTR 是一款結合了 `ping` 與 `traceroute` 功能的網路診斷工具，它能顯示封包從您的電腦傳送到伺服器所經過的所有節點，以及各節點的延遲與遺失率。
+</Callout>
+
+### 必備工具下載
+
+請先點擊下方連結下載 WinMTR 工具：
+[下載 WinMTR 工具 (https://cdn.hypernetwork.tw/WinMTR.exe)](https://cdn.hypernetwork.tw/WinMTR.exe)
+
+### 執行路由追蹤教學
+
+<Steps>
+<Step>
+### 輸入伺服器位址
+開啟 WinMTR 後，請在介面上方的「主機 (Host)」欄位中輸入您伺服器的**連線位址**。
+*注意：請勿輸入連接埠 (Port)。例如，若連線位址為 `a.x.cfh.tw:13105`，您只需輸入 `a.x.cfh.tw` 即可。*
+![圖片](/images/debug/mtr/host.png)
+</Step>
+<Step>
+### 開始測試並等待數據收集
+點擊「開始 (Start)」按鈕讓程式開始傳送封包。請耐心等待列表中「Sent (已傳送)」的數值超過 **100**，這能確保收集到的連線數據具有足夠的參考價值。
+![圖片](/images/debug/mtr/start.png)
+</Step>
+<Step>
+### 截圖與回報
+當「Sent」超過 100 後，請點擊「截圖至剪貼簿」按鈕，並連同您的問題描述一併回傳給我們的客服團隊。
+![圖片](/images/debug/mtr/share.png)
+</Step>
+</Steps>
+
+### ⚠️ 測試注意事項
+
+<Callout type="warn">
+**網路環境限制**  
+請務必在**發生連線問題的那台客戶端電腦**上直接進行測試，且測試期間**請勿使用 VPN、加速器或任何代理服務**，否則測試結果將無法真實反映您原始網路的連線狀況。
+</Callout>
+
+<Callout type="error">
+**完整截圖要求**  
+請提供 WinMTR 的**完整視窗截圖**，切勿裁切或遮蔽任何內容。畫面中的任何詳細資訊對於我們交叉比對連線紀錄至關重要。
+</Callout>
+
+**💡 額外提示：**  
+* 建議在連線異常發生的**當下立即執行**此工具，以捕捉最真實的錯誤狀態。
+* 若您遭遇的是 Minecraft 伺服器無法連線的問題，回報時請**額外附上 Minecraft 遊戲客戶端畫面中顯示的錯誤訊息截圖**。

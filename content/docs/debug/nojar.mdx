@@ -1,0 +1,70 @@
+---
+title: 找不到 Jar
+description: 找不到伺服器啟動 Jar 檔案
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+當您啟動伺服器卻立刻遭遇崩潰時，其中一個最常見的原因是控制面板無法找到指定的啟動檔案。在 Java 環境中，這通常會反映為無法存取 `.jar` 檔案。
+
+以下為控制面板終端機可能輸出的錯誤訊息範例：
+
+```text
+[Coffee Host 主控臺]: 正在更新进程配置文件...
+[Coffee Host 主控臺]: 确保文件权限设置正确，这可能需要几秒钟...
+container@coffeehost~ Server marked as starting...
+[Coffee Host 主控臺]: 正在拉取 Docker 容器镜像，这可能需要几分钟才能完成...
+Pulling from ptero-eggs/yolks 
+Digest: sha256:afbe93630fc543361cd463630335fc04d799d52e1e87ca8d87005938e0508ad2 
+Status: Image is up to date for ghcr.io/ptero-eggs/yolks:java_25 
+[Coffee Host 主控臺]: Docker 容器镜像已拉取完成
+container@coffeehost~ java -version
+openjdk version "25.0.3" 2026-04-21 LTS
+OpenJDK Runtime Environment Temurin-25.0.3+9 (build 25.0.3+9-LTS)
+OpenJDK 64-Bit Server VM Temurin-25.0.3+9 (build 25.0.3+9-LTS, mixed mode, sharing)
+container@coffeehost~ java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar server.jar
+Error: Unable to access jarfile server.jar
+container@coffeehost~ Server marked as offline...
+[Coffee Host 主控臺]: ---------- 检测到服务器进程处于崩溃状态！ ----------
+[Coffee Host 主控臺]: 退出代码: 1
+[Coffee Host 主控臺]: 内存不足: false
+```
+
+### 診斷問題
+
+<Callout type="info">
+在上述繁雜的啟動日誌中，請注意這行關鍵錯誤訊息：  
+`Error: Unable to access jarfile server.jar`  
+這句話明確表示伺服器啟動程序在嘗試執行 `server.jar` 時失敗，因為該檔案不存在於根目錄，或是檔案名稱與啟動指令不符。
+</Callout>
+
+### 解決方案
+
+根據您建置伺服器的方式，請參考以下對應的修復步驟：
+
+<Steps>
+<Step>
+### 情況一：您是自行上傳伺服器核心檔案
+如果您是從外部下載核心檔案並手動上傳至檔案管理中，檔名可能不一定是 `server.jar`（例如可能是 `paper-1.20.4.jar`）。
+請前往控制面板的「啟動設定」頁面，找到「伺服器啟動 Jar 檔案」欄位。請將該欄位的值修改為您實際上傳的核心檔案名稱（需包含 `.jar` 副檔名）。
+![圖片](/images/debug/nojar/custom.png)
+</Step>
+<Step>
+### 情況二：伺服器核心檔案遺失
+如果您原本使用面板自動化安裝核心，但不小心誤刪了該檔案。
+請前往控制面板的「其他設定」頁面，點選重新安裝伺服器選項。系統會根據您當前的設定，自動重新下載並補齊遺失的核心檔案。
+![圖片](/images/debug/nojar/reinstall.png)
+</Step>
+<Step>
+### 情況三：啟動參數錯誤
+如果您已經重新安裝過核心，且檔案確實存在於目錄中，但仍出現此錯誤。
+請回到「啟動設定」頁面，仔細檢查您的 <b>啟動參數設定</b> 是否有輸入錯誤，或是引入了無法解析的特殊字元，這可能導致指令解析錯亂而無法正確指向 Jar 檔案。
+![圖片](/images/debug/nojar/startup.png)
+</Step>
+</Steps>
+
+<Callout type="warn">
+**最佳實踐**  
+為了避免日後混淆，建議您在手動上傳核心時，直接將該檔案重新命名為 `server.jar`，這樣就能維持預設的啟動設定而無須額外修改參數。
+</Callout>

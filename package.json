@@ -29,5 +29,9 @@
     "postcss": "^8.5.14",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
+  },
+  "allowScripts": {
+    "esbuild@0.28.0": true,
+    "sharp@0.34.5": true
   }
 }

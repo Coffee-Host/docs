@@ -3,43 +3,62 @@ title: 分享帳號使用權限
 description: 共享客戶中心帳號權限給您的財務管理，讓其他人來協助支付帳單。
 ---
 
-import { Callout } from "fumadocs-ui/components/callout";
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-<Callout title="分享帳號權限後，被分享人可以看到您的部分個人資料，請特別注意。" type="warn" />
+若您希望團隊成員（例如財務管理人員、系統管理員）能協助您處理伺服器或支付帳單等相關事宜，您可以透過分享帳號權限的方式，邀請他們加入您的客戶中心。
 
-import { Step, Steps } from "fumadocs-ui/components/steps";
+<Callout type="warn">
+  **安全性警告：** 分享帳號權限後，受邀者將能查看您的部分個人資料。請務必確認受邀者的身份，並謹慎選擇要賦予的權限，敬請特別留意。
+</Callout>
 
-# 邀請用戶
+## 邀請新用戶的完整步驟
+
+請依照以下流程，發送邀請並設定權限：
+
 <Steps>
-	<Step>
-	    登入客戶中心。
-        ![圖片](/images/store/account/share-account/login.png)
-    </Step>
-	<Step>
-	    點擊右上角，進入 「使用者管理」。
-        ![圖片](/images/store/account/share-account/menu.png)
-    </Step>
-	<Step>
-	    點擊 「邀請新用戶」 按鈕。
-        ![圖片](/images/store/account/share-account/invite.png)
-    </Step>
-	<Step>
-	    輸入新用戶的 Email 地址。
-        ![圖片](/images/store/account/share-account/email.png)
-    </Step>
-	<Step>
-	    選擇要分配的權限，完成後點擊 「發送邀請」。
-        ![圖片](/images/store/account/share-account/permission.png)
-    </Step>
-	<Step>
-	    請受邀請者前往信箱查看邀請信件，點擊 「接受邀請」。
-        ![圖片](/images/store/account/share-account/accept.png)
-    </Step>
-	<Step>
-	    如果受邀請者已經在 Coffee Host 上註冊帳號，可以立即登入；如果沒有帳號，請註冊。
-        ![圖片](/images/store/account/share-account/unregister.png)
-    </Step>
-	<Step>
-	    登入完成後，將會接受邀請。未來登入帳號時，系統會詢問要使用的帳號，以供選擇。
-    </Step>
+  <Step>
+    **登入客戶中心**
+    請使用您的主要帳號登入系統。
+	![圖片](/images/store/account/share-account/login.png)
+  </Step>
+  <Step>
+    **進入用戶管理**
+    點擊頁面右上角，進入「用戶管理」頁面。
+	![圖片](/images/store/account/share-account/menu.png)
+  </Step>
+  <Step>
+    **建立邀請**
+    點擊畫面上的「邀請新用戶」按鈕。
+	![圖片](/images/store/account/share-account/invite.png)
+  </Step>
+  <Step>
+    **填寫受邀者資訊**
+    輸入新用戶的 Email 地址。
+	![圖片](/images/store/account/share-account/email.png)
+  </Step>
+  <Step>
+    **配置權限並發送**
+    選擇欲分配給該用戶的權限（例如僅能查看帳單，或是能進入控制面板操作伺服器）。設定完成後點擊「發送邀請」。
+	![圖片](/images/store/account/share-account/permission.png)
+  </Step>
+  <Step>
+    **受邀者接收信件**
+    請受邀者前往其電子信箱查看邀請信件，並點擊「接受邀請」。
+	![圖片](/images/store/account/share-account/accept.png)
+  </Step>
+  <Step>
+    **受邀者登入或註冊**
+    - 若受邀者已於 CheapServer 註冊帳號，可立即登入。
+    - 若受邀者尚未擁有帳號，則請先完成註冊程序。
+	![圖片](/images/store/account/share-account/unregister.png)
+  </Step>
+  <Step>
+    **切換與管理帳號**
+    登入完成後，系統將自動接受邀請。未來登入時，系統會詢問欲使用的帳號，以便您進行切換與選擇。
+  </Step>
 </Steps>
+
+<Callout type="info">
+  **專家提示：** 定期審查您的「用戶管理」列表，移除已離職或不再需要存取權限的成員，是維持帳號與伺服器安全的重要好習慣。
+</Callout>

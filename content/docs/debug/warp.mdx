@@ -22,61 +22,28 @@ WARP 不一定會讓所有連線變快；如果原本的路徑已經是最佳路
 WARP 不是匿名工具，也不能讓您偽裝成其他國家的使用者。它只會改變裝置前往網際網路的傳輸路徑；伺服器離線、連接埠關閉、帳號權限錯誤或遊戲服務本身故障，無法透過 WARP 修復。
 </Callout>
 
-## 使用前先記錄原本的連線
+## 連線測試方式
 
-請先準備 Minecraft 主機的連線位址與連接埠。若客服已提供完整位址，例如 `play.example.com:25565`，請將主機位址與連接埠分開記下：
+WARP 前後的連線比較請使用現有的 [WinMTR 路由追蹤教學](/docs/debug/mtr)，不要改用不同工具或不同測試目標。WinMTR 能列出電腦到 Minecraft 主機之間的每個網路節點、延遲及封包遺失，較容易判斷問題是否出在原本的 ISP 路由。
 
-- **主機位址：** `play.example.com`
-- **連接埠：** `25565`
+請先準備 Minecraft 主機的**連線位址**。如果遊戲內顯示完整位址，例如 `play.example.com:25565`，WinMTR 的「主機（Host）」欄位只輸入 `play.example.com`，不要輸入 `:25565` 連接埠。
 
-如果您使用的是 SRV 網域，請直接使用遊戲內實際輸入的連線位址進行測試。
+請依下列順序測試：
 
-<Steps>
-<Step>
-### 開啟命令提示字元
+1. **關閉 WARP**，依照 [WinMTR 路由追蹤教學](/docs/debug/mtr) 執行測試，等待 `Sent` 超過 100 後保存完整截圖，並標記為「WARP 關閉」。
+2. 使用相同的電腦、相同的網路、相同的主機位址，再完成本頁的 WARP 安裝與連線步驟。
+3. **開啟 WARP 並確認顯示已連線**，再回到 [WinMTR 路由追蹤教學](/docs/debug/mtr) 使用完全相同的主機位址重新測試，等待 `Sent` 超過 100 後保存完整截圖，並標記為「WARP 開啟」。
+4. 將兩張 WinMTR 完整截圖一起提供給客服，比較各節點的 `Loss%`、`Avg`、`Worst` 及最後一列的結果。請不要只截取單一節點或裁掉視窗其他欄位。
 
-1. 按下 **Win + R** 開啟「執行」視窗。
-2. 輸入 `cmd`，按下 **Enter**。
+<Callout type="info" title="圖片 Placeholder：WARP 前後 WinMTR 比較">
+**預計檔名：** `/images/debug/warp/mtr-before-after.png`
 
-<Callout type="info" title="圖片 Placeholder：開啟命令提示字元">
-**預計檔名：** `/images/debug/warp/open-command-prompt.png`
+**請截圖：** 將「WARP 關閉」與「WARP 開啟」兩張 WinMTR 完整視窗截圖上下排列；兩次測試都要使用同一台電腦、同一個主機位址，且 `Sent` 建議超過 100。
 
-**請截圖：** Windows「執行」視窗，完整顯示輸入 `cmd` 的欄位及「確定」按鈕。
+**請框選：** 分別框住最後一列的 `Loss%`、`Avg`、`Worst` 與節點路徑；在圖片上方清楚標註「WARP 關閉」及「WARP 開啟」。不要裁掉 WinMTR 的欄位或遮蔽客服需要判讀的節點資料。
 
-**請框選：** 框住輸入欄位與「確定」按鈕，並用箭頭標記「輸入 cmd → 按確定」；不要顯示使用者名稱或其他已輸入的命令。
-
-**圖片下方引導文字：**「按下 Win + R，輸入 cmd，再按『確定』開啟命令提示字元。」
+**圖片下方引導文字：**「請先依 WinMTR 教學取得 WARP 關閉的結果，再開啟 WARP 使用相同目標重測，將兩張完整截圖一起回傳。」
 </Callout>
-</Step>
-
-<Step>
-### 測試開啟 WARP 前的連線
-
-在命令提示字元中，將 `<主機位址>` 替換成您的主機位址，執行：
-
-```text
-ping -n 20 <主機位址>
-```
-
-若您知道連接埠，也可以開啟 PowerShell，將 `<連接埠>` 替換成實際數字後執行：
-
-```powershell
-Test-NetConnection <主機位址> -Port <連接埠>
-```
-
-請記下 `Average`、`Lost`，以及 `TcpTestSucceeded` 顯示的結果。這是開啟 WARP 前的基準，稍後要與 WARP 開啟後比較。
-
-<Callout type="info" title="圖片 Placeholder：WARP 開啟前的測試結果">
-**預計檔名：** `/images/debug/warp/before-test.png`
-
-**請截圖：** 命令提示字元中的完整 `ping -n 20` 結果；若有測試連接埠，也可一併截取 PowerShell 的 `Test-NetConnection` 結果。
-
-**請框選：** 框住封包遺失率、平均延遲，以及 `TcpTestSucceeded`；請遮蔽 Windows 使用者名稱、內部 IP 或其他不必要的命令內容。
-
-**圖片下方引導文字：**「先保留這張原始線路測試結果，開啟 WARP 後使用同一個主機位址與連接埠再測試一次。」
-</Callout>
-</Step>
-</Steps>
 
 ## 從官方頁面下載 Cloudflare WARP
 
@@ -165,33 +132,13 @@ Test-NetConnection <主機位址> -Port <連接埠>
 </Step>
 </Steps>
 
-## 使用 WARP 後重新測試
+## 使用 WARP 後判斷結果
 
-請保持 WARP 開啟，回到命令提示字元或 PowerShell，使用與前面完全相同的主機位址、連接埠與指令重新測試：
+WARP 顯示已連線後，請依前面的 [WinMTR 路由追蹤教學](/docs/debug/mtr)，使用完全相同的主機位址重新執行一次測試。等待 `Sent` 超過 100，再將新結果與「WARP 關閉」的完整結果並列比較：
 
-```text
-ping -n 20 <主機位址>
-```
-
-```powershell
-Test-NetConnection <主機位址> -Port <連接埠>
-```
-
-比較開啟前後的平均延遲、封包遺失率與 `TcpTestSucceeded`：
-
-- 平均延遲降低、封包遺失減少，且連接埠測試成功：可以保持 WARP 開啟，再進入 Minecraft 測試。
-- 結果差不多：WARP 對目前網路路由沒有明顯改善，可以依使用習慣決定是否保留。
-- 延遲變高、封包遺失增加或測試失敗：請關閉 WARP，恢復原本連線後再回報客服。
-
-<Callout type="info" title="圖片 Placeholder：WARP 開啟前後比較">
-**預計檔名：** `/images/debug/warp/after-test.png`
-
-**請截圖：** WARP 開啟後的 `ping` 及 `Test-NetConnection` 結果，最好與開啟前結果放在同一張長圖上下對照。
-
-**請框選：** 上半部標記「WARP 開啟前」，下半部標記「WARP 開啟後」，分別框住平均延遲、遺失率與 `TcpTestSucceeded`；不要只截取單一成功行而失去比較依據。
-
-**圖片下方引導文字：**「請比較兩次測試結果；只有在 WARP 開啟後確實改善時，才建議保持連線。」
-</Callout>
+- `Loss%` 降低、節點的 `Avg`／`Worst` 改善：保持 WARP，進入 Minecraft 實測。
+- 結果接近：WARP 沒有明顯改變目前路由，可依實際遊戲體驗決定是否保留。
+- `Loss%` 增加或節點延遲變高：關閉 WARP，保留兩份 WinMTR 完整截圖回報客服。
 
 ## 進入 Minecraft 測試
 
@@ -240,8 +187,8 @@ Test-NetConnection <主機位址> -Port <連接埠>
 </Callout>
 
 - **開啟 WARP 後所有網站都無法開啟：** 先關閉 WARP，確認原本網路恢復後，再嘗試重新連線。
-- **Minecraft 仍然無法連線：** 確認伺服器位址、連接埠及伺服器狀態，並比較 WARP 開啟前後的 `Test-NetConnection` 結果。
-- **延遲沒有降低：** WARP 不保證每個 ISP 或每個目的地都會有更短路徑；以實際 `ping`、封包遺失及遊戲體驗為準。
+- **Minecraft 仍然無法連線：** 確認伺服器位址、連接埠及伺服器狀態，並比較 WARP 開啟前後的 WinMTR 結果。
+- **延遲沒有降低：** WARP 不保證每個 ISP 或每個目的地都會有更短路徑；以 WinMTR 節點延遲、封包遺失及遊戲體驗為準。
 - **WARP 連線一下就中斷：** 檢查 Wi-Fi 是否穩定，並確認公司、學校或公共網路沒有封鎖 WARP 所需的連線。
 
 回報問題時，請提供發生時間、主機位址與連接埠、WARP 開啟前後的測試結果、WARP 顯示的連線狀態，以及 Minecraft 的完整錯誤訊息。截圖前請先遮蔽帳號、玩家名稱、公開 IP 與其他個人資訊。

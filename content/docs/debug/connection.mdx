@@ -21,38 +21,39 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 <Steps>
 <Step>
 
-### 1. 先檢查是否被上游防火牆封鎖
+### 1. 檢查 FastLine 並視情況更換連線位址
 
 請先在瀏覽器開啟 [https://fast-line.tw/](https://fast-line.tw/)。如果無法瀏覽，通常表示目前連線已被抗攻擊上游的防火牆判定為異常流量並封鎖。
 
+如果確認被封鎖，請暫時將 Minecraft 的連線位址改為 `udp.cfh.tw:<連接埠>`。例如原本使用 `a.x.cfh.tw:11102`，請暫時改為 `udp.cfh.tw:11102`。如果 `fast-line.tw` 可以正常瀏覽，請先保留原本的連線位址。
+
+改用替代位址後，請不要頻繁進出伺服器，也不要太頻繁重新整理伺服器列表，避免短時間內產生大量連線請求。
 </Step>
 
 <Step>
-### 2. 被封鎖時的處理方式
+### 2. 設定 Google DNS 並清除快取
 
-1. 暫時將 Minecraft 的連線位址改為 `udp.cfh.tw:<連接埠>`。例如原本使用 `a.x.cfh.tw:11102`，請暫時改為 `udp.cfh.tw:11102`。
-2. 改用替代位址後，請不要頻繁進出伺服器，也不要太頻繁重新整理伺服器列表，避免短時間內產生大量連線請求。
-3. 如果仍然無法連線，可以暫時開啟 [Cloudflare WARP](/docs/debug/warp) 繞過目前的網路障礙，再重新嘗試連線。
+完成第一步後若仍然無法連線，請依照 [Google DNS 教學](/docs/debug/googledns) 將 DNS 設定為 `8.8.8.8` 與 `8.8.4.4`。
 
-</Step>
-
-<Step>
-### 3. 未被封鎖或改用替代位址後仍無法連線
-
-1. 先依照 [Google DNS 教學](/docs/debug/googledns) 將 DNS 設定為 `8.8.8.8` 與 `8.8.4.4`。
-2. 開啟命令提示字元，執行以下指令清除 DNS 快取：
+開啟命令提示字元，執行以下指令清除 DNS 快取：
 
    ```text
    ipconfig /flushdns
    ```
 
-3. 使用 `nslookup <主機位址>` 確認輸出中的 **Server** 或 **伺服器** 是否為 `8.8.8.8` 或 `8.8.4.4`，再重新開啟 Minecraft 連線。
-4. 如果仍然無法連線，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 安裝並連線後再嘗試。
+使用 `nslookup <主機位址>` 確認輸出中的 **Server** 或 **伺服器** 是否為 `8.8.8.8` 或 `8.8.4.4`，再重新開啟 Minecraft 連線。
 
 </Step>
 
 <Step>
-### 4. 仍無法連線或延遲很高
+### 3. 使用 Cloudflare WARP 改善路由
+
+如果 Google DNS 及清除 DNS 快取後仍然無法連線，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 安裝並連線，再使用相同的 Minecraft 連線位址重新嘗試。WARP 顯示已連線後，請不要再頻繁進出伺服器或重新整理伺服器列表。
+
+</Step>
+
+<Step>
+### 4. 仍無法連線或延遲很高時回報
 
 如果上述方法都無法解決問題，或使用原本位址及 `udp.cfh.tw:<連接埠>` 時延遲都很高，請前往 [Discord 客服群組](https://discord.gg/hpe2aWVaYs) 開啟「售後服務」客服單，並提供：
 
@@ -74,9 +75,15 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 </Step>
 
 <Step>
-### 2. 仍無法連線時提供資料
+### 2. 使用 Cloudflare WARP 改善路由
 
-如果確認連線位址正確後仍然無法連線，請依照 [MTR 路由追蹤](/docs/debug/mtr) 執行 WinMTR，並在問題發生時保存完整結果。
+如果確認連線位址正確後仍然無法連線，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 開啟 WARP，等待顯示已連線後，再使用相同的 `udp.cfh.tw:<連接埠>` 位址重新嘗試。
+</Step>
+
+<Step>
+### 3. 仍無法連線時提供資料
+
+如果開啟 WARP 後仍然無法連線，請依照 [MTR 路由追蹤](/docs/debug/mtr) 執行 WinMTR，並在問題發生時保存完整結果。
 
 前往 [Discord 客服群組](https://discord.gg/hpe2aWVaYs) 開啟「售後服務」客服單時，請一併提供：
 
@@ -97,7 +104,13 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 </Step>
 
 <Step>
-### 2. 提供服務連線問題資料
+### 2. 使用 Cloudflare WARP 改善路由
+
+完成第一步後，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 開啟 WARP，等待顯示已連線後，再使用相同的 VPS 位址及服務連接埠重新嘗試連線。
+</Step>
+
+<Step>
+### 3. 提供服務連線問題資料
 
 請前往 [Discord 客服群組](https://discord.gg/hpe2aWVaYs) 開啟「售後服務」客服單，並提供：
 

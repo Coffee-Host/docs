@@ -4,9 +4,9 @@ description: Minecraft、Hytale、Palworld 與 VPS 的簡易網路排查方式
 icon: WifiOff
 ---
 
+import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Callout } from 'fumadocs-ui/components/callout';
-
-# 簡易網路排查方式
+import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 使用超大咖託管服務時，若遇到連線問題，請先依照您使用的服務類型，按照以下步驟快速排查原因。
 
@@ -14,19 +14,30 @@ import { Callout } from 'fumadocs-ui/components/callout';
 請記下發生問題的時間、使用的網路環境（家用網路、公司網路或行動網路）、連線位址與連接埠，以及完整的錯誤訊息。需要提供截圖時，請保留完整畫面，不要只截取單一錯誤文字。
 </Callout>
 
-## 1. Minecraft Java
+## 依服務類型排查
 
-### 先檢查是否被上游防火牆封鎖
+<Accordions>
+<Accordion title="Minecraft Java">
+<Steps>
+<Step>
+
+### 1. 先檢查是否被上游防火牆封鎖
 
 請先在瀏覽器開啟 [https://fast-line.tw/](https://fast-line.tw/)。如果無法瀏覽，通常表示目前連線已被抗攻擊上游的防火牆判定為異常流量並封鎖。
 
-### 被封鎖時的處理方式
+</Step>
 
-1. 暫時將 Minecraft 的連線位址改為 `udp.cfh.tw:<連接埠>`。例如原本使用 `tsa.cfh.tw:11102`，請暫時改為 `udp.cfh.tw:11102`。
+<Step>
+### 2. 被封鎖時的處理方式
+
+1. 暫時將 Minecraft 的連線位址改為 `udp.cfh.tw:<連接埠>`。例如原本使用 `a.x.cfh.tw:11102`，請暫時改為 `udp.cfh.tw:11102`。
 2. 改用替代位址後，請不要頻繁進出伺服器，也不要太頻繁重新整理伺服器列表，避免短時間內產生大量連線請求。
 3. 如果仍然無法連線，可以暫時開啟 [Cloudflare WARP](/docs/debug/warp) 繞過目前的網路障礙，再重新嘗試連線。
 
-### 未被封鎖或改用替代位址後仍無法連線
+</Step>
+
+<Step>
+### 3. 未被封鎖或改用替代位址後仍無法連線
 
 1. 先依照 [Google DNS 教學](/docs/debug/googledns) 將 DNS 設定為 `8.8.8.8` 與 `8.8.4.4`。
 2. 開啟命令提示字元，執行以下指令清除 DNS 快取：
@@ -38,19 +49,32 @@ import { Callout } from 'fumadocs-ui/components/callout';
 3. 使用 `nslookup <主機位址>` 確認輸出中的 **Server** 或 **伺服器** 是否為 `8.8.8.8` 或 `8.8.4.4`，再重新開啟 Minecraft 連線。
 4. 如果仍然無法連線，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 安裝並連線後再嘗試。
 
-### 仍無法連線或延遲很高
+</Step>
+
+<Step>
+### 4. 仍無法連線或延遲很高
 
 如果上述方法都無法解決問題，或使用原本位址及 `udp.cfh.tw:<連接埠>` 時延遲都很高，請前往 [Discord 客服群組](https://discord.gg/hpe2aWVaYs) 開啟「售後服務」客服單，並提供：
 
 - [MTR 路由追蹤](/docs/debug/mtr) 的完整 WinMTR 截圖。
 - Minecraft 無法連線、Connection Reset、逾時或延遲異常的完整遊戲畫面截圖。
 - 使用的連線位址與連接埠、發生時間、網路環境，以及已嘗試過的 Google DNS、替代位址或 WARP 步驟。
+</Step>
+</Steps>
+</Accordion>
 
-## 2. Minecraft 基岩版／Hytale／Palworld
+<Accordion title="Minecraft 基岩版／Hytale／Palworld">
+<Steps>
+<Step>
 
-### 先確認連線位址
+### 1. 先確認連線位址
 
 這些遊戲請使用包含 `udp.cfh.tw` 的正確連線位址，例如 `udp.cfh.tw:<連接埠>`。請確認連接埠數字與客服或服務面板提供的資料一致，不要直接套用 Minecraft Java 的連線位址或連接埠。
+
+</Step>
+
+<Step>
+### 2. 仍無法連線時提供資料
 
 如果確認連線位址正確後仍然無法連線，請依照 [MTR 路由追蹤](/docs/debug/mtr) 執行 WinMTR，並在問題發生時保存完整結果。
 
@@ -59,16 +83,31 @@ import { Callout } from 'fumadocs-ui/components/callout';
 - 以 `udp.cfh.tw:<連接埠>` 為目標的完整 MTR／WinMTR 截圖。
 - 遊戲顯示無法連線、逾時、Connection Reset 或其他錯誤的完整畫面截圖。
 - 使用的遊戲、連線位址與連接埠、發生時間、網路環境，以及詳細問題描述。
+</Step>
+</Steps>
+</Accordion>
 
-## 3. VPS
+<Accordion title="VPS">
+<Steps>
+<Step>
+### 1. 確認 VPS 位址並執行 MTR
 
 如果 VPS 上的網站、面板、遠端桌面或其他服務無法連線，請先確認使用的是正確的 VPS IP 位址或網域，以及正確的服務連接埠。接著依照 [MTR 路由追蹤](/docs/debug/mtr) 執行 WinMTR，主機欄位填入 VPS 的 IP 位址或網域，不要填入連接埠。
+
+</Step>
+
+<Step>
+### 2. 提供服務連線問題資料
 
 請前往 [Discord 客服群組](https://discord.gg/hpe2aWVaYs) 開啟「售後服務」客服單，並提供：
 
 - 以 VPS IP 位址或網域為目標的完整 MTR／WinMTR 截圖。
 - 您的服務連線有問題的完整截圖，例如瀏覽器錯誤、SSH、遠端桌面或服務端的錯誤訊息。
 - 發生時間、服務名稱與連接埠、使用的網路環境，以及問題的詳細情況。
+</Step>
+</Steps>
+</Accordion>
+</Accordions>
 
 <Callout type="warn" title="MTR 截圖注意事項">
 請在發生問題的那台電腦與相同網路環境下執行 WinMTR，等待 **Sent** 超過 100 後提供完整視窗截圖。請不要裁切節點、遺失率或最後一列的資料，這些資訊有助於我們判斷問題所在。

@@ -1,5 +1,5 @@
 ---
-title: 設定 Google Public DNS
+title: Google DNS
 description: 在 Windows 系統上將 DNS 設定為 Google Public DNS
 icon: Network
 ---
@@ -7,9 +7,17 @@ icon: Network
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-當您遇到網站或伺服器網域無法解析、顯示找不到主機，或不同網路環境的解析結果不一致時，可以先將 Windows 的 DNS（網域名稱系統）改為 **Google Public DNS** 測試。
+當您遇到 Minecraft 主機無法連線、網域解析失敗、顯示找不到主機，或不同網路環境取得的解析結果不一致時，可以先將 Windows 的 DNS（網域名稱系統）改為 **Google Public DNS** 測試。
 
-Google Public DNS 只負責將網域名稱轉換為 IP 位址，不會改善所有網路延遲、伺服器故障或連接埠封鎖問題。完成設定後，若問題仍然存在，請將測試結果一併提供給客服團隊。
+Coffee Host 使用的網路線路皆具備備援機制；當單一線路或節點發生故障時，系統會自動切換至可用的備援路徑。因此，如果 Minecraft 主機本身正常，但您遇到暫時連不進去的情況，建議先改用 Google DNS，讓電腦重新取得較新的主機解析結果。
+
+相較於部分 ISP 預設 DNS，Google DNS 通常能較快重新查詢並取得更新後的 DNS 記錄，對剛完成切換、異動或修復的 Minecraft 主機尤其有幫助；實際更新時間仍會受網域 TTL、ISP 快取及各地 DNS 狀況影響。
+
+<Callout type="info" title="Google DNS 的額外優點：ECS">
+Google Public DNS 支援 **EDNS Client Subnet（ECS）**。在 ISP、CDN 及權威 DNS 支援 ECS 的情況下，解析服務可以依據使用者所在網路的大致位置，選擇較合適的 IP 及網路路由，讓 ISP 有機會將連線導向較好的路徑。ECS 只提供部分網段資訊，並不保證每次都會降低延遲或改善路由。
+</Callout>
+
+Google Public DNS 主要負責網域解析，不會修復伺服器離線、連接埠封鎖、實體線路中斷或服務本身故障。完成設定後若問題仍然存在，請將測試結果、錯誤訊息與發生時間一併提供給客服團隊。
 
 <Callout type="warn" title="修改前請先確認">
 本教學只需要修改 DNS 伺服器欄位，請勿任意變更 IP 位址、子網路遮罩、預設閘道或其他網路設定。若這台電腦由公司、學校或 VPN 管理，DNS 可能會被管理政策自動覆寫。
@@ -22,75 +30,11 @@ Google Public DNS 只負責將網域名稱轉換為 IP 位址，不會改善所�
 | IPv4 | `8.8.8.8` | `8.8.4.4` |
 | IPv6 | `2001:4860:4860::8888` | `2001:4860:4860::8844` |
 
-## Windows 11 設定方式
+## Windows 通用設定方式（以 Windows 10 示範）
 
-<Steps>
-<Step>
-### 開啟目前使用中的網路設定
+以下使用 Windows 10 的傳統「網路連線」介面示範。這個方法透過 `ncpa.cpl` 開啟網路介面卡設定，不依賴特定版本的「設定」頁面；其他 Windows 版本只要能開啟相同介面，也可以按照相同步驟操作。
 
-1. 按一下 **開始** → **設定**。
-2. 在左側選擇 **網路和網際網路**。
-3. 依目前的連線類型選擇 **Wi-Fi** 或 **乙太網路**，再開啟目前顯示「已連線」的網路。
-
-<Callout type="info" title="圖片 Placeholder：Windows 11 網路設定入口">
-**預計檔名：** `/images/debug/googledns/windows11-network.png`
-
-**請截圖：** Windows 11「網路和網際網路」頁面，畫面中要同時看得到 Wi-Fi／乙太網路選單，以及目前顯示「已連線」的介面。
-
-**請框選：** 框住左側的「網路和網際網路」及右側目前使用中的 Wi-Fi 或乙太網路項目；不要框選使用者名稱、IP 位址或其他個人資訊。
-
-**圖片下方引導文字：**「請依您目前的連線方式，點選顯示為『已連線』的 Wi-Fi 或乙太網路。」
-</Callout>
-</Step>
-
-<Step>
-### 找到 DNS 伺服器設定
-
-在目前的網路詳細設定頁面中，找到 **DNS 伺服器指派**，再按一下右側的 **編輯**。
-
-<Callout type="info" title="圖片 Placeholder：DNS 伺服器指派">
-**預計檔名：** `/images/debug/googledns/windows11-dns-assignment.png`
-
-**請截圖：** 目前網路的詳細設定頁面，讓「DNS 伺服器指派」整列完整出現在畫面中。
-
-**請框選：** 只框住「DNS 伺服器指派」文字、目前的設定值，以及右側的「編輯」按鈕。若畫面同時顯示 IP 位址或硬體資訊，請裁切或遮蔽那些欄位。
-
-**圖片下方引導文字：**「在『DNS 伺服器指派』右側按一下『編輯』，開啟 DNS 設定視窗。」
-</Callout>
-</Step>
-
-<Step>
-### 輸入 Google DNS 位址
-
-在「編輯 DNS 設定」視窗中依序完成以下設定：
-
-1. 將設定方式由 **自動（DHCP）** 改為 **手動**。
-2. 開啟 **IPv4**。
-3. 在 **慣用 DNS** 輸入 `8.8.8.8`。
-4. 在 **其他 DNS** 輸入 `8.8.4.4`。
-5. 若您的網路確實使用 IPv6，也可以開啟 **IPv6**，填入 `2001:4860:4860::8888` 及 `2001:4860:4860::8844`；不確定時先只設定 IPv4。
-
-<Callout type="info" title="圖片 Placeholder：輸入 Google DNS">
-**預計檔名：** `/images/debug/googledns/windows11-dns-values.png`
-
-**請截圖：** Windows 11「編輯 DNS 設定」視窗，完整顯示手動模式、IPv4 開關、兩個 IPv4 欄位，以及視窗底部的「儲存」按鈕。
-
-**請框選：** 使用不同顏色的框依序標記「手動」、「IPv4」、「慣用 DNS」、「其他 DNS」四個位置；在兩個欄位旁加上 `8.8.8.8` 與 `8.8.4.4` 的文字標籤。不要把真實的其他 DNS、公司網域或帳號資訊放進示範圖。
-
-**圖片下方引導文字：**「將模式切換為『手動』並開啟 IPv4，依圖片填入兩組 Google DNS 位址；其他網路欄位請保持原設定。」
-</Callout>
-</Step>
-
-<Step>
-### 儲存設定並重新連線
-
-確認位址輸入無誤後，按一下 **儲存**，再關閉設定視窗。若網路未自動恢復，請先中斷 Wi-Fi 或拔除網路線，等待數秒後重新連線。
-</Step>
-</Steps>
-
-## Windows 10 或傳統介面設定方式
-
-如果您使用 Windows 10，或在 Windows 11 找不到「DNS 伺服器指派」，可以使用 Windows 內建的網路介面卡設定：
+請依照下列步驟在 Windows 10 的傳統網路介面中設定 DNS；其他 Windows 版本若畫面文字略有不同，請尋找相同功能名稱即可。
 
 <Steps>
 <Step>

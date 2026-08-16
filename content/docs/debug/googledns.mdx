@@ -1,0 +1,191 @@
+---
+title: 設定 Google Public DNS
+description: 在 Windows 系統上將 DNS 設定為 Google Public DNS
+icon: Globe
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+當您遇到網站或伺服器網域無法解析、顯示找不到主機，或不同網路環境的解析結果不一致時，可以先將 Windows 的 DNS（網域名稱系統）改為 **Google Public DNS** 測試。
+
+Google Public DNS 只負責將網域名稱轉換為 IP 位址，不會改善所有網路延遲、伺服器故障或連接埠封鎖問題。完成設定後，若問題仍然存在，請將測試結果一併提供給客服團隊。
+
+<Callout type="warn" title="修改前請先確認">
+本教學只需要修改 DNS 伺服器欄位，請勿任意變更 IP 位址、子網路遮罩、預設閘道或其他網路設定。若這台電腦由公司、學校或 VPN 管理，DNS 可能會被管理政策自動覆寫。
+</Callout>
+
+## Google Public DNS 位址
+
+| 通訊協定 | 慣用 DNS 伺服器 | 其他 DNS 伺服器 |
+| --- | --- | --- |
+| IPv4 | `8.8.8.8` | `8.8.4.4` |
+| IPv6 | `2001:4860:4860::8888` | `2001:4860:4860::8844` |
+
+## Windows 11 設定方式
+
+<Steps>
+<Step>
+### 開啟目前使用中的網路設定
+
+1. 按一下 **開始** → **設定**。
+2. 在左側選擇 **網路和網際網路**。
+3. 依目前的連線類型選擇 **Wi-Fi** 或 **乙太網路**，再開啟目前顯示「已連線」的網路。
+
+<Callout type="info" title="圖片 Placeholder：Windows 11 網路設定入口">
+**預計檔名：** `/images/debug/googledns/windows11-network.png`
+
+**請截圖：** Windows 11「網路和網際網路」頁面，畫面中要同時看得到 Wi-Fi／乙太網路選單，以及目前顯示「已連線」的介面。
+
+**請框選：** 框住左側的「網路和網際網路」及右側目前使用中的 Wi-Fi 或乙太網路項目；不要框選使用者名稱、IP 位址或其他個人資訊。
+
+**圖片下方引導文字：**「請依您目前的連線方式，點選顯示為『已連線』的 Wi-Fi 或乙太網路。」
+</Callout>
+</Step>
+
+<Step>
+### 找到 DNS 伺服器設定
+
+在目前的網路詳細設定頁面中，找到 **DNS 伺服器指派**，再按一下右側的 **編輯**。
+
+<Callout type="info" title="圖片 Placeholder：DNS 伺服器指派">
+**預計檔名：** `/images/debug/googledns/windows11-dns-assignment.png`
+
+**請截圖：** 目前網路的詳細設定頁面，讓「DNS 伺服器指派」整列完整出現在畫面中。
+
+**請框選：** 只框住「DNS 伺服器指派」文字、目前的設定值，以及右側的「編輯」按鈕。若畫面同時顯示 IP 位址或硬體資訊，請裁切或遮蔽那些欄位。
+
+**圖片下方引導文字：**「在『DNS 伺服器指派』右側按一下『編輯』，開啟 DNS 設定視窗。」
+</Callout>
+</Step>
+
+<Step>
+### 輸入 Google DNS 位址
+
+在「編輯 DNS 設定」視窗中依序完成以下設定：
+
+1. 將設定方式由 **自動（DHCP）** 改為 **手動**。
+2. 開啟 **IPv4**。
+3. 在 **慣用 DNS** 輸入 `8.8.8.8`。
+4. 在 **其他 DNS** 輸入 `8.8.4.4`。
+5. 若您的網路確實使用 IPv6，也可以開啟 **IPv6**，填入 `2001:4860:4860::8888` 及 `2001:4860:4860::8844`；不確定時先只設定 IPv4。
+
+<Callout type="info" title="圖片 Placeholder：輸入 Google DNS">
+**預計檔名：** `/images/debug/googledns/windows11-dns-values.png`
+
+**請截圖：** Windows 11「編輯 DNS 設定」視窗，完整顯示手動模式、IPv4 開關、兩個 IPv4 欄位，以及視窗底部的「儲存」按鈕。
+
+**請框選：** 使用不同顏色的框依序標記「手動」、「IPv4」、「慣用 DNS」、「其他 DNS」四個位置；在兩個欄位旁加上 `8.8.8.8` 與 `8.8.4.4` 的文字標籤。不要把真實的其他 DNS、公司網域或帳號資訊放進示範圖。
+
+**圖片下方引導文字：**「將模式切換為『手動』並開啟 IPv4，依圖片填入兩組 Google DNS 位址；其他網路欄位請保持原設定。」
+</Callout>
+</Step>
+
+<Step>
+### 儲存設定並重新連線
+
+確認位址輸入無誤後，按一下 **儲存**，再關閉設定視窗。若網路未自動恢復，請先中斷 Wi-Fi 或拔除網路線，等待數秒後重新連線。
+</Step>
+</Steps>
+
+## Windows 10 或傳統介面設定方式
+
+如果您使用 Windows 10，或在 Windows 11 找不到「DNS 伺服器指派」，可以使用 Windows 內建的網路介面卡設定：
+
+<Steps>
+<Step>
+### 開啟網路介面卡清單
+
+1. 按下 **Win + R** 開啟「執行」視窗。
+2. 輸入 `ncpa.cpl`，按下 **Enter**。
+3. 在「網路連線」視窗中，找出目前正在使用的 Wi-Fi 或乙太網路介面卡。
+
+<Callout type="info" title="圖片 Placeholder：網路連線介面卡">
+**預計檔名：** `/images/debug/googledns/windows10-adapter.png`
+
+**請截圖：** Windows「網路連線」視窗，至少顯示目前使用中的 Wi-Fi 或乙太網路介面卡及其「已啟用／已連線」狀態。
+
+**請框選：** 框住要操作的介面卡，並在框旁標記「右鍵此介面卡」；不要框選未使用的介面卡、藍牙裝置或任何個人化名稱。
+
+**圖片下方引導文字：**「請在目前顯示已連線的網路介面卡上按一下右鍵，再選擇『內容』。」
+</Callout>
+</Step>
+
+<Step>
+### 開啟 IPv4 內容
+
+在介面卡上按右鍵，選擇 **內容**。在清單中點選 **網際網路通訊協定第 4 版（TCP/IPv4）**，再按 **內容**。
+
+<Callout type="info" title="圖片 Placeholder：IPv4 內容按鈕">
+**預計檔名：** `/images/debug/googledns/windows10-ipv4-select.png`
+
+**請截圖：** 介面卡「內容」視窗，讓「網際網路通訊協定第 4 版（TCP/IPv4）」項目及下方的「內容」按鈕同時可見。
+
+**請框選：** 第一個框標記 TCP/IPv4 項目，第二個框標記「內容」按鈕，並用箭頭表示操作順序。請遮蔽其他不必要的網路資訊。
+
+**圖片下方引導文字：**「選取 TCP/IPv4 後按『內容』，不要修改其他通訊協定或服務。」
+</Callout>
+</Step>
+
+<Step>
+### 填入 DNS 並套用
+
+在 IPv4 內容視窗中：
+
+1. 保持 **自動取得 IP 位址** 的選項及原有 IP 設定不變。
+2. 選取 **使用下列 DNS 伺服器位址**。
+3. 慣用 DNS 輸入 `8.8.8.8`，其他 DNS 輸入 `8.8.4.4`。
+4. 按 **確定**，再按介面卡內容視窗的 **確定**。
+
+<Callout type="info" title="圖片 Placeholder：Windows 10 IPv4 DNS 欄位">
+**預計檔名：** `/images/debug/googledns/windows10-dns-values.png`
+
+**請截圖：** IPv4 內容視窗，完整顯示「使用下列 DNS 伺服器位址」及兩個已填入 Google DNS 的欄位。
+
+**請框選：** 框住 DNS 選項、`8.8.8.8`、`8.8.4.4` 及「確定」按鈕；不要框選或修改 IP 位址、子網路遮罩、預設閘道欄位。
+
+**圖片下方引導文字：**「只填寫下方兩個 DNS 欄位，IP 位址區塊請維持原狀，完成後按『確定』。」
+</Callout>
+</Step>
+</Steps>
+
+## 清除 DNS 快取並確認設定
+
+修改完成後，建議清除 Windows 的 DNS 快取，再確認系統是否使用 Google DNS：
+
+1. 按下 **Win + R**，輸入 `cmd`，按下 **Enter**。
+2. 在命令提示字元輸入以下指令並按下 **Enter**：
+
+   ```text
+   ipconfig /flushdns
+   ```
+
+3. 接著輸入以下指令：
+
+   ```text
+   nslookup coffeehost.net
+   ```
+
+4. 查看輸出內容中的 **Server** 或 **伺服器**，確認 DNS 位址顯示為 `8.8.8.8` 或 `8.8.4.4`。如果顯示的是 VPN、路由器或公司內部 DNS，表示目前設定可能被其他網路服務覆寫。
+
+<Callout type="info" title="圖片 Placeholder：DNS 驗證結果">
+**預計檔名：** `/images/debug/googledns/nslookup-result.png`
+
+**請截圖：** 命令提示字元中執行 `ipconfig /flushdns` 及 `nslookup coffeehost.net` 後的完整結果，保留 `Server`、`Address` 和查詢結果等必要行。
+
+**請框選：** 框住 `Server`／`Address` 顯示 `8.8.8.8` 或 `8.8.4.4` 的區域，以及查詢成功的結果；請裁切或遮蔽 Windows 使用者名稱、內部網域、內部 IP 等不必要資訊。
+
+**圖片下方引導文字：**「請確認 Server 顯示 Google DNS，再重新開啟網站或連線服務測試。」
+</Callout>
+
+## 遇到問題時
+
+<Callout type="warn" title="設定後無法上網">
+回到相同的 DNS 設定畫面，將設定方式改回 **自動（DHCP）**，或在 Windows 10 的 IPv4 內容選擇 **自動取得 DNS 伺服器位址**，儲存後重新連線。請不要自行修改 IP 位址、子網路遮罩或預設閘道。
+</Callout>
+
+- VPN、防毒軟體、公司／學校網路政策或瀏覽器的安全 DNS 功能，可能會覆寫 Windows 的 DNS 設定。
+- DNS 變更無法修復伺服器離線、路由異常、連接埠封鎖或服務本身故障；這些問題請另外提供錯誤訊息及連線測試結果。
+- Google Public DNS 是第三方 DNS 服務。若您不希望使用，請將設定恢復為自動（DHCP）。
+
+若問題仍未解決，請將 `nslookup` 結果、錯誤訊息及發生問題的時間一併回報客服，以便我們進一步協助。

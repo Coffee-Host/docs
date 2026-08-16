@@ -1,48 +1,36 @@
 ---
 title: Cloudflare WARP
-description: 在 Windows 上安裝、設定及測試 Cloudflare WARP
+description: 在 Windows 上安裝及設定 Cloudflare WARP
 icon: Zap
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-當 Minecraft 主機可以正常運作，但您所在的網路出現無法連線、頻繁逾時、封包遺失或延遲偏高時，可以使用 Cloudflare WARP 測試另一條網路傳輸路徑。WARP 會將裝置的網路流量經由 Cloudflare 網路傳送，適合用來判斷問題是否出在原本的 ISP 路由。
+如果您已完成 [Google DNS 教學](/docs/debug/googledns)，但 Minecraft 主機仍無法連線、頻繁逾時、封包遺失或延遲偏高，可以再使用 Cloudflare WARP。WARP 會將裝置的網路流量經由 Cloudflare 網路傳送，改用另一條傳輸路徑。
 
-WARP 不一定會讓所有連線變快；如果原本的路徑已經是最佳路徑，開啟後反而可能增加延遲。因此，請先記錄開啟前的測試結果，再與開啟 WARP 後的結果比較。
+WARP 不一定會讓所有連線變快；如果原本的路徑已經是最佳路徑，開啟後反而可能增加延遲。若開啟 WARP 後沒有改善，請關閉 WARP 並回報客服。
 
-<Callout type="info" title="什麼情況適合測試 WARP？">
-- Minecraft 主機只有在特定 ISP、Wi-Fi 或行動網路下無法連線。
-- 可以連線，但延遲突然升高、頻繁逾時或封包遺失。
+<Callout type="info" title="什麼情況適合使用 WARP？">
+- 已完成 [Google DNS 教學](/docs/debug/googledns)，Minecraft 主機仍然無法連線。
+- 已經可以連線，但延遲突然升高、頻繁逾時或遊戲中斷線。
 - 同一台主機在其他網路可以正常連線，只有目前網路異常。
-- 客服請您測試 Cloudflare WARP 這條替代連線路徑。
 </Callout>
 
 <Callout type="warn" title="使用前請先知道">
 WARP 不是匿名工具，也不能讓您偽裝成其他國家的使用者。它只會改變裝置前往網際網路的傳輸路徑；伺服器離線、連接埠關閉、帳號權限錯誤或遊戲服務本身故障，無法透過 WARP 修復。
 </Callout>
 
-## 連線測試方式
+## 使用 WARP 前請先完成 Google DNS
 
-WARP 前後的連線比較請使用現有的 [WinMTR 路由追蹤教學](/docs/debug/mtr)，不要改用不同工具或不同測試目標。WinMTR 能列出電腦到 Minecraft 主機之間的每個網路節點、延遲及封包遺失，較容易判斷問題是否出在原本的 ISP 路由。
+請先依照 [Google DNS 教學](/docs/debug/googledns) 將 Windows DNS 改為 Google Public DNS，清除 DNS 快取並重新連線，然後再次嘗試進入 Minecraft 伺服器。
 
-請先準備 Minecraft 主機的**連線位址**。如果遊戲內顯示完整位址，例如 `play.example.com:25565`，WinMTR 的「主機（Host）」欄位只輸入 `play.example.com`，不要輸入 `:25565` 連接埠。
+如果改用 Google DNS 後已經可以正常連線，就不需要再使用 WARP；只有在問題仍然存在時，才繼續本頁的安裝與連線步驟。
 
-請依下列順序測試：
-
-1. **關閉 WARP**，依照 [WinMTR 路由追蹤教學](/docs/debug/mtr) 執行測試，等待 `Sent` 超過 100 後保存完整截圖，並標記為「WARP 關閉」。
-2. 使用相同的電腦、相同的網路、相同的主機位址，再完成本頁的 WARP 安裝與連線步驟。
-3. **開啟 WARP 並確認顯示已連線**，再回到 [WinMTR 路由追蹤教學](/docs/debug/mtr) 使用完全相同的主機位址重新測試，等待 `Sent` 超過 100 後保存完整截圖，並標記為「WARP 開啟」。
-4. 將兩張 WinMTR 完整截圖一起提供給客服，比較各節點的 `Loss%`、`Avg`、`Worst` 及最後一列的結果。請不要只截取單一節點或裁掉視窗其他欄位。
-
-<Callout type="info" title="圖片 Placeholder：WARP 前後 WinMTR 比較">
-**預計檔名：** `/images/debug/warp/mtr-before-after.png`
-
-**請截圖：** 將「WARP 關閉」與「WARP 開啟」兩張 WinMTR 完整視窗截圖上下排列；兩次測試都要使用同一台電腦、同一個主機位址，且 `Sent` 建議超過 100。
-
-**請框選：** 分別框住最後一列的 `Loss%`、`Avg`、`Worst` 與節點路徑；在圖片上方清楚標註「WARP 關閉」及「WARP 開啟」。不要裁掉 WinMTR 的欄位或遮蔽客服需要判讀的節點資料。
-
-**圖片下方引導文字：**「請先依 WinMTR 教學取得 WARP 關閉的結果，再開啟 WARP 使用相同目標重測，將兩張完整截圖一起回傳。」
+<Callout type="info" title="建議處理順序">
+1. 先完成 [Google DNS 教學](/docs/debug/googledns)。
+2. 重新開啟 Minecraft，確認是否已經可以連線。
+3. 如果仍然無法連線、頻繁逾時或延遲偏高，再開啟本頁的 Cloudflare WARP。
 </Callout>
 
 ## 從官方頁面下載 Cloudflare WARP
@@ -132,31 +120,23 @@ WARP 前後的連線比較請使用現有的 [WinMTR 路由追蹤教學](/docs/d
 </Step>
 </Steps>
 
-## 使用 WARP 後判斷結果
-
-WARP 顯示已連線後，請依前面的 [WinMTR 路由追蹤教學](/docs/debug/mtr)，使用完全相同的主機位址重新執行一次測試。等待 `Sent` 超過 100，再將新結果與「WARP 關閉」的完整結果並列比較：
-
-- `Loss%` 降低、節點的 `Avg`／`Worst` 改善：保持 WARP，進入 Minecraft 實測。
-- 結果接近：WARP 沒有明顯改變目前路由，可依實際遊戲體驗決定是否保留。
-- `Loss%` 增加或節點延遲變高：關閉 WARP，保留兩份 WinMTR 完整截圖回報客服。
-
-## 進入 Minecraft 測試
+## 使用 WARP 後進入 Minecraft
 
 1. 保持 WARP 顯示 **Connected／已連線**。
 2. 開啟 Minecraft，進入多人遊戲或伺服器清單。
 3. 使用原本的伺服器位址與連接埠，不要因為開啟 WARP 而修改遊戲內設定。
 4. 進入伺服器後，實際移動、開啟箱子或進行幾分鐘遊戲，觀察是否仍會斷線或延遲升高。
 
-如果只有開啟 WARP 時可以連線，請回報「原本網路」與「WARP」兩組測試結果，這能幫助客服判斷原本 ISP 的路由問題。
+如果開啟 WARP 後可以連線或狀況改善，請記下發生時間、使用的網路環境及 Minecraft 的連線結果，回報客服協助判斷原本的 ISP 路由問題。
 
-<Callout type="info" title="圖片 Placeholder：Minecraft 連線測試">
+<Callout type="info" title="圖片 Placeholder：Minecraft 實際連線">
 **預計檔名：** `/images/debug/warp/minecraft-test.png`
 
 **請截圖：** Minecraft 成功進入伺服器後的遊戲畫面，或無法連線時顯示完整錯誤訊息的畫面。
 
 **請框選：** 成功時框住伺服器名稱與遊戲狀態；失敗時框住完整錯誤訊息。請遮蔽玩家名稱、聊天內容及其他不必要的個人資訊。
 
-**圖片下方引導文字：**「請在 WARP 顯示已連線時重新進入 Minecraft，確認連線及實際遊戲延遲。」
+**圖片下方引導文字：**「請在 WARP 顯示已連線時重新進入 Minecraft，確認是否能正常連線及遊戲延遲。」
 </Callout>
 
 ## 關閉 WARP 或恢復原本連線
@@ -187,8 +167,8 @@ WARP 顯示已連線後，請依前面的 [WinMTR 路由追蹤教學](/docs/debu
 </Callout>
 
 - **開啟 WARP 後所有網站都無法開啟：** 先關閉 WARP，確認原本網路恢復後，再嘗試重新連線。
-- **Minecraft 仍然無法連線：** 確認伺服器位址、連接埠及伺服器狀態，並比較 WARP 開啟前後的 WinMTR 結果。
-- **延遲沒有降低：** WARP 不保證每個 ISP 或每個目的地都會有更短路徑；以 WinMTR 節點延遲、封包遺失及遊戲體驗為準。
+- **Minecraft 仍然無法連線：** 確認伺服器位址、連接埠及伺服器狀態；如果 Google DNS 與 WARP 都沒有改善，請提供完整錯誤訊息與發生時間給客服。
+- **延遲沒有降低：** WARP 不保證每個 ISP 或每個目的地都會有更短路徑；如果實際遊戲體驗沒有改善，請關閉 WARP。
 - **WARP 連線一下就中斷：** 檢查 Wi-Fi 是否穩定，並確認公司、學校或公共網路沒有封鎖 WARP 所需的連線。
 
-回報問題時，請提供發生時間、主機位址與連接埠、WARP 開啟前後的測試結果、WARP 顯示的連線狀態，以及 Minecraft 的完整錯誤訊息。截圖前請先遮蔽帳號、玩家名稱、公開 IP 與其他個人資訊。
+回報問題時，請提供發生時間、主機位址與連接埠、Google DNS 設定結果、WARP 顯示的連線狀態，以及 Minecraft 的完整錯誤訊息。截圖前請先遮蔽帳號、玩家名稱、公開 IP 與其他個人資訊。

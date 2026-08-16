@@ -1,6 +1,6 @@
 {
   "title": "檔案管理",
-  "icon": "File",
+  "icon": "FolderCog",
   "defaultOpen": false,
   "pages": [
     "upload",

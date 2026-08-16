@@ -1,6 +1,6 @@
 {
   "title": "管理",
-  "icon": "Shield",
+  "icon": "ShieldEllipsis",
   "defaultOpen": false,
   "pages": [
     "upload",

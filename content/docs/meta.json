@@ -1,5 +1,6 @@
 {
   "title": "主頁",
+  "icon": "BookOpen",
   "defaultOpen": false,
   "pages": [
     "index",

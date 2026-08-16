@@ -1,6 +1,6 @@
 {
   "title": "一般",
-  "icon": "Info",
+  "icon": "CircleQuestionMark",
   "defaultOpen": false,
   "pages": [
     "console",

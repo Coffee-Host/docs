@@ -1,6 +1,6 @@
 {
   "title": "配置",
-  "icon": "Settings",
+  "icon": "PanelTop",
   "defaultOpen": false,
   "pages": [
     "schedules",

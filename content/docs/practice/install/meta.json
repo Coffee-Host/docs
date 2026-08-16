@@ -1,6 +1,6 @@
 {
   "title": "安裝教學",
-  "icon": "Download",
+  "icon": "HardDriveDownload",
   "defaultOpen": true,
   "pages": ["plugin", "mod"]
 }

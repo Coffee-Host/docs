@@ -1,4 +1,4 @@
-export const appName = 'Coffee Host 教學文件';
+export const appName = 'Coffee Host 說明文件';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';

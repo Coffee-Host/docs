@@ -1,4 +1,4 @@
-# 超大咖託管教學文件
+# 超大咖託管說明文件
 
 這是一個使用 [Create Fumadocs](https://github.com/fuma-nama/fumadocs) 生成的 Next.js 應用程式。
 

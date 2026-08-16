@@ -21,17 +21,17 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 <Steps>
 <Step>
 
-### 1. 檢查 FastLine 並視情況更換連線位址
+### 檢查封鎖狀態並視情況更換連線位址
 
 請先在瀏覽器開啟 [https://fast-line.tw/](https://fast-line.tw/)。如果無法瀏覽，通常表示目前連線已被抗攻擊上游的防火牆判定為異常流量並封鎖。
 
-如果確認被封鎖，請暫時將 Minecraft 的連線位址改為 `udp.cfh.tw:<連接埠>`。例如原本使用 `a.x.cfh.tw:11102`，請暫時改為 `udp.cfh.tw:11102`。如果 `fast-line.tw` 可以正常瀏覽，請先保留原本的連線位址。
+如果確認被封鎖，請暫時將 Minecraft 的連線位址改為 `udp.cfh.tw:<連接埠>`。例如原本使用 `a.x.cfh.tw:13105`，請暫時改為 `udp.cfh.tw:13105`。
 
-改用替代位址後，請不要頻繁進出伺服器，也不要太頻繁重新整理伺服器列表，避免短時間內產生大量連線請求。
+若後續上游已解除封鎖，建議使用原本的連線位址。為避免再次遭到封鎖，請不要頻繁進出伺服器，也不要太頻繁重新整理伺服器列表，避免短時間內產生大量連線請求。
 </Step>
 
 <Step>
-### 2. 設定 Google DNS 並清除快取
+### 設定 Google DNS 並清除快取
 
 完成第一步後若仍然無法連線，請依照 [Google DNS 教學](/docs/debug/googledns) 將 DNS 設定為 `8.8.8.8` 與 `8.8.4.4`。
 
@@ -48,7 +48,7 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 <Step>
 ### 3. 使用 Cloudflare WARP 改善路由
 
-如果 Google DNS 及清除 DNS 快取後仍然無法連線，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 安裝並連線，再使用相同的 Minecraft 連線位址重新嘗試。WARP 顯示已連線後，請不要再頻繁進出伺服器或重新整理伺服器列表。
+如果 Google DNS 及清除 DNS 快取後仍然無法連線，請依照 [Cloudflare WARP 教學](/docs/debug/warp) 安裝並連線，再使用相同的 Minecraft 連線位址重新嘗試。
 
 </Step>
 

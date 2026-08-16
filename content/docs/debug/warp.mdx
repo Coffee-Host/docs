@@ -1,5 +1,5 @@
 ---
-title: 使用 Cloudflare WARP（1.1.1.1）
+title: Cloudflare WARP
 description: 在 Windows 上安裝、設定及測試 Cloudflare WARP
 icon: Zap
 ---
@@ -7,180 +7,241 @@ icon: Zap
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
 
-Cloudflare WARP（1.1.1.1）是一個安裝在電腦上的連線工具。它可以將 DNS 查詢加密，或將裝置的網路流量經由 Cloudflare 網路傳送。當您遇到特定網路無法連線、路由不穩定，或需要測試不同連線路徑時，可以依照本教學操作。
+當 Minecraft 主機可以正常運作，但您所在的網路出現無法連線、頻繁逾時、封包遺失或延遲偏高時，可以使用 Cloudflare WARP 測試另一條網路傳輸路徑。WARP 會將裝置的網路流量經由 Cloudflare 網路傳送，適合用來判斷問題是否出在原本的 ISP 路由。
 
-本教學使用的是個人版 Cloudflare WARP，不是需要登入公司組織的 **Cloudflare One Client（Zero Trust）**。若安裝程式要求輸入組織名稱或 Team 名稱，請先關閉該程式，改從下方的個人版官方連結下載。
+WARP 不一定會讓所有連線變快；如果原本的路徑已經是最佳路徑，開啟後反而可能增加延遲。因此，請先記錄開啟前的測試結果，再與開啟 WARP 後的結果比較。
 
-<Callout type="warn" title="WARP 與 VPN 的差異">
-WARP 不提供匿名功能，也不能讓您偽裝成其他國家的使用者。它可能改變流量前往目的地的路徑，因此有機會改善特定網路的連線問題，但也可能讓延遲、網站驗證或部分服務相容性改變。
+<Callout type="info" title="什麼情況適合測試 WARP？">
+- Minecraft 主機只有在特定 ISP、Wi-Fi 或行動網路下無法連線。
+- 可以連線，但延遲突然升高、頻繁逾時或封包遺失。
+- 同一台主機在其他網路可以正常連線，只有目前網路異常。
+- 客服請您測試 Cloudflare WARP 這條替代連線路徑。
 </Callout>
 
-## 先選擇適合的模式
+<Callout type="warn" title="使用前請先知道">
+WARP 不是匿名工具，也不能讓您偽裝成其他國家的使用者。它只會改變裝置前往網際網路的傳輸路徑；伺服器離線、連接埠關閉、帳號權限錯誤或遊戲服務本身故障，無法透過 WARP 修復。
+</Callout>
 
-不同版本的程式可能使用不同名稱，請依下表的功能理解模式：
+## 使用前先記錄原本的連線
 
-| 介面名稱 | 可能顯示的舊名稱 | 作用 |
-| --- | --- | --- |
-| **Traffic and DNS** | **WARP**／`1.1.1.1 with WARP` | 裝置的網路流量及 DNS 都經由 WARP 傳送；適合測試完整的替代連線路徑。 |
-| **DNS only** | **1.1.1.1** | 只將 DNS 查詢送往 Cloudflare 解析器，不會將一般網路流量導入 WARP；適合只想測試 DNS 的情況。 |
+請先準備 Minecraft 主機的連線位址與連接埠。若客服已提供完整位址，例如 `play.example.com:25565`，請將主機位址與連接埠分開記下：
 
-如果客服請您測試「WARP 連線」，請使用 **Traffic and DNS／WARP**；如果客服只請您測試 DNS 解析，請使用 **DNS only／1.1.1.1**。
+- **主機位址：** `play.example.com`
+- **連接埠：** `25565`
 
-## 安裝 Cloudflare WARP
+如果您使用的是 SRV 網域，請直接使用遊戲內實際輸入的連線位址進行測試。
 
 <Steps>
 <Step>
-### 下載 Windows 版本
+### 開啟命令提示字元
 
-請開啟 [Cloudflare WARP for Windows 官方說明](https://developers.cloudflare.com/warp-client/get-started/windows/)，在 Windows 區段點選官方下載連結，下載安裝程式。請不要從不明網站下載修改版或破解版本。
+1. 按下 **Win + R** 開啟「執行」視窗。
+2. 輸入 `cmd`，按下 **Enter**。
 
-<Callout type="info" title="圖片 Placeholder：Cloudflare 官方下載頁">
-**預計檔名：** `/images/debug/warp/download.png`
+<Callout type="info" title="圖片 Placeholder：開啟命令提示字元">
+**預計檔名：** `/images/debug/warp/open-command-prompt.png`
 
-**請截圖：** Cloudflare 官方 Windows 說明頁中，顯示「Download Cloudflare WARP for Windows」的區域。
+**請截圖：** Windows「執行」視窗，完整顯示輸入 `cmd` 的欄位及「確定」按鈕。
 
-**請框選：** 只框住官方下載連結及 Windows 標題；網址列應保留 `developers.cloudflare.com`，其他瀏覽分頁、帳號資訊或通知內容請裁切掉。
+**請框選：** 框住輸入欄位與「確定」按鈕，並用箭頭標記「輸入 cmd → 按確定」；不要顯示使用者名稱或其他已輸入的命令。
 
-**圖片下方引導文字：**「請從 Cloudflare 官方文件下載 Windows 版本，避免使用第三方安裝檔。」
+**圖片下方引導文字：**「按下 Win + R，輸入 cmd，再按『確定』開啟命令提示字元。」
 </Callout>
 </Step>
 
 <Step>
-### 執行安裝程式
+### 測試開啟 WARP 前的連線
 
-開啟下載的安裝檔，依畫面提示完成安裝。若 Windows 顯示使用者帳戶控制視窗，請確認發行者為 Cloudflare 後再按 **是**。安裝完成後，WARP 通常會自動啟動，並出現在工作列右下角的通知區域。
+在命令提示字元中，將 `<主機位址>` 替換成您的主機位址，執行：
 
-<Callout type="info" title="圖片 Placeholder：WARP 安裝完成">
-**預計檔名：** `/images/debug/warp/installed.png`
+```text
+ping -n 20 <主機位址>
+```
 
-**請截圖：** Windows 桌面右下角通知區域，顯示 Cloudflare WARP 圖示；若需要，也可以同時放入開始功能表搜尋「Cloudflare WARP」的畫面。
+若您知道連接埠，也可以開啟 PowerShell，將 `<連接埠>` 替換成實際數字後執行：
 
-**請框選：** 框住通知區域中的 Cloudflare 圖示，並以箭頭標記「點擊此圖示開啟 WARP」；請遮蔽時間、通知內容及其他應用程式圖示。
+```powershell
+Test-NetConnection <主機位址> -Port <連接埠>
+```
 
-**圖片下方引導文字：**「安裝完成後，請從通知區域點擊 Cloudflare WARP 圖示開啟程式。」
+請記下 `Average`、`Lost`，以及 `TcpTestSucceeded` 顯示的結果。這是開啟 WARP 前的基準，稍後要與 WARP 開啟後比較。
+
+<Callout type="info" title="圖片 Placeholder：WARP 開啟前的測試結果">
+**預計檔名：** `/images/debug/warp/before-test.png`
+
+**請截圖：** 命令提示字元中的完整 `ping -n 20` 結果；若有測試連接埠，也可一併截取 PowerShell 的 `Test-NetConnection` 結果。
+
+**請框選：** 框住封包遺失率、平均延遲，以及 `TcpTestSucceeded`；請遮蔽 Windows 使用者名稱、內部 IP 或其他不必要的命令內容。
+
+**圖片下方引導文字：**「先保留這張原始線路測試結果，開啟 WARP 後使用同一個主機位址與連接埠再測試一次。」
 </Callout>
 </Step>
 </Steps>
 
-## 開啟 WARP 連線
+## 從官方頁面下載 Cloudflare WARP
 
 <Steps>
 <Step>
-### 開啟程式並接受初次設定
+### 開啟 Cloudflare 繁體中文頁面
 
-第一次啟動時，請依畫面按 **Next**，閱讀並接受 Cloudflare 的隱私政策。完成初次設定後，回到 WARP 主畫面。
+請在瀏覽器開啟以下網址：
+
+[https://one.one.one.one/zh-Hant/](https://one.one.one.one/zh-Hant/)
+
+進入頁面後，直接點擊 **Windows** 下載按鈕。請勿從搜尋結果中的不明網站或第三方下載站取得安裝檔。
+
+<Callout type="info" title="圖片 Placeholder：Cloudflare WARP Windows 下載按鈕">
+**預計檔名：** `/images/debug/warp/download-windows.png`
+
+**請截圖：** `https://one.one.one.one/zh-Hant/` 頁面，完整顯示 Cloudflare WARP 產品介紹及 **Windows** 下載按鈕。
+
+**請框選：** 只框住 **Windows** 下載按鈕，並在框旁標記「點擊這裡下載」；網址列需保留 `one.one.one.one/zh-Hant`，其他分頁與帳號資訊請裁切掉。
+
+**圖片下方引導文字：**「進入指定的繁體中文頁面後，直接點擊 Windows 下載，不要選擇其他平台。」
+</Callout>
 </Step>
 
 <Step>
-### 開啟連線開關
+### 執行下載的安裝程式
 
-在 WARP 主畫面按一下中央的開關。開關顯示為啟用或 Connected 後，WARP 才會開始處理連線。
+1. 開啟瀏覽器的下載清單，找到剛下載的 Cloudflare WARP Windows 安裝程式。
+2. 點擊安裝程式開始執行。
+3. 若 Windows 顯示使用者帳戶控制視窗，確認發行者是 Cloudflare 後按 **是**。
+4. 依安裝畫面按 **Next** 或 **下一步** 完成安裝。
 
-<Callout type="info" title="圖片 Placeholder：開啟 WARP">
-**預計檔名：** `/images/debug/warp/connect.png`
+<Callout type="info" title="圖片 Placeholder：執行 WARP 安裝程式">
+**預計檔名：** `/images/debug/warp/installer.png`
 
-**請截圖：** Cloudflare WARP 主畫面，完整顯示未連線與已連線其中一種狀態，以及中央的連線開關。
+**請截圖：** Cloudflare WARP 安裝程式的第一個畫面，或 Windows 使用者帳戶控制視窗中顯示 Cloudflare 發行者的畫面。
 
-**請框選：** 框住中央開關與 `Connected`／`Disconnected` 狀態文字；不要框選裝置名稱、帳號、公開 IP 或其他個人化資訊。
+**請框選：** 框住安裝程式名稱、Cloudflare 發行者及 **Next／下一步** 按鈕；若有檔案路徑或 Windows 使用者名稱，請先遮蔽。
 
-**圖片下方引導文字：**「按一下中央開關，直到畫面顯示已連線；若要停止 WARP，再按一次相同開關即可。」
+**圖片下方引導文字：**「確認程式來自 Cloudflare 後，依畫面按下一步完成安裝。」
+</Callout>
+</Step>
+
+<Step>
+### 找到 WARP 圖示
+
+安裝完成後，WARP 通常會自動啟動。請查看工作列右下角的通知區域；如果看不到圖示，點擊 **^** 展開隱藏圖示，或在開始功能表搜尋 **Cloudflare WARP** 後開啟程式。
+
+<Callout type="info" title="圖片 Placeholder：工作列中的 WARP 圖示">
+**預計檔名：** `/images/debug/warp/tray-icon.png`
+
+**請截圖：** Windows 工作列右下角通知區域，顯示 Cloudflare WARP 圖示；也可以補一張開始功能表搜尋 Cloudflare WARP 的畫面。
+
+**請框選：** 框住 WARP 圖示，並用箭頭標記「點擊此圖示開啟程式」；時間、通知內容及其他應用程式圖示請遮蔽或裁切。
+
+**圖片下方引導文字：**「安裝完成後，從工作列通知區域點擊 Cloudflare WARP 圖示。」
 </Callout>
 </Step>
 </Steps>
 
-## 切換 WARP 與 1.1.1.1 模式
-
-如果您需要依客服指示切換模式，請依下列步驟操作：
+## 開啟 WARP 並連線
 
 <Steps>
 <Step>
-### 開啟偏好設定
+### 接受初次設定
 
-1. 從工作列通知區域點擊 WARP 圖示。
-2. 點擊齒輪圖示，進入 **Preferences** 或 **偏好設定**。
-
-<Callout type="info" title="圖片 Placeholder：開啟 WARP 偏好設定">
-**預計檔名：** `/images/debug/warp/preferences.png`
-
-**請截圖：** WARP 的通知區域選單或主畫面選單，讓齒輪圖示及 **Preferences／偏好設定** 選項同時可見。
-
-**請框選：** 依序框住 WARP 圖示、齒輪圖示及 Preferences 選項，使用箭頭表示點擊順序；請遮蔽帳號或裝置識別資訊。
-
-**圖片下方引導文字：**「先開啟 WARP 選單，再點擊齒輪圖示進入偏好設定。」
-</Callout>
+第一次開啟 WARP 時，請依畫面按 **Next**，閱讀並接受 Cloudflare 的隱私政策，直到進入主畫面。這些畫面只會在第一次啟動時出現。
 </Step>
 
 <Step>
-### 選擇連線模式
+### 開啟 WARP 開關
 
-在偏好設定或模式選單中，選擇客服要求的模式：
+在主畫面中央找到連線開關，按一下將它開啟。請等待數秒，直到畫面顯示 **Connected**、**已連線** 或類似的連線成功狀態。
 
-- **Traffic and DNS／WARP**：將一般流量及 DNS 都經由 WARP 傳送。
-- **DNS only／1.1.1.1**：只加密並傳送 DNS 查詢，不建立一般流量的 WARP 通道。
+如果偏好設定中顯示連線模式，請保留預設的 **WARP／完整流量連線**，讓整台電腦的連線都經由 WARP 傳送；不需要額外修改其他進階設定。
 
-選好後返回主畫面，必要時先關閉再重新開啟連線，讓新模式套用。
+<Callout type="info" title="圖片 Placeholder：WARP 已連線">
+**預計檔名：** `/images/debug/warp/connected.png`
 
-<Callout type="info" title="圖片 Placeholder：WARP 模式選單">
-**預計檔名：** `/images/debug/warp/mode.png`
+**請截圖：** Cloudflare WARP 主畫面，完整顯示中央開關為啟用狀態，以及 `Connected`／`已連線` 文字。
 
-**請截圖：** WARP 的模式選單，讓兩個可選模式及目前勾選的模式完整可見。
+**請框選：** 框住中央開關與連線成功狀態，並加上「已連線」標記；不要顯示帳號、裝置名稱、公開 IP 或其他個人資訊。
 
-**請框選：** 各自框住 **Traffic and DNS／WARP** 與 **DNS only／1.1.1.1**，並在框旁標註「完整流量」與「僅 DNS」；不要把其他偏好設定或個人資料放進圖片。
-
-**圖片下方引導文字：**「需要替代連線路徑時選擇 Traffic and DNS；只測試 DNS 時選擇 DNS only。」
+**圖片下方引導文字：**「開啟中央開關，等待狀態變成已連線後，再測試 Minecraft。」
 </Callout>
 </Step>
 </Steps>
 
-## 確認 WARP 是否生效
+## 使用 WARP 後重新測試
 
-### 使用 Cloudflare 測試頁面
+請保持 WARP 開啟，回到命令提示字元或 PowerShell，使用與前面完全相同的主機位址、連接埠與指令重新測試：
 
-開啟 [1.1.1.1/help](https://1.1.1.1/help)，查看頁面中的連線狀態。依選擇的模式，頁面可能顯示 DNS 連線或 WARP 連線結果；測試時請確認 WARP 程式本身也顯示已連線。
+```text
+ping -n 20 <主機位址>
+```
 
-### 使用命令提示字元測試 DNS
+```powershell
+Test-NetConnection <主機位址> -Port <連接埠>
+```
 
-1. 按下 **Win + R**，輸入 `cmd`，按下 **Enter**。
-2. 執行以下指令：
+比較開啟前後的平均延遲、封包遺失率與 `TcpTestSucceeded`：
 
-   ```text
-   nslookup coffeehost.net
-   ```
+- 平均延遲降低、封包遺失減少，且連接埠測試成功：可以保持 WARP 開啟，再進入 Minecraft 測試。
+- 結果差不多：WARP 對目前網路路由沒有明顯改善，可以依使用習慣決定是否保留。
+- 延遲變高、封包遺失增加或測試失敗：請關閉 WARP，恢復原本連線後再回報客服。
 
-3. 確認指令能取得網域的解析結果。WARP 模式下，`Server` 顯示的位址可能是 WARP 建立的本機 DNS 介面，不一定直接顯示 `1.1.1.1`；請以 1.1.1.1/help 的結果及 WARP 主畫面狀態為主要判斷依據。
+<Callout type="info" title="圖片 Placeholder：WARP 開啟前後比較">
+**預計檔名：** `/images/debug/warp/after-test.png`
 
-<Callout type="info" title="圖片 Placeholder：WARP 連線驗證">
-**預計檔名：** `/images/debug/warp/verify.png`
+**請截圖：** WARP 開啟後的 `ping` 及 `Test-NetConnection` 結果，最好與開啟前結果放在同一張長圖上下對照。
 
-**請截圖：** 1.1.1.1/help 頁面中與連線狀態相關的區域，或命令提示字元執行 `nslookup coffeehost.net` 後的結果；若兩者都提供，優先放 1.1.1.1/help。
+**請框選：** 上半部標記「WARP 開啟前」，下半部標記「WARP 開啟後」，分別框住平均延遲、遺失率與 `TcpTestSucceeded`；不要只截取單一成功行而失去比較依據。
 
-**請框選：** 在 1.1.1.1/help 框住 DNS／WARP 狀態；在命令提示字元框住 `Server` 和查詢結果。請裁切或遮蔽公開 IP、內部 DNS、Windows 使用者名稱等不必要資訊。
-
-**圖片下方引導文字：**「請確認 WARP 主畫面與 1.1.1.1/help 都顯示連線正常，再重新測試原本無法連線的服務。」
+**圖片下方引導文字：**「請比較兩次測試結果；只有在 WARP 開啟後確實改善時，才建議保持連線。」
 </Callout>
 
-## 暫停、恢復與解除安裝
+## 進入 Minecraft 測試
 
-- **暫停 WARP：** 點擊通知區域的 WARP 圖示，將主畫面開關關閉。
-- **恢復 WARP：** 再次開啟相同開關，等待狀態變成 Connected。
-- **解除安裝：** 開啟 Windows **設定** → **應用程式** → **已安裝的應用程式**，找到 **Cloudflare WARP** 後選擇解除安裝。
+1. 保持 WARP 顯示 **Connected／已連線**。
+2. 開啟 Minecraft，進入多人遊戲或伺服器清單。
+3. 使用原本的伺服器位址與連接埠，不要因為開啟 WARP 而修改遊戲內設定。
+4. 進入伺服器後，實際移動、開啟箱子或進行幾分鐘遊戲，觀察是否仍會斷線或延遲升高。
 
-解除安裝前請先關閉 WARP；如果電腦由公司或學校管理，可能需要系統管理員權限。
+如果只有開啟 WARP 時可以連線，請回報「原本網路」與「WARP」兩組測試結果，這能幫助客服判斷原本 ISP 的路由問題。
+
+<Callout type="info" title="圖片 Placeholder：Minecraft 連線測試">
+**預計檔名：** `/images/debug/warp/minecraft-test.png`
+
+**請截圖：** Minecraft 成功進入伺服器後的遊戲畫面，或無法連線時顯示完整錯誤訊息的畫面。
+
+**請框選：** 成功時框住伺服器名稱與遊戲狀態；失敗時框住完整錯誤訊息。請遮蔽玩家名稱、聊天內容及其他不必要的個人資訊。
+
+**圖片下方引導文字：**「請在 WARP 顯示已連線時重新進入 Minecraft，確認連線及實際遊戲延遲。」
+</Callout>
+
+## 關閉 WARP 或恢復原本連線
+
+如果 WARP 沒有改善問題，或開啟後反而變慢，請在工作列通知區域點擊 WARP 圖示，再按一下主畫面中央開關，直到狀態顯示 **Disconnected／已中斷**。關閉 WARP 後，Windows 會恢復使用原本的網路連線。
+
+若關閉後網路沒有恢復：
+
+1. 等待約 10 秒後重新連接 Wi-Fi 或網路線。
+2. 關閉其他 VPN、Proxy 或加速器。
+3. 重新啟動 WARP，再關閉一次。
+4. 仍然無法上網時，重新啟動電腦並確認一般網路是否正常。
+
+<Callout type="info" title="圖片 Placeholder：關閉 WARP">
+**預計檔名：** `/images/debug/warp/disconnect.png`
+
+**請截圖：** WARP 主畫面顯示 `Disconnected`／`已中斷` 的狀態。
+
+**請框選：** 框住中央開關與已中斷狀態，並標記「按此關閉 WARP」；不要顯示裝置名稱或帳號資訊。
+
+**圖片下方引導文字：**「WARP 沒有改善連線時，請關閉中央開關，恢復原本網路後再回報結果。」
+</Callout>
 
 ## 常見問題
 
-<Callout type="warn" title="WARP 顯示已連線，但服務仍無法使用">
-先切換到 **DNS only／1.1.1.1** 重試。如果 DNS only 可以連線、Traffic and DNS 不能，可能是完整 WARP 路徑、服務端的 VPN／資料中心 IP 限制，或其他 VPN 與 WARP 發生衝突。回報客服時請附上使用的模式、WARP 狀態及錯誤訊息。
+<Callout type="warn" title="WARP 無法連線">
+先確認一般網路可以開啟網站，再暫時關閉其他 VPN、Proxy、加速器及防毒軟體的網路過濾功能。若仍無法連線，請重新啟動 WARP 或電腦；不要同時啟用多個 VPN 工具。
 </Callout>
 
-- 請先關閉其他 VPN、Proxy、加速器及會接管 DNS 的防毒軟體，再測試 WARP。
-- 如果開啟 WARP 後所有網站都無法開啟，先關閉 WARP；確認一般網路正常後，再重新啟動 WARP 或改用 DNS only 模式。
-- WARP 不能修復伺服器離線、連接埠封鎖、遊戲服務本身故障或帳號權限問題。
-- 若程式要求登入組織或顯示 Cloudflare One Client，這是企業版／Zero Trust 流程，不是本教學使用的個人版 WARP。
+- **開啟 WARP 後所有網站都無法開啟：** 先關閉 WARP，確認原本網路恢復後，再嘗試重新連線。
+- **Minecraft 仍然無法連線：** 確認伺服器位址、連接埠及伺服器狀態，並比較 WARP 開啟前後的 `Test-NetConnection` 結果。
+- **延遲沒有降低：** WARP 不保證每個 ISP 或每個目的地都會有更短路徑；以實際 `ping`、封包遺失及遊戲體驗為準。
+- **WARP 連線一下就中斷：** 檢查 Wi-Fi 是否穩定，並確認公司、學校或公共網路沒有封鎖 WARP 所需的連線。
 
-回報問題時，請提供發生問題的時間、使用的 WARP 模式、WARP 主畫面狀態、1.1.1.1/help 結果及錯誤訊息；截圖請先遮蔽帳號、公開 IP 與其他個人資訊。
-
-## 官方參考
-
-- [Cloudflare WARP for Windows 官方文件](https://developers.cloudflare.com/warp-client/get-started/windows/)
-- [Cloudflare WARP 模式說明](https://developers.cloudflare.com/warp-client/warp-modes/)
+回報問題時，請提供發生時間、主機位址與連接埠、WARP 開啟前後的測試結果、WARP 顯示的連線狀態，以及 Minecraft 的完整錯誤訊息。截圖前請先遮蔽帳號、玩家名稱、公開 IP 與其他個人資訊。
